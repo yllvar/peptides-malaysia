@@ -31,22 +31,21 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-evo-black/90 backdrop-blur-md border-b border-white/10 py-0' 
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
+          ? 'bg-evo-black/90 backdrop-blur-md border-b border-white/10 py-0'
           : 'bg-transparent border-transparent py-4'
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          
+
           {/* --- LEFT SIDE: LOGO --- */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="relative">
               <div className="absolute inset-0 bg-evo-orange blur opacity-20 group-hover:opacity-60 transition-opacity duration-500"></div>
-              <div className="relative bg-neutral-900 border border-white/10 p-2 rounded-lg group-hover:border-evo-orange/50 transition-colors">
-                <Beaker className="h-5 w-5 text-evo-orange" />
+              <div className="relative bg-neutral-900 border border-white/10 p-1.5 rounded-lg group-hover:border-evo-orange/50 transition-colors overflow-hidden">
+                <img src="/logo/logo.png" alt="Evo Logo" className="h-8 w-8 object-contain" />
               </div>
             </div>
             <div className="flex flex-col">
@@ -58,7 +57,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
 
           {/* --- RIGHT SIDE: NAV + ACTIONS --- */}
           <div className="flex items-center gap-6">
-            
+
             {/* Desktop Navigation Links */}
             <div className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => (
@@ -67,8 +66,8 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
                   to={link.path}
                   className={`
                     relative px-4 py-2 text-xs font-bold uppercase tracking-[0.15em] transition-all rounded hover:bg-white/5
-                    ${isActive(link.path) 
-                      ? 'text-evo-orange' 
+                    ${isActive(link.path)
+                      ? 'text-evo-orange'
                       : 'text-gray-300 hover:text-white'
                     }
                   `}
@@ -99,7 +98,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
                 </span>
               )}
             </Link>
-            
+
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -113,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount }) => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <div 
+      <div
         className={`
           lg:hidden absolute top-full left-0 w-full bg-evo-black/95 backdrop-blur-xl border-b border-white/10 transition-all duration-300 ease-in-out overflow-hidden
           ${isOpen ? 'max-h-screen opacity-100 py-4 shadow-2xl' : 'max-h-0 opacity-0 py-0'}

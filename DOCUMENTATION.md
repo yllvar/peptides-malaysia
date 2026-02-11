@@ -43,9 +43,9 @@ The codebase has been refactored to eliminate all critical blockers. It is now f
 | Checkout & Payments | Functional (WhatsApp) | ✅ B |
 | Security | Improved | ✅ B |
 | SEO | Configured | ✅ B |
-| Accessibility (a11y) | Initial Cleanup | � C |
+| Accessibility (a11y) | Initial Cleanup | 🟡 C |
 | Testing | Absent | 🔴 F |
-| CI/CD & Deployment | Ready for Vercel/Netlify | ✅ B |
+| CI/CD & Deployment | Deployed (Vercel) | ✅ A |
 | Error Handling | Custom 404 Added | ✅ B |
 | Performance | Optimized (Build-time) | ✅ A |
 

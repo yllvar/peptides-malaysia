@@ -62,7 +62,7 @@ export const PRODUCTS: Product[] = [
     price: 45,
     category: 'Essentials',
     description: 'Pharmaceutical grade solvent containing 0.9% benzyl alcohol. The foundation of safe reconstitution.',
-    image: '/images/evo_retatrutide.jpg',
+    image: '/images/evo_bac_water.jpg',
     inStock: true,
     features: ['0.9% Benzyl Alcohol', 'Sterile Filtered', 'Long Shelf Life']
   },
