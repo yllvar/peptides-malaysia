@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
-    "@prisma/adapter-neon": "^7.3.0",
+    "@prisma/adapter-neon": "^6.19.2",
     "@prisma/client": "^6.19.2",
     "@tanstack/react-query": "^5.90.21",
     "@types/ws": "^8.18.1",
