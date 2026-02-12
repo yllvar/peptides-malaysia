@@ -69,7 +69,7 @@ const Shop: React.FC = () => {
                   <div className="text-xs text-evo-orange mb-2 font-bold uppercase tracking-wider">{product.category}</div>
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-evo-orange transition-colors">{product.name}</h3>
                   <div className="flex items-center justify-between mt-4">
-                    <span className="text-lg text-gray-300">RM{product.price}</span>
+                    <span className="text-lg text-gray-300">RM{product.price.toFixed(2)}</span>
                     <span className="text-sm text-gray-500 group-hover:text-white transition-colors">View Details &rarr;</span>
                   </div>
                 </div>

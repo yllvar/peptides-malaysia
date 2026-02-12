@@ -3,11 +3,12 @@ import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../src/hooks/useProducts';
 import { useCartStore } from '../src/stores/cartStore';
 import { WHATSAPP_NUMBER, STORAGE_PROTOCOLS } from '../src/constants';
-import { Check, AlertCircle, ShoppingCart, MessageCircle, FileText, Activity } from 'lucide-react';
+import { Check, AlertCircle, ShoppingCart, MessageCircle, FileText, Activity, CheckCircle2 } from 'lucide-react';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<'desc' | 'guide' | 'coa' | 'tech'>('desc');
+  const [showAdded, setShowAdded] = useState(false);
 
   const { data: products, isLoading } = useProducts();
   const addToCart = useCartStore((state) => state.addToCart);
@@ -30,6 +31,8 @@ const ProductDetail: React.FC = () => {
 
   const handleAddToCart = () => {
     addToCart(product);
+    setShowAdded(true);
+    setTimeout(() => setShowAdded(false), 2000);
   };
 
   return (
@@ -52,7 +55,7 @@ const ProductDetail: React.FC = () => {
           {/* Info Section */}
           <div>
             <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-2 uppercase tracking-tight">{product.name}</h1>
-            <div className="text-2xl text-evo-orange font-bold mb-6">RM{product.price}</div>
+            <div className="text-2xl text-evo-orange font-bold mb-6">RM{product.price.toFixed(2)}</div>
 
             <div className="bg-white/5 border-l-4 border-evo-orange p-4 mb-8">
               <p className="text-sm text-gray-300 leading-relaxed italic">
@@ -64,9 +67,16 @@ const ProductDetail: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 py-4 bg-neutral-800 hover:bg-neutral-700 text-white font-bold rounded border border-white/10 flex items-center justify-center transition-all"
+                className={`flex-1 py-4 font-bold rounded border flex items-center justify-center transition-all ${showAdded
+                    ? 'bg-green-600 border-green-500 text-white'
+                    : 'bg-neutral-800 hover:bg-neutral-700 text-white border-white/10'
+                  }`}
               >
-                <ShoppingCart className="mr-2 h-5 w-5" /> ADD TO CART
+                {showAdded ? (
+                  <><CheckCircle2 className="mr-2 h-5 w-5" /> ADDED TO CART!</>
+                ) : (
+                  <><ShoppingCart className="mr-2 h-5 w-5" /> ADD TO CART</>
+                )}
               </button>
               <button
                 onClick={handleWhatsAppBuy}
