@@ -1,4 +1,8 @@
 import { prisma } from '../../../src/lib/db';
+
+export const config = {
+    runtime: 'nodejs',
+};
 import { jwtVerify } from 'jose';
 
 export async function GET(request: Request) {
@@ -35,9 +39,12 @@ export async function GET(request: Request) {
         });
 
         return Response.json(orders);
-    } catch (error) {
+    } catch (error: any) {
         console.error('Admin Orders Fetch Error:', error);
-        return Response.json({ error: 'Internal server error' }, { status: 500 });
+        return Response.json({
+            error: 'Internal server error',
+            details: error?.message || 'Unknown error'
+        }, { status: 500 });
     }
 }
 
@@ -82,8 +89,11 @@ export async function PATCH(request: Request) {
         });
 
         return Response.json(updatedOrder);
-    } catch (error) {
+    } catch (error: any) {
         console.error('Admin Order Update Error:', error);
-        return Response.json({ error: 'Internal server error' }, { status: 500 });
+        return Response.json({
+            error: 'Internal server error',
+            details: error?.message || 'Unknown error'
+        }, { status: 500 });
     }
 }

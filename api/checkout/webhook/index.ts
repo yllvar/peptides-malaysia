@@ -1,5 +1,9 @@
 import { prisma } from '../../../src/lib/db';
 
+export const config = {
+    runtime: 'nodejs',
+};
+
 export async function POST(request: Request) {
     try {
         const formData = await request.formData();
@@ -81,8 +85,11 @@ export async function POST(request: Request) {
 
         return Response.json({ success: true });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Webhook error:', error);
-        return Response.json({ error: 'Internal server error' }, { status: 500 });
+        return Response.json({
+            error: 'Internal server error',
+            details: error?.message || 'Unknown error'
+        }, { status: 500 });
     }
 }

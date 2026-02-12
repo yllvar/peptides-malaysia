@@ -1,4 +1,8 @@
 import { jwtVerify } from 'jose';
+
+export const config = {
+    runtime: 'nodejs',
+};
 import { prisma } from '../../../src/lib/db';
 
 export async function GET(request: Request) {
@@ -8,7 +12,7 @@ export async function GET(request: Request) {
     }
 
     const token = authHeader.split(' ')[1];
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
     try {
         const { payload } = await jwtVerify(token, secret);
@@ -24,7 +28,10 @@ export async function GET(request: Request) {
         }
 
         return Response.json({ user });
-    } catch (err) {
-        return Response.json({ error: 'Invalid token' }, { status: 401 });
+    } catch (err: any) {
+        return Response.json({
+            error: 'Invalid token',
+            details: err?.message || 'Unknown error'
+        }, { status: 401 });
     }
 }

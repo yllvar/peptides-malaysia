@@ -1,4 +1,8 @@
 import { prisma } from '../../src/lib/db';
+
+export const config = {
+    runtime: 'nodejs',
+};
 import { calculateShippingCost } from '../../src/lib/utils/shipping';
 
 export async function POST(request: Request) {
@@ -115,8 +119,11 @@ export async function POST(request: Request) {
             return Response.json({ error: 'Failed to generate payment link' }, { status: 500 });
         }
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Checkout error:', error);
-        return Response.json({ error: 'Internal server error' }, { status: 500 });
+        return Response.json({
+            error: 'Internal server error',
+            details: error?.message || 'Unknown error'
+        }, { status: 500 });
     }
 }

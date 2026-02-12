@@ -47,7 +47,7 @@ This document provides a guide for deploying the **Peptides Malaysia - Evo™** 
 
 ### Cold Starts
 Vercel Serverless Functions may experience cold starts. Prisma Client initialization adds ~200-500ms overhead.
-- **Opt-in:** Use a distinct database connection pool or edge-compatible driver (`@neondatabase/serverless`) to mitigate.
+- **Implementation:** We use the standard Prisma Client with the `nodejs` runtime for maximum stability and performance on Vercel.
 
 ### Database Connection Limits
 Serverless functions can exhaust database connections during traffic spikes.

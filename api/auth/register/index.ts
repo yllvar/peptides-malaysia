@@ -1,4 +1,8 @@
 import { prisma } from '../../../src/lib/db';
+
+export const config = {
+    runtime: 'nodejs',
+};
 import bcrypt from 'bcryptjs';
 
 export async function POST(request: Request) {
@@ -35,8 +39,11 @@ export async function POST(request: Request) {
             }
         });
 
-    } catch (error) {
+    } catch (error: any) {
         console.error('Registration error:', error);
-        return Response.json({ error: 'Internal server error' }, { status: 500 });
+        return Response.json({
+            error: 'Internal server error',
+            details: error?.message || 'Unknown error'
+        }, { status: 500 });
     }
 }
