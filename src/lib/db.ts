@@ -3,9 +3,12 @@ import { PrismaNeon } from '@prisma/adapter-neon';
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import WebSocket from 'ws';
 
-neonConfig.webSocketConstructor = WebSocket;
 
-const connectionString = process.env.DATABASE_URL!;
+if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL is not defined');
+}
+
+const connectionString = process.env.DATABASE_URL;
 
 const pool = new Pool({ connectionString });
 const adapter = new PrismaNeon(pool);

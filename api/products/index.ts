@@ -1,5 +1,9 @@
 import { prisma } from '../../src/lib/db';
 
+export const config = {
+    runtime: 'nodejs',
+};
+
 export async function GET(request: Request) {
     try {
         const products = await prisma.product.findMany({
