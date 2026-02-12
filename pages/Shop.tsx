@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PRODUCTS, WHATSAPP_NUMBER } from '../constants';
-import { Product } from '../types';
+import { useProducts } from '../src/hooks/useProducts';
+import { WHATSAPP_NUMBER } from '../src/constants';
 
 const Shop: React.FC = () => {
   const [filter, setFilter] = useState<string>('All');
   const categories = ['All', 'Weight Management', 'Recovery', 'Performance', 'Anti-Aging', 'Bundles', 'Essentials'];
 
+  const { data: products, isLoading, error } = useProducts();
+
+  if (isLoading) return <div className="pt-32 text-center text-white">Loading products...</div>;
+  if (error) return <div className="pt-32 text-center text-red-500">Error loading products.</div>;
+
+  const validProducts = products || [];
   const filteredProducts = filter === 'All'
-    ? PRODUCTS
-    : PRODUCTS.filter(p => p.category === filter);
+    ? validProducts
+    : validProducts.filter(p => p.category === filter);
 
   return (
     <div className="pt-24 pb-16 bg-evo-black min-h-screen">
@@ -17,8 +23,8 @@ const Shop: React.FC = () => {
 
         {/* Header */}
         <div className="mb-12 text-center">
-          <h1 className="text-4xl font-display font-bold text-white mb-4">THE COLLECTION</h1>
-          <p className="text-gray-400">High-purity ligands and solvents for advanced research.</p>
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 uppercase tracking-tighter">THE EVO™ SERIES</h1>
+          <p className="text-gray-400 uppercase tracking-widest text-xs">Vanguard research isotopes & high-purity laboratory solvents.</p>
         </div>
 
         {/* Filters */}

@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { PRODUCTS, WHATSAPP_NUMBER, COA_DATA } from '../constants';
-import { CartItem } from '../types';
-import { Check, AlertCircle, ShoppingCart, MessageCircle, FileText } from 'lucide-react';
+import { useProducts } from '../src/hooks/useProducts';
+import { useCartStore } from '../src/stores/cartStore';
+import { WHATSAPP_NUMBER, STORAGE_PROTOCOLS } from '../src/constants';
+import { Check, AlertCircle, ShoppingCart, MessageCircle, FileText, Activity } from 'lucide-react';
 
-interface ProductDetailProps {
-  addToCart: (item: CartItem) => void;
-}
-
-const ProductDetail: React.FC<ProductDetailProps> = ({ addToCart }) => {
+const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [activeTab, setActiveTab] = useState<'desc' | 'guide' | 'coa'>('desc');
+  const [activeTab, setActiveTab] = useState<'desc' | 'guide' | 'coa' | 'tech'>('desc');
 
-  const product = PRODUCTS.find(p => p.id === id);
+  const { data: products, isLoading } = useProducts();
+  const addToCart = useCartStore((state) => state.addToCart);
+
+  const product = products?.find(p => p.id === id);
+  const techSpec = product?.techSpec;
+
+  if (isLoading) {
+    return <div className="pt-32 text-center text-white">Loading product details...</div>;
+  }
 
   if (!product) {
     return <div className="pt-32 text-center text-white">Product not found</div>;
@@ -24,7 +29,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ addToCart }) => {
   };
 
   const handleAddToCart = () => {
-    addToCart({ ...product, quantity: 1 });
+    addToCart(product);
   };
 
   return (
@@ -32,7 +37,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ addToCart }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Breadcrumb */}
-        <div className="text-sm text-gray-500 mb-8">
+        <div className="text-sm text-gray-500 mb-8 uppercase tracking-widest">
           <Link to="/" className="hover:text-white">Home</Link> / <Link to="/shop" className="hover:text-white">Shop</Link> / <span className="text-evo-orange">{product.name}</span>
         </div>
 
@@ -46,12 +51,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ addToCart }) => {
 
           {/* Info Section */}
           <div>
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-2">{product.name}</h1>
+            <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-2 uppercase tracking-tight">{product.name}</h1>
             <div className="text-2xl text-evo-orange font-bold mb-6">RM{product.price}</div>
 
             <div className="bg-white/5 border-l-4 border-evo-orange p-4 mb-8">
-              <p className="text-sm text-gray-300 leading-relaxed">
-                <span className="font-bold text-white">Research Kit Includes:</span> This SKU is sold as a bundled research unit containing the lyophilized peptide and 10ml of Evo™ Bacteriostatic Water. Components cannot be separated.
+              <p className="text-sm text-gray-300 leading-relaxed italic">
+                <span className="font-bold text-white uppercase not-italic">Research Kit Logic:</span> Bundled research unit containing the lyophilized peptide and 10ml of Evo™ Bacteriostatic Water. Optimized for structural stability.
               </p>
             </div>
 
@@ -73,7 +78,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ addToCart }) => {
 
             {/* Features List */}
             <div className="mb-10">
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Specifications</h3>
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-[0.2em] mb-4">Core Specifications</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {product.features.map((feat, idx) => (
                   <li key={idx} className="flex items-center text-sm text-gray-300">
@@ -86,66 +91,112 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ addToCart }) => {
 
             {/* Tabs */}
             <div className="border-t border-white/10 pt-6">
-              <div className="flex space-x-6 border-b border-white/10 mb-6">
+              <div className="flex space-x-6 border-b border-white/10 mb-6 overflow-x-auto scrollbar-hide">
                 <button
                   onClick={() => setActiveTab('desc')}
-                  className={`pb-3 text-sm font-bold tracking-wide transition-colors border-b-2 ${activeTab === 'desc' ? 'text-white border-evo-orange' : 'text-gray-500 border-transparent hover:text-white'}`}
+                  className={`pb-3 text-xs font-bold tracking-widest transition-colors border-b-2 whitespace-nowrap ${activeTab === 'desc' ? 'text-white border-evo-orange' : 'text-gray-500 border-transparent hover:text-white'}`}
                 >
                   DESCRIPTION
                 </button>
                 <button
-                  onClick={() => setActiveTab('guide')}
-                  className={`pb-3 text-sm font-bold tracking-wide transition-colors border-b-2 ${activeTab === 'guide' ? 'text-white border-evo-orange' : 'text-gray-500 border-transparent hover:text-white'}`}
+                  onClick={() => setActiveTab('tech')}
+                  className={`pb-3 text-xs font-bold tracking-widest transition-colors border-b-2 whitespace-nowrap ${activeTab === 'tech' ? 'text-white border-evo-orange' : 'text-gray-500 border-transparent hover:text-white'}`}
                 >
-                  RECONSTITUTION
+                  TECHNICAL DATA
+                </button>
+                <button
+                  onClick={() => setActiveTab('guide')}
+                  className={`pb-3 text-xs font-bold tracking-widest transition-colors border-b-2 whitespace-nowrap ${activeTab === 'guide' ? 'text-white border-evo-orange' : 'text-gray-500 border-transparent hover:text-white'}`}
+                >
+                  HANDLING
                 </button>
                 <button
                   onClick={() => setActiveTab('coa')}
-                  className={`pb-3 text-sm font-bold tracking-wide transition-colors border-b-2 ${activeTab === 'coa' ? 'text-white border-evo-orange' : 'text-gray-500 border-transparent hover:text-white'}`}
+                  className={`pb-3 text-xs font-bold tracking-widest transition-colors border-b-2 whitespace-nowrap ${activeTab === 'coa' ? 'text-white border-evo-orange' : 'text-gray-500 border-transparent hover:text-white'}`}
                 >
                   LAB DATA (COA)
                 </button>
               </div>
 
-              <div className="text-gray-400 text-sm leading-relaxed min-h-[200px]">
+              <div className="text-gray-400 text-sm leading-relaxed min-h-[220px]">
                 {activeTab === 'desc' && (
                   <div className="animate-fade-in">
                     <p className="mb-4">{product.description}</p>
-                    <p>Designed for in-vitro research use only. This product is strictly for laboratory handling by qualified professionals. Keep stored at -20°C for long-term stability.</p>
+                    <p className="border-t border-white/5 pt-4 text-xs italic">Designed for in-vitro research use only. This product is strictly for laboratory handling by qualified professionals.</p>
+                  </div>
+                )}
+                {activeTab === 'tech' && (
+                  <div className="animate-fade-in">
+                    {techSpec ? (
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white/5 p-3 rounded">
+                          <div className="text-[10px] uppercase text-gray-500 mb-1">Molar Mass</div>
+                          <div className="text-white font-bold">{techSpec.mass}</div>
+                        </div>
+                        <div className="bg-white/5 p-3 rounded">
+                          <div className="text-[10px] uppercase text-gray-500 mb-1">Half-Life</div>
+                          <div className="text-white font-bold">{techSpec.halfLife}</div>
+                        </div>
+                        <div className="bg-white/5 p-3 rounded col-span-2">
+                          <div className="text-[10px] uppercase text-gray-500 mb-1">Research Focus</div>
+                          <div className="text-white font-bold">{techSpec.focus}</div>
+                        </div>
+                        <div className="bg-white/5 p-3 rounded col-span-2">
+                          <div className="text-[10px] uppercase text-gray-500 mb-1">Molecular Formula</div>
+                          <div className="text-white font-mono text-xs">{techSpec.formula}</div>
+                        </div>
+                      </div>
+                    ) : (
+                      <p>Technical specifications for this SKU are available upon institutional request.</p>
+                    )}
                   </div>
                 )}
                 {activeTab === 'guide' && (
                   <div className="animate-fade-in">
-                    <div className="bg-neutral-900 p-4 rounded border border-white/10 mb-4">
-                      <h4 className="text-white font-bold mb-2 flex items-center"><AlertCircle className="h-4 w-4 mr-2 text-evo-orange" /> Important Protocol</h4>
-                      <p>Slowly inject the BAC water down the side of the vial. Do not spray directly onto the lyophilized powder. Swirl gently; do not shake.</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div className="bg-neutral-900 p-4 rounded border border-white/10">
+                        <h4 className="text-white font-bold mb-3 flex items-center text-xs uppercase tracking-wider"><AlertCircle className="h-4 w-4 mr-2 text-evo-orange" /> Pre-Reconstitution</h4>
+                        <ul className="space-y-2 text-xs">
+                          {STORAGE_PROTOCOLS.preReconstitution.map((item, i) => (
+                            <li key={i} className="flex justify-between border-b border-white/5 pb-1">
+                              <span>{item.temp}</span>
+                              <span className="text-white">{item.stability}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="bg-neutral-900 p-4 rounded border border-white/10">
+                        <h4 className="text-white font-bold mb-3 flex items-center text-xs uppercase tracking-wider"><Activity className="h-4 w-4 mr-2 text-evo-orange" /> Post-Reconstitution</h4>
+                        <ul className="space-y-2 text-xs">
+                          <li className="flex justify-between border-b border-white/5 pb-1">
+                            <span>Storage</span>
+                            <span className="text-white">2°C to 8°C</span>
+                          </li>
+                          <li className="flex justify-between border-b border-white/5 pb-1">
+                            <span>Stability</span>
+                            <span className="text-white">30 Days</span>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                    <ul className="list-disc list-inside space-y-2 ml-2">
-                      <li>Ensure all surfaces and vial tops are wiped with alcohol prep pads.</li>
-                      <li>Equilibrate the vial to room temperature before reconstitution.</li>
-                      <li>Once reconstituted, store in a refrigerator (2-8°C).</li>
-                    </ul>
+                    <p className="text-xs">Optimized for <strong>Evo™ Bacteriostatic (BAC) Water</strong> (0.9% Benzyl Alcohol).</p>
                   </div>
                 )}
                 {activeTab === 'coa' && (
                   <div className="animate-fade-in">
-                    {(() => {
-                      const coa = COA_DATA.find(c => product.name.includes(c.productName) || c.productName.includes(product.name));
-                      if (coa) {
-                        return (
-                          <div className="flex items-center justify-between p-4 bg-neutral-900 border border-white/10 rounded">
-                            <div>
-                              <div className="text-white font-bold">{coa.productName}</div>
-                              <div className="text-xs text-gray-500">Batch: {coa.batchNumber} | Purity: {coa.purity}</div>
-                            </div>
-                            <Link to="/lab-testing" className="text-evo-orange hover:text-white flex items-center">
-                              <FileText className="h-4 w-4 mr-1" /> View History
-                            </Link>
-                          </div>
-                        );
-                      }
-                      return <p>Lab analysis for this batch is currently being processed. Contact support for early access.</p>;
-                    })()}
+                    {product.coa ? (
+                      <div className="flex items-center justify-between p-4 bg-neutral-900 border border-white/10 rounded group hover:border-evo-orange transition-colors">
+                        <div>
+                          <div className="text-white font-bold">{product.coa.productName}</div>
+                          <div className="text-xs text-gray-500 uppercase tracking-tighter">Batch: {product.coa.batchNumber} | Purity: {product.coa.purity}</div>
+                        </div>
+                        <Link to="/lab-testing" className="text-evo-orange hover:text-white flex items-center text-xs font-bold uppercase tracking-widest">
+                          <FileText className="h-4 w-4 mr-1" /> View Full report
+                        </Link>
+                      </div>
+                    ) : (
+                      <p>Lab analysis for this batch is currently being processed. Contact our KL hub for early access.</p>
+                    )}
                   </div>
                 )}
               </div>

@@ -1,11 +1,20 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { BLOG_POSTS } from '../constants';
+import { useBlogPosts } from '../src/hooks/useBlogPosts';
 import { ArrowLeft, Clock, Calendar } from 'lucide-react';
 
 const BlogPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const post = BLOG_POSTS.find(p => p.id === id);
+  const { data: posts, isLoading } = useBlogPosts();
+  const post = posts?.find(p => p.id === id);
+
+  if (isLoading) {
+    return (
+      <div className="pt-32 pb-16 bg-evo-black min-h-screen text-center text-white">
+        Loading article...
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -19,7 +28,7 @@ const BlogPost: React.FC = () => {
   return (
     <div className="pt-24 pb-16 bg-evo-black min-h-screen">
       <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         <Link to="/education" className="inline-flex items-center text-gray-500 hover:text-white mb-8 transition-colors">
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to Protocols
         </Link>

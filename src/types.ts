@@ -9,6 +9,15 @@ export interface Product {
   isNew?: boolean;
   inStock: boolean;
   features: string[];
+  techSpec?: TechnicalSpec;
+  coa?: COADocument;
+}
+
+export interface TechnicalSpec {
+  mass: string;
+  halfLife: string;
+  focus: string;
+  formula: string;
 }
 
 export interface CartItem extends Product {

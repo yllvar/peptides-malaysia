@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CartItem } from '../types';
+import { useCartStore } from '../src/stores/cartStore';
 import { Trash2, ArrowRight, MessageCircle, AlertCircle } from 'lucide-react';
-import { WHATSAPP_NUMBER } from '../constants';
+import { WHATSAPP_NUMBER } from '../src/constants';
 
-interface CartProps {
-  cart: CartItem[];
-  removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, delta: number) => void;
-}
-
-const Cart: React.FC<CartProps> = ({ cart, removeFromCart, updateQuantity }) => {
+const Cart: React.FC = () => {
+  const { cart, removeFromCart, updateQuantity, getTotalPrice } = useCartStore();
   const [customer, setCustomer] = useState({
     name: '',
     phone: '',

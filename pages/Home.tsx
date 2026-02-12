@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, Zap, Truck, FlaskConical, Flame, Activity, Dumbbell, ChevronRight } from 'lucide-react';
-import { PRODUCTS } from '../constants';
+import { PRODUCTS } from '../src/constants';
 
 const Home: React.FC = () => {
   const featuredProduct = PRODUCTS[0]; // Retatrutide Kit

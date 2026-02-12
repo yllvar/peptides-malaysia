@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { PRODUCTS, BLOG_POSTS, COA_DATA, WHATSAPP_NUMBER, CURRENCY } from '../constants';
+import { PRODUCTS, BLOG_POSTS, COA_DATA, WHATSAPP_NUMBER, CURRENCY } from '../src/constants';
 
 describe('Constants & Data Integrity', () => {
 

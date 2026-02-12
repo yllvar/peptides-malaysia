@@ -1,6 +1,6 @@
 import React from 'react';
 import { MessageCircle, Mail, MapPin } from 'lucide-react';
-import { WHATSAPP_NUMBER } from '../constants';
+import { WHATSAPP_NUMBER } from '../src/constants';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = React.useState({

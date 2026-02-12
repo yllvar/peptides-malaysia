@@ -2,6 +2,30 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import App from '../App';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+
+vi.mock('../src/stores/cartStore', () => ({
+    useCartStore: vi.fn((selector) => {
+        const state = {
+            getItemCount: () => 2
+        };
+        return selector ? selector(state) : state;
+    })
+}));
+
+vi.mock('../src/stores/authStore', () => ({
+    useAuthStore: vi.fn(() => ({
+        user: null
+    }))
+}));
+
+const renderApp = () => render(
+    <QueryClientProvider client={queryClient}>
+        <App />
+    </QueryClientProvider>
+);
 
 describe('App Component (Integration)', () => {
 

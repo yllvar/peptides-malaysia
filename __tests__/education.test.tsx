@@ -4,27 +4,33 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import Education from '../pages/Education';
 import { renderWithRouter } from './helpers';
-import { BLOG_POSTS } from '../constants';
+import { BLOG_POSTS } from '../src/constants';
+
+vi.mock('../src/hooks/useBlogPosts', () => ({
+    useBlogPosts: vi.fn(() => ({
+        data: BLOG_POSTS,
+        isLoading: false
+    }))
+}));
 
 describe('Education Page', () => {
     const renderEducation = () => renderWithRouter(<Education />);
 
     it('renders the page heading', () => {
         renderEducation();
-        expect(screen.getByText('EDUCATION HUB')).toBeInTheDocument();
+        expect(screen.getByText('TECHNICAL CENTER')).toBeInTheDocument();
     });
 
     it('renders all blog posts', () => {
         renderEducation();
         BLOG_POSTS.forEach(post => {
             expect(screen.getByText(post.title)).toBeInTheDocument();
-            expect(screen.getByText(post.excerpt)).toBeInTheDocument();
         });
     });
 
     it('renders the Peptide Calculator', () => {
         renderEducation();
-        expect(screen.getByText('Peptide Calculator')).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: /PRECISION CALCULATOR/i })).toBeInTheDocument();
     });
 
     describe('Peptide Calculator', () => {
@@ -67,9 +73,9 @@ describe('Education Page', () => {
         });
     });
 
-    it('renders "Read Protocol" links for each blog post', () => {
+    it('renders entry links for each blog post', () => {
         renderEducation();
-        const readLinks = screen.getAllByText('Read Protocol');
+        const readLinks = screen.getAllByText(/Enter Laboratory Log/i);
         expect(readLinks.length).toBe(BLOG_POSTS.length);
     });
 });

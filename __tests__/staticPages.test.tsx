@@ -6,7 +6,7 @@ import LabTesting from '../pages/LabTesting';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import { renderWithRouter } from './helpers';
-import { COA_DATA, WHATSAPP_NUMBER } from '../constants';
+import { COA_DATA, WHATSAPP_NUMBER } from '../src/constants';
 
 describe('Static Pages', () => {
 
@@ -30,7 +30,7 @@ describe('Static Pages', () => {
     describe('Lab Testing Page', () => {
         it('renders the page heading', () => {
             renderWithRouter(<LabTesting />);
-            expect(screen.getByText('LABORATORY ANALYSIS')).toBeInTheDocument();
+            expect(screen.getByText(/Evo.*Grade Purity/i)).toBeInTheDocument();
         });
 
         it('renders all COA entries', () => {

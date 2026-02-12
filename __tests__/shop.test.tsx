@@ -4,14 +4,22 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import Shop from '../pages/Shop';
 import { renderWithRouter } from './helpers';
-import { PRODUCTS } from '../constants';
+import { PRODUCTS } from '../src/constants';
+
+vi.mock('../src/hooks/useProducts', () => ({
+    useProducts: vi.fn(() => ({
+        data: PRODUCTS,
+        isLoading: false,
+        error: null
+    }))
+}));
 
 describe('Shop Page', () => {
     const renderShop = () => renderWithRouter(<Shop />);
 
     it('renders the page heading', () => {
         renderShop();
-        expect(screen.getByText('THE COLLECTION')).toBeInTheDocument();
+        expect(screen.getByText(/THE EVO™ SERIES/i)).toBeInTheDocument();
     });
 
     it('renders all category filter buttons', () => {

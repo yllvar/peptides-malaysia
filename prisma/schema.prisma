@@ -1,0 +1,196 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String    @id @default(uuid())
+  email           String    @unique
+  passwordHash    String    @map("password_hash")
+  fullName        String    @map("full_name")
+  phone           String?
+  defaultAddress  String?   @map("default_address")
+  defaultCity     String?   @map("default_city")
+  defaultPostcode String?   @map("default_postcode") @db.VarChar(5)
+  role            String    @default("customer")
+  emailVerified   Boolean   @default(false) @map("email_verified")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  sessions        Session[]
+  orders          Order[]
+
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String   @map("user_id")
+  refreshToken String   @unique @map("refresh_token")
+  expiresAt    DateTime @map("expires_at")
+  createdAt    DateTime @default(now()) @map("created_at")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([refreshToken])
+  @@index([userId])
+  @@map("sessions")
+}
+
+model Product {
+  id                String          @id // e.g., 'evo-retat-kit'
+  name              String
+  slug              String          @unique
+  price             Decimal         @db.Decimal(10, 2)
+  compareAtPrice    Decimal?        @map("compare_at_price") @db.Decimal(10, 2)
+  category          String
+  description       String
+  shortDescription  String?         @map("short_description")
+  imageUrl          String          @map("image_url")
+  galleryUrls       String[]        @default([]) @map("gallery_urls")
+  badge             String?
+  isNew             Boolean         @default(false) @map("is_new")
+  inStock           Boolean         @default(true) @map("in_stock")
+  stockQuantity     Int             @default(0) @map("stock_quantity")
+  lowStockThreshold Int             @default(5) @map("low_stock_threshold")
+  weightGrams       Int?            @map("weight_grams")
+  features          String[]        @default([])
+  sortOrder         Int             @default(0) @map("sort_order")
+  isPublished       Boolean         @default(true) @map("is_published")
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime        @updatedAt @map("updated_at")
+  techSpecs         TechnicalSpec[]
+  coaDocuments      CoaDocument[]
+  orderItems        OrderItem[]
+
+  @@map("products")
+}
+
+model TechnicalSpec {
+  id               String   @id @default(uuid())
+  productId        String?  @map("product_id")
+  molecularFormula String?  @map("molecular_formula")
+  molarMass        String?  @map("molar_mass")
+  researchFocus    String?  @map("research_focus")
+  halfLife         String?  @map("half_life")
+  category         String?
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at") // Added for consistency
+  product          Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("technical_specs")
+}
+
+model CoaDocument {
+  id          String   @id @default(uuid())
+  productId   String?  @map("product_id")
+  productName String   @map("product_name")
+  batchNumber String   @map("batch_number")
+  purity      String
+  testDate    DateTime @map("test_date") @db.Date
+  pdfUrl      String?  @map("pdf_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@map("coa_documents")
+}
+
+model Order {
+  id               String        @id @default(uuid())
+  orderNumber      String        @unique @map("order_number")
+  userId           String?       @map("user_id")
+  guestName        String?       @map("guest_name")
+  guestPhone       String?       @map("guest_phone")
+  guestEmail       String?       @map("guest_email")
+  shippingName     String        @map("shipping_name")
+  shippingPhone    String        @map("shipping_phone")
+  shippingAddress  String        @map("shipping_address")
+  shippingCity     String        @map("shipping_city")
+  shippingPostcode String        @map("shipping_postcode") @db.VarChar(5)
+  shippingMethod   String        @default("standard") @map("shipping_method")
+  shippingCost     Decimal       @default(10.00) @map("shipping_cost") @db.Decimal(10, 2)
+  trackingNumber   String?       @map("tracking_number")
+  courier          String?
+  subtotal         Decimal       @db.Decimal(10, 2)
+  discountAmount   Decimal       @default(0) @map("discount_amount") @db.Decimal(10, 2)
+  total            Decimal       @db.Decimal(10, 2)
+  status           String        @default("pending")
+  notes            String?
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime      @updatedAt @map("updated_at")
+  paidAt           DateTime?     @map("paid_at")
+  shippedAt        DateTime?     @map("shipped_at")
+  deliveredAt      DateTime?     @map("delivered_at")
+  user             User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  items            OrderItem[]
+  payment          OrderPayment?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id           String  @id @default(uuid())
+  orderId      String  @map("order_id")
+  productId    String? @map("product_id")
+  productName  String  @map("product_name")
+  productPrice Decimal @map("product_price") @db.Decimal(10, 2)
+  quantity     Int
+  lineTotal    Decimal @map("line_total") @db.Decimal(10, 2)
+  order        Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product      Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@map("order_items")
+}
+
+model OrderPayment {
+  id                   String   @id @default(uuid())
+  orderId              String   @unique @map("order_id") // 1:1 relation
+  gateway              String
+  gatewayRef           String?  @map("gateway_ref")
+  gatewayTransactionId String?  @map("gateway_transaction_id")
+  amount               Decimal  @db.Decimal(10, 2)
+  currency             String   @default("MYR")
+  status               String   @default("pending")
+  rawResponse          Json?    @map("raw_response")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+  order                Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("order_payments")
+}
+
+model BlogPost {
+  id            String    @id @default(uuid())
+  title         String
+  slug          String    @unique
+  excerpt       String?
+  content       String    @db.Text
+  category      String?
+  readTime      String?   @map("read_time")
+  imageUrl      String?   @map("image_url") // Changed from featured_image to match snake_case map if needed, but keeping field camelCase
+  isPublished   Boolean   @default(false) @map("is_published")
+  publishedAt   DateTime? @map("published_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@map("blog_posts")
+}
+
+model DiscountCode {
+  id             String    @id @default(uuid())
+  code           String    @unique
+  discountType   String?   @map("discount_type")
+  discountValue  Decimal   @map("discount_value") @db.Decimal(10, 2)
+  minOrderAmount Decimal   @default(0) @map("min_order_amount") @db.Decimal(10, 2)
+  maxUses        Int?      @map("max_uses")
+  currentUses    Int       @default(0) @map("current_uses")
+  validFrom      DateTime  @default(now()) @map("valid_from")
+  validUntil     DateTime? @map("valid_until")
+  isActive       Boolean   @default(true) @map("is_active")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  @@map("discount_codes")
+}

@@ -1,10 +1,19 @@
 import React, { ReactElement } from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { MemoryRouter, MemoryRouterProps } from 'react-router-dom';
-import { CartItem, Product } from '../types';
+import { CartItem, Product } from '../src/types';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: false,
+        },
+    },
+});
 
 /**
- * Renders a component wrapped in MemoryRouter for testing routed components.
+ * Renders a component wrapped in MemoryRouter and QueryClientProvider for testing.
  */
 export function renderWithRouter(
     ui: ReactElement,
@@ -12,7 +21,9 @@ export function renderWithRouter(
     options?: Omit<RenderOptions, 'wrapper'>
 ) {
     const Wrapper = ({ children }: { children: React.ReactNode }) => (
-        <MemoryRouter {...routerProps}>{children}</MemoryRouter>
+        <QueryClientProvider client={queryClient}>
+            <MemoryRouter {...routerProps}>{children}</MemoryRouter>
+        </QueryClientProvider>
     );
     return render(ui, { wrapper: Wrapper, ...options });
 }

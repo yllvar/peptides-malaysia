@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import Contact from '../pages/Contact';
 import { renderWithRouter } from './helpers';
-import { WHATSAPP_NUMBER } from '../constants';
+import { WHATSAPP_NUMBER } from '../src/constants';
 
 describe('Contact Page', () => {
     const renderContact = () => renderWithRouter(<Contact />);

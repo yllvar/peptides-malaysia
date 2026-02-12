@@ -1,5 +1,5 @@
 import React from 'react';
-import { COA_DATA, WHATSAPP_NUMBER } from '../constants';
+import { COA_DATA, WHATSAPP_NUMBER } from '../src/constants';
 import { FileText, ShieldCheck } from 'lucide-react';
 
 const LabTesting: React.FC = () => {
@@ -8,9 +8,9 @@ const LabTesting: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <ShieldCheck className="h-16 w-16 text-evo-orange mx-auto mb-4" />
-          <h1 className="text-4xl font-display font-bold text-white mb-4">LABORATORY ANALYSIS</h1>
-          <p className="text-gray-400">
-            Transparency is our commitment. View the HPLC and Mass Spectrometry reports for our current batches.
+          <h1 className="text-4xl font-display font-bold text-white mb-4 uppercase tracking-tighter">Evo™ Grade Purity</h1>
+          <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Every batch undergoes rigorous <span className="text-white font-bold">HPLC (High-Performance Liquid Chromatography)</span> and <span className="text-white font-bold">MS (Mass Spectrometry)</span> testing. Lab-verified purity is a non-negotiable standard for the Evo™ brand.
           </p>
         </div>
 

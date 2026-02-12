@@ -4,21 +4,43 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import ProductDetail from '../pages/ProductDetail';
-import { PRODUCTS, COA_DATA } from '../constants';
+import { PRODUCTS, COA_DATA } from '../src/constants';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } }
+});
+
+vi.mock('../src/hooks/useProducts', () => ({
+    useProducts: vi.fn(() => ({
+        data: PRODUCTS,
+        isLoading: false,
+        error: null
+    }))
+}));
+
+const mockAddToCart = vi.fn();
+vi.mock('../src/stores/cartStore', () => ({
+    useCartStore: vi.fn((selector) => selector({
+        addToCart: mockAddToCart
+    }))
+}));
 
 /**
  * Renders ProductDetail within a proper Route context so useParams works.
  */
 function renderProductDetail(productId: string) {
-    const addToCart = vi.fn();
     const result = render(
-        <MemoryRouter initialEntries={[`/product/${productId}`]}>
-            <Routes>
-                <Route path="/product/:id" element={<ProductDetail addToCart={addToCart} />} />
-            </Routes>
-        </MemoryRouter>
+        <QueryClientProvider client={queryClient}>
+            <MemoryRouter initialEntries={[`/product/${productId}`]}>
+                <Routes>
+                    <Route path="/product/:id" element={<ProductDetail />} />
+                </Routes>
+            </MemoryRouter>
+        </QueryClientProvider>
     );
-    return { ...result, addToCart };
+    return { ...result, addToCart: mockAddToCart };
 }
 
 describe('Product Detail Page', () => {
@@ -28,7 +50,7 @@ describe('Product Detail Page', () => {
         render(
             <MemoryRouter initialEntries={['/product/nonexistent-id']}>
                 <Routes>
-                    <Route path="/product/:id" element={<ProductDetail addToCart={vi.fn()} />} />
+                    <Route path="/product/:id" element={<ProductDetail />} />
                 </Routes>
             </MemoryRouter>
         );
@@ -73,11 +95,7 @@ describe('Product Detail Page', () => {
         await user.click(screen.getByText(/ADD TO CART/));
 
         expect(addToCart).toHaveBeenCalledTimes(1);
-        expect(addToCart).toHaveBeenCalledWith(expect.objectContaining({
-            id: retatrutide.id,
-            name: retatrutide.name,
-            quantity: 1,
-        }));
+        expect(addToCart).toHaveBeenCalledWith(retatrutide);
     });
 
     it('opens WhatsApp when BUY VIA WHATSAPP is clicked', async () => {
@@ -95,17 +113,17 @@ describe('Product Detail Page', () => {
     describe('Tabs', () => {
         it('shows DESCRIPTION tab content by default', () => {
             renderProductDetail(retatrutide.id);
-            // Check for partial description text
-            expect(screen.getByText(/zenith of metabolic capability/i)).toBeInTheDocument();
+            // Check for actual description text from constants.ts
+            expect(screen.getByText(/absolute zenith of metabolic capability/i)).toBeInTheDocument();
         });
 
-        it('switches to RECONSTITUTION tab', async () => {
+        it('switches to HANDLING tab', async () => {
             renderProductDetail(retatrutide.id);
             const user = userEvent.setup();
 
-            await user.click(screen.getByText('RECONSTITUTION'));
+            await user.click(screen.getByText('HANDLING'));
 
-            expect(screen.getByText('Important Protocol')).toBeInTheDocument();
+            expect(screen.getByText(/Pre-Reconstitution/i)).toBeInTheDocument();
         });
 
         it('switches to LAB DATA (COA) tab and shows matching COA data', async () => {
@@ -114,14 +132,9 @@ describe('Product Detail Page', () => {
 
             await user.click(screen.getByText('LAB DATA (COA)'));
 
-            // Should find matching COA for Retatrutide
-            const matchingCoa = COA_DATA.find(c =>
-                retatrutide.name.includes(c.productName) || c.productName.includes(retatrutide.name)
-            );
-
-            if (matchingCoa) {
-                expect(screen.getByText(matchingCoa.productName)).toBeInTheDocument();
-            }
+            // The productName in COA_DATA for retatrutide is "Retatrutide 20mg"
+            expect(screen.getByText('Retatrutide 20mg')).toBeInTheDocument();
+            expect(screen.getByText(/Batch: EVO-RT-0092/i)).toBeInTheDocument();
         });
     });
 
