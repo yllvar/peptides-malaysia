@@ -6,7 +6,8 @@ Welcome to the **Peptides Malaysia - Evo™** documentation. This knowledge base
 
 ### [Architecture](./architecture/SYSTEM_OVERVIEW.md)
 Understanding the high-level system design, technology stack, and component interactions.
-- **Key Patterns:** Vercel Serverless Functions, Neon Postgres + Prisma, JWT Authentication.
+- **[Frontend Architecture](./architecture/FRONTEND.md)**: Visuals, state (Zustand), and styling.
+- **Key Backend Patterns:** Vercel Serverless Functions, Neon Postgres + Prisma, JWT Authentication.
 
 ### [API Reference](./api/ENDPOINTS.md)
 Detailed documentation of all backend API endpoints, including request/response schemas and authentication requirements.
@@ -26,6 +27,16 @@ Guidelines for writing and running tests, coverage reports, and specific impleme
 
 ### [Deployment Guide](./deployment/VERCEL_GUIDE.md)
 Instructions for deploying the application to production, managing environment variables, and performing database migrations.
+
+---
+
+## 🛠️ User & Admin Guides
+
+### [Content Management](./guides/CONTENT_MANAGEMENT.md)
+Instructions for the site owner on how to manage products, blogs, and technical reports.
+
+### [Troubleshooting](./guides/TROUBLESHOOTING.md)
+Common errors, database connection issues, and frontend styling fixes.
 
 ---
 
