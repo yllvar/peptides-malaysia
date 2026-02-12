@@ -29,9 +29,6 @@ export async function GET(request: Request) {
 
         return Response.json({ user });
     } catch (err: any) {
-        return Response.json({
-            error: 'Invalid token',
-            details: err?.message || 'Unknown error'
-        }, { status: 401 });
+        return Response.json({ error: 'Invalid token' }, { status: 401 });
     }
 }

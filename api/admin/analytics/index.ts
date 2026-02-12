@@ -65,8 +65,7 @@ export async function GET(request: Request) {
     } catch (error: any) {
         console.error('Analytics Fetch Error:', error);
         return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
+            error: 'Internal server error'
         }, { status: 500 });
     }
 }

@@ -4,6 +4,33 @@ export const config = {
     runtime: 'nodejs',
 };
 
+/**
+ * Verify payment server-to-server with ToyyibPay API.
+ * Returns true only if ToyyibPay confirms the bill is paid.
+ */
+async function verifyPaymentWithGateway(billCode: string): Promise<boolean> {
+    try {
+        const verifyData = new URLSearchParams();
+        verifyData.append('billCode', billCode);
+
+        const response = await fetch('https://toyyibpay.com/index.php/api/getBillTransactions', {
+            method: 'POST',
+            body: verifyData,
+        });
+
+        const transactions = await response.json();
+
+        if (Array.isArray(transactions) && transactions.length > 0) {
+            // billpaymentStatus '1' = Success in ToyyibPay
+            return transactions.some((tx: any) => tx.billpaymentStatus === '1');
+        }
+        return false;
+    } catch (err) {
+        console.error('ToyyibPay verification failed:', err);
+        return false;
+    }
+}
+
 export async function POST(request: Request) {
     try {
         const formData = await request.formData();
@@ -12,15 +39,30 @@ export async function POST(request: Request) {
         const billCode = formData.get('billcode')?.toString();
         const transactionId = formData.get('transaction_id')?.toString();
 
-        if (!orderId || !statusId) {
+        if (!orderId || !statusId || !billCode) {
             return Response.json({ error: 'Missing parameters' }, { status: 400 });
+        }
+
+        // --- SECURITY: Verify the order exists and the billCode matches ---
+        const payment = await prisma.orderPayment.findUnique({
+            where: { orderId },
+        });
+
+        if (!payment || payment.gatewayRef !== billCode) {
+            console.error(`Webhook rejected: billCode mismatch for order ${orderId}. Expected ${payment?.gatewayRef}, got ${billCode}`);
+            return Response.json({ error: 'Invalid webhook' }, { status: 403 });
         }
 
         const isSuccess = statusId === '1';
 
-        // Update Order and Payment records
         if (isSuccess) {
-            // Fetch order items to update stock
+            // --- SECURITY: Server-to-server verification with ToyyibPay ---
+            const verified = await verifyPaymentWithGateway(billCode);
+            if (!verified) {
+                console.error(`Webhook rejected: ToyyibPay verification failed for billCode ${billCode}`);
+                return Response.json({ error: 'Payment verification failed' }, { status: 403 });
+            }
+
             const orderWithItems = await prisma.order.findUnique({
                 where: { id: orderId },
                 include: { items: true }
@@ -36,16 +78,19 @@ export async function POST(request: Request) {
                 return Response.json({ success: true });
             }
 
-            const stockUpdates = orderWithItems?.items.map(item =>
-                prisma.product.update({
-                    where: { id: item.productId },
-                    data: {
-                        stockQuantity: {
-                            decrement: item.quantity
+            // Filter out items with null productId to avoid Prisma errors
+            const stockUpdates = orderWithItems.items
+                .filter(item => item.productId !== null)
+                .map(item =>
+                    prisma.product.update({
+                        where: { id: item.productId! },
+                        data: {
+                            stockQuantity: {
+                                decrement: item.quantity
+                            }
                         }
-                    }
-                })
-            ) || [];
+                    })
+                );
 
             await prisma.$transaction([
                 prisma.order.update({
@@ -65,7 +110,7 @@ export async function POST(request: Request) {
                 }),
                 ...stockUpdates
             ]);
-            console.log(`Payment Success and Stock Decremented for Order ${orderId}`);
+            console.log(`Payment VERIFIED and Stock Decremented for Order ${orderId}`);
         } else {
             await prisma.$transaction([
                 prisma.order.update({
@@ -87,9 +132,7 @@ export async function POST(request: Request) {
 
     } catch (error: any) {
         console.error('Webhook error:', error);
-        return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
-        }, { status: 500 });
+        // Never leak internal details in production
+        return Response.json({ error: 'Internal server error' }, { status: 500 });
     }
 }

@@ -36,8 +36,7 @@ export async function GET(request: Request) {
     } catch (error: any) {
         console.error('Admin Products Fetch Error:', error);
         return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
+            error: 'Internal server error'
         }, { status: 500 });
     }
 }
@@ -98,8 +97,7 @@ export async function POST(request: Request) {
     } catch (error: any) {
         console.error('Admin Product Create Error:', error);
         return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
+            error: 'Internal server error'
         }, { status: 500 });
     }
 }
@@ -164,8 +162,7 @@ export async function PATCH(request: Request) {
     } catch (error: any) {
         console.error('Admin Product Update Error:', error);
         return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
+            error: 'Internal server error'
         }, { status: 500 });
     }
 }
@@ -204,8 +201,7 @@ export async function DELETE(request: Request) {
     } catch (error: any) {
         console.error('Admin Product Delete Error:', error);
         return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
+            error: 'Internal server error'
         }, { status: 500 });
     }
 }

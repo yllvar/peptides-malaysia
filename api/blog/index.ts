@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     } catch (error: any) {
         return Response.json({
             error: 'Failed to fetch blog posts',
-            details: error?.message || 'Unknown error'
+
         }, { status: 500 });
     }
 }

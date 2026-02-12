@@ -42,8 +42,7 @@ export async function GET(request: Request) {
     } catch (error: any) {
         console.error('Admin Orders Fetch Error:', error);
         return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
+            error: 'Internal server error'
         }, { status: 500 });
     }
 }
@@ -92,8 +91,7 @@ export async function PATCH(request: Request) {
     } catch (error: any) {
         console.error('Admin Order Update Error:', error);
         return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
+            error: 'Internal server error'
         }, { status: 500 });
     }
 }

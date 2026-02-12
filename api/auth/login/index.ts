@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         }
 
         const user = await prisma.user.findUnique({
-            where: { email },
+            where: { email: email.toLowerCase().trim() },
         });
 
         if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
@@ -61,9 +61,6 @@ export async function POST(request: Request) {
 
     } catch (error: any) {
         console.error('Login error:', error);
-        return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
-        }, { status: 500 });
+        return Response.json({ error: 'Login failed. Please try again.' }, { status: 500 });
     }
 }

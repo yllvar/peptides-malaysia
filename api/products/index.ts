@@ -19,7 +19,7 @@ export async function GET(request: Request) {
         console.error('Failed to fetch products:', error);
         return Response.json({
             error: 'Failed to fetch products',
-            details: error?.message || 'Unknown error'
+
         }, { status: 500 });
     }
 }

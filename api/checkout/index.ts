@@ -122,8 +122,7 @@ export async function POST(request: Request) {
     } catch (error: any) {
         console.error('Checkout error:', error);
         return Response.json({
-            error: 'Internal server error',
-            details: error?.message || 'Unknown error'
+            error: 'Internal server error'
         }, { status: 500 });
     }
 }
