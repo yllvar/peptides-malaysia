@@ -35,6 +35,7 @@ describe('Cart Page', () => {
             cart: defaultCartItems,
             removeFromCart: mockRemoveFromCart,
             updateQuantity: mockUpdateQuantity,
+            getItemCount: () => defaultCartItems.reduce((acc, item) => acc + item.quantity, 0),
             getTotalPrice: () => defaultCartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0)
         };
         (cartStore.useCartStore as any).mockImplementation((selector: any) => selector ? selector(state) : state);
@@ -45,6 +46,7 @@ describe('Cart Page', () => {
             cart: cartItems,
             removeFromCart: mockRemoveFromCart,
             updateQuantity: mockUpdateQuantity,
+            getItemCount: () => cartItems.reduce((acc, item) => acc + item.quantity, 0),
             getTotalPrice: () => cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0)
         };
         (cartStore.useCartStore as any).mockImplementation((selector: any) => selector ? selector(state) : state);
@@ -66,19 +68,19 @@ describe('Cart Page', () => {
 
     it('calculates subtotal correctly', () => {
         renderCart();
-        expect(screen.getByText('RM1010')).toBeInTheDocument();
+        // 650 + (180 * 2) = 1010.00
+        expect(screen.getAllByText('RM1010.00').length).toBeGreaterThan(0);
     });
 
-    it('calculates total (subtotal + shipping)', () => {
+    it('calculates total (subtotal + shipping) shows calculated at checkout', () => {
         renderCart();
-        expect(screen.getByText('RM1020')).toBeInTheDocument();
+        expect(screen.getByText('Calculated at checkout')).toBeInTheDocument();
     });
 
     it('calls removeFromCart when Trash icon is clicked', async () => {
         renderCart();
         const user = userEvent.setup();
-        const buttons = screen.getAllByRole('button');
-        const removeButtons = buttons.filter(b => !['+', '-', 'COMPLETE ORDER'].includes(b.textContent || ''));
+        const removeButtons = screen.getAllByText(/Remove/i);
 
         await user.click(removeButtons[0]);
         expect(mockRemoveFromCart).toHaveBeenCalledWith('item-1');
@@ -91,7 +93,7 @@ describe('Cart Page', () => {
         await user.click(plusButtons[0]);
         expect(mockUpdateQuantity).toHaveBeenCalledWith('item-1', 1);
 
-        const minusButtons = screen.getAllByText('-');
+        const minusButtons = screen.getAllByText('−'); // Note the minus character used in new Cart.tsx
         await user.click(minusButtons[1]);
         expect(mockUpdateQuantity).toHaveBeenCalledWith('item-2', -1);
     });

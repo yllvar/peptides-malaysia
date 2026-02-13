@@ -165,7 +165,7 @@ describe('Auth API - Register', () => {
             method: 'POST',
             body: JSON.stringify({
                 email: 'exists@example.com',
-                password: 'password123',
+                password: 'Password123',
                 fullName: 'Existing User'
             }),
         });
@@ -191,7 +191,7 @@ describe('Auth API - Register', () => {
             method: 'POST',
             body: JSON.stringify({
                 email: 'new@example.com',
-                password: 'password123',
+                password: 'Password123',
                 fullName: 'New User'
             }),
         });
@@ -205,33 +205,27 @@ describe('Auth API - Register', () => {
         expect(prisma.user.create).toHaveBeenCalled();
     });
 
-    it('should accept any password length (no strength validation - documents current behavior)', async () => {
-        (prisma.user.findUnique as any).mockResolvedValue(null);
-        (bcrypt.hash as any).mockResolvedValue('hashed');
-        (prisma.user.create as any).mockResolvedValue({ id: 'u1', email: 'e@e.com' });
-
+    it('should reject weak passwords', async () => {
         const req = new Request('http://localhost/api/auth/register', {
             method: 'POST',
             body: JSON.stringify({ email: 'e@e.com', password: '1', fullName: 'Test' }),
         });
 
         const res = await registerPOST(req);
-        // Documents that weak passwords are currently allowed
-        expect(res.status).toBe(200);
+        const data = await res.json();
+        expect(res.status).toBe(400);
+        expect(data.error).toContain('Password');
     });
 
-    it('should accept invalid email format (no format validation - documents current behavior)', async () => {
-        (prisma.user.findUnique as any).mockResolvedValue(null);
-        (bcrypt.hash as any).mockResolvedValue('hashed');
-        (prisma.user.create as any).mockResolvedValue({ id: 'u1', email: 'not-an-email' });
-
+    it('should reject invalid email format', async () => {
         const req = new Request('http://localhost/api/auth/register', {
             method: 'POST',
-            body: JSON.stringify({ email: 'not-an-email', password: 'pass', fullName: 'Test' }),
+            body: JSON.stringify({ email: 'not-an-email', password: 'Password123', fullName: 'Test' }),
         });
 
         const res = await registerPOST(req);
-        // Documents that invalid email formats are currently allowed
-        expect(res.status).toBe(200);
+        const data = await res.json();
+        expect(res.status).toBe(400);
+        expect(data.error).toBe('Invalid email format');
     });
 });

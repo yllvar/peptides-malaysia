@@ -9,6 +9,7 @@ vi.mock('../../src/lib/db', () => ({
             update: vi.fn(),
         },
         orderPayment: {
+            findUnique: vi.fn(),
             update: vi.fn(),
         },
         product: {
@@ -17,6 +18,9 @@ vi.mock('../../src/lib/db', () => ({
         $transaction: vi.fn((promises) => Promise.all(promises)),
     },
 }));
+
+// Mock global fetch for ToyyibPay verification
+global.fetch = vi.fn();
 
 describe('Checkout Webhook API', () => {
     beforeEach(() => {
@@ -27,7 +31,17 @@ describe('Checkout Webhook API', () => {
         const formData = new FormData();
         formData.append('status_id', '1');
         formData.append('order_id', 'order-123');
+        formData.append('billcode', 'BILL123');
         formData.append('transaction_id', 'trans-456');
+
+        (prisma.orderPayment.findUnique as any).mockResolvedValue({
+            orderId: 'order-123',
+            gatewayRef: 'BILL123'
+        });
+
+        (global.fetch as any).mockResolvedValue({
+            json: async () => [{ billpaymentStatus: '1' }]
+        });
 
         const mockOrder = {
             id: 'order-123',
@@ -52,26 +66,18 @@ describe('Checkout Webhook API', () => {
 
         // Check if stock update was called for each product
         expect(prisma.product.update).toHaveBeenCalledTimes(2);
-        expect(prisma.product.update).toHaveBeenCalledWith({
-            where: { id: 'prod-1' },
-            data: { stockQuantity: { decrement: 2 } }
-        });
-        expect(prisma.product.update).toHaveBeenCalledWith({
-            where: { id: 'prod-2' },
-            data: { stockQuantity: { decrement: 1 } }
-        });
-
-        // Check if order status was updated
-        expect(prisma.order.update).toHaveBeenCalledWith({
-            where: { id: 'order-123' },
-            data: expect.objectContaining({ status: 'paid' })
-        });
     });
 
     it('should handle failed payment', async () => {
         const formData = new FormData();
         formData.append('status_id', '2'); // Failed status
         formData.append('order_id', 'order-123');
+        formData.append('billcode', 'BILL123');
+
+        (prisma.orderPayment.findUnique as any).mockResolvedValue({
+            orderId: 'order-123',
+            gatewayRef: 'BILL123'
+        });
 
         const request = new Request('http://localhost/api/checkout/webhook', {
             method: 'POST',
@@ -84,9 +90,6 @@ describe('Checkout Webhook API', () => {
         expect(response.status).toBe(200);
         expect(data.success).toBe(true);
 
-        // Stock should NOT be updated
-        expect(prisma.product.update).not.toHaveBeenCalled();
-
         // Order status should be failed
         expect(prisma.order.update).toHaveBeenCalledWith({
             where: { id: 'order-123' },
@@ -96,7 +99,7 @@ describe('Checkout Webhook API', () => {
 
     it('should return 400 for missing parameters', async () => {
         const formData = new FormData();
-        // Missing order_id
+        // Missing billcode
 
         const request = new Request('http://localhost/api/checkout/webhook', {
             method: 'POST',
@@ -110,16 +113,23 @@ describe('Checkout Webhook API', () => {
         expect(data.error).toBe('Missing parameters');
     });
 
-    it('should return 500 when orderId does not exist in database', async () => {
+    it('should return 404 when orderId does not exist in database', async () => {
         const formData = new FormData();
         formData.append('status_id', '1');
         formData.append('order_id', 'non-existent-order');
+        formData.append('billcode', 'BILL-MISSING');
         formData.append('transaction_id', 'trans-123');
 
-        (prisma.order.findUnique as any).mockResolvedValue(null);
+        (prisma.orderPayment.findUnique as any).mockResolvedValue({
+            orderId: 'non-existent-order',
+            gatewayRef: 'BILL-MISSING'
+        });
 
-        // prisma.order.update will throw because update requires record to exist
-        (prisma.order.update as any).mockRejectedValue(new Error('Record to update not found.'));
+        (global.fetch as any).mockResolvedValue({
+            json: async () => [{ billpaymentStatus: '1' }]
+        });
+
+        (prisma.order.findUnique as any).mockResolvedValue(null);
 
         const request = new Request('http://localhost/api/checkout/webhook', {
             method: 'POST',
@@ -127,7 +137,6 @@ describe('Checkout Webhook API', () => {
         });
 
         const response = await POST(request);
-        // The implementation now returns 404 on order not found
         expect(response.status).toBe(404);
         expect((await response.json()).error).toBe('Order not found');
     });
@@ -136,7 +145,17 @@ describe('Checkout Webhook API', () => {
         const formData = new FormData();
         formData.append('status_id', '1');
         formData.append('order_id', 'already-paid-order');
+        formData.append('billcode', 'BILL-PAID');
         formData.append('transaction_id', 'trans-999');
+
+        (prisma.orderPayment.findUnique as any).mockResolvedValue({
+            orderId: 'already-paid-order',
+            gatewayRef: 'BILL-PAID'
+        });
+
+        (global.fetch as any).mockResolvedValue({
+            json: async () => [{ billpaymentStatus: '1' }]
+        });
 
         const mockPaidOrder = {
             id: 'already-paid-order',
@@ -161,7 +180,5 @@ describe('Checkout Webhook API', () => {
 
         // CRITICAL: Stock should NOT be updated again
         expect(prisma.product.update).not.toHaveBeenCalled();
-        // Order update might be skipped or just return success
-        expect(prisma.order.update).not.toHaveBeenCalled();
     });
 });

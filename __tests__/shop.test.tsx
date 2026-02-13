@@ -68,7 +68,7 @@ describe('Shop Page', () => {
     it('displays product prices in RM format', () => {
         renderShop();
         // Just verify some prices exist, avoiding duplicate text issues
-        const priceElements = screen.getAllByText(/^RM\d+$/);
+        const priceElements = screen.getAllByText(/^RM\d+\.\d{2}$/);
         expect(priceElements.length).toBe(PRODUCTS.length);
     });
 
