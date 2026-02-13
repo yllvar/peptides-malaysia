@@ -1,8 +1,7 @@
 {
     "functions": {
         "api/**/*.ts": {
-            "includeFiles": "src/**/*.{ts,js}",
-            "runtime": "nodejs22.x"
+            "includeFiles": "src/**/*.{ts,js}"
         }
     },
     "headers": [
