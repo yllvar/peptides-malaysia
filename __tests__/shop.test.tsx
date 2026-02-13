@@ -1,21 +1,33 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import Shop from '../pages/Shop';
-import { renderWithRouter } from './helpers';
+import { renderWithRouter, createMockProduct } from './helpers';
 import { PRODUCTS } from '../src/constants';
+import { Product } from '../src/types';
+
+// Default mock returns PRODUCTS from constants
+const mockUseProducts = vi.fn(() => ({
+    data: PRODUCTS,
+    isLoading: false,
+    error: null,
+}));
 
 vi.mock('../src/hooks/useProducts', () => ({
-    useProducts: vi.fn(() => ({
-        data: PRODUCTS,
-        isLoading: false,
-        error: null
-    }))
+    useProducts: (...args: any[]) => mockUseProducts(...args),
 }));
 
 describe('Shop Page', () => {
     const renderShop = () => renderWithRouter(<Shop />);
+
+    beforeEach(() => {
+        mockUseProducts.mockReturnValue({
+            data: PRODUCTS,
+            isLoading: false,
+            error: null,
+        });
+    });
 
     it('renders the page heading', () => {
         renderShop();
@@ -82,5 +94,69 @@ describe('Shop Page', () => {
         renderShop();
         // "All" is active by default and shows all products, so no empty state
         expect(screen.queryByText('No products found in this category.')).not.toBeInTheDocument();
+    });
+
+    // --- P3: New test cases ---
+
+    it('shows "Out of Stock" overlay for out-of-stock products', () => {
+        const outOfStockProduct: Product = createMockProduct({
+            id: 'oos-product',
+            name: 'Out of Stock Peptide',
+            price: 999,
+            category: 'Recovery',
+            inStock: false,
+        });
+        mockUseProducts.mockReturnValue({
+            data: [outOfStockProduct],
+            isLoading: false,
+            error: null,
+        });
+
+        renderWithRouter(<Shop />);
+
+        expect(screen.getByText('Out of Stock')).toBeInTheDocument();
+        expect(screen.getByText('Out of Stock Peptide')).toBeInTheDocument();
+    });
+
+    it('shows empty state when a filtered category has no products', async () => {
+        // Mock with products only in "Recovery" category
+        const recoveryOnly: Product[] = [
+            createMockProduct({ id: 'recovery-1', name: 'Recovery Peptide', category: 'Recovery' }),
+        ];
+        mockUseProducts.mockReturnValue({
+            data: recoveryOnly,
+            isLoading: false,
+            error: null,
+        });
+
+        renderWithRouter(<Shop />);
+        const user = userEvent.setup();
+
+        // Click "Performance" filter — no products exist for this category
+        await user.click(screen.getByText('Performance'));
+
+        expect(screen.getByText('No products found in this category.')).toBeInTheDocument();
+    });
+
+    it('shows loading state', () => {
+        mockUseProducts.mockReturnValue({
+            data: undefined,
+            isLoading: true,
+            error: null,
+        });
+
+        renderWithRouter(<Shop />);
+        expect(screen.getByText('Loading products...')).toBeInTheDocument();
+    });
+
+    it('shows error state', () => {
+        mockUseProducts.mockReturnValue({
+            data: undefined,
+            isLoading: false,
+            error: new Error('Network error'),
+        });
+
+        renderWithRouter(<Shop />);
+        expect(screen.getByText('Error loading products.')).toBeInTheDocument();
     });
 });

@@ -66,6 +66,8 @@ model Product {
   coaDocuments      CoaDocument[]
   orderItems        OrderItem[]
 
+  @@index([isPublished, sortOrder])
+  @@index([category])
   @@map("products")
 }
 

@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function seed() {
     console.log('🌱 Seeding Neon Postgres via Prisma...');
 
-    // 0. Clear existing data
+    // 0. Clear existing data (except users/sessions)
     console.log('🧹 Clearing existing data...');
     await prisma.orderItem.deleteMany();
     await prisma.orderPayment.deleteMany();
@@ -21,7 +21,17 @@ async function seed() {
     for (const p of PRODUCTS) {
         await prisma.product.upsert({
             where: { id: p.id },
-            update: {},
+            update: {
+                name: p.name,
+                price: p.price,
+                category: p.category,
+                description: p.description,
+                imageUrl: p.image,
+                badge: p.badge || null,
+                isNew: p.isNew || false,
+                inStock: p.inStock,
+                features: p.features,
+            },
             create: {
                 id: p.id,
                 name: p.name,
@@ -41,16 +51,22 @@ async function seed() {
     }
     console.log(`✅ Seeded ${PRODUCTS.length} products`);
 
-    // 2. Seed Technical Specs
+    // 2. Seed Technical Specs (idempotent: delete existing for product, then create)
     for (const s of TECHNICAL_SPECS) {
-        // Improved matching logic: Try to find product containing the key ingredient name
-        // e.g., "Evo Retatrutide" -> "Retatrutide"
         const keyIngredient = s.name.replace('Evo ', '').split(' ')[0];
         const product = PRODUCTS.find(p => p.name.includes(keyIngredient));
+        const productId = product?.id || null;
+
+        // Delete existing specs for this product to prevent duplicates
+        if (productId) {
+            await prisma.technicalSpec.deleteMany({
+                where: { productId },
+            });
+        }
 
         await prisma.technicalSpec.create({
             data: {
-                productId: product?.id || null, // Optional link
+                productId,
                 molecularFormula: s.formula,
                 molarMass: s.mass,
                 researchFocus: s.focus,
@@ -65,7 +81,13 @@ async function seed() {
     for (const b of BLOG_POSTS) {
         await prisma.blogPost.upsert({
             where: { slug: `post-${b.id}` },
-            update: {},
+            update: {
+                title: b.title,
+                excerpt: b.excerpt,
+                content: b.content,
+                category: b.category,
+                readTime: b.readTime,
+            },
             create: {
                 title: b.title,
                 slug: `post-${b.id}`,
@@ -80,14 +102,21 @@ async function seed() {
     }
     console.log(`✅ Seeded ${BLOG_POSTS.length} blog posts`);
 
-    // 4. Seed COA Documents
+    // 4. Seed COA Documents (idempotent: delete existing for product, then create)
     for (const c of COA_DATA) {
-        // Try to link to a product if possible
         const product = PRODUCTS.find(p => p.name.includes(c.productName) || c.productName.includes(p.name));
+        const productId = product?.id || null;
+
+        // Delete existing COA for this product to prevent duplicates
+        if (productId) {
+            await prisma.coaDocument.deleteMany({
+                where: { productId },
+            });
+        }
 
         await prisma.coaDocument.create({
             data: {
-                productId: product?.id || null,
+                productId,
                 productName: c.productName,
                 batchNumber: c.batchNumber,
                 purity: c.purity,
