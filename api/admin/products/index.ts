@@ -1,5 +1,5 @@
-import { prisma } from '../../../src/lib/db.js';
-import { requireAdmin } from '../../../src/lib/adminAuth.js';
+import { prisma } from '../../_db.js';
+import { requireAdmin } from '../../_adminAuth.js';
 
 export const config = {
     runtime: 'nodejs',
