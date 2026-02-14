@@ -1,4 +1,6 @@
-import { prisma } from '../../src/lib/db';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const config = {
     runtime: 'nodejs',
@@ -55,10 +57,9 @@ export async function GET(request: Request) {
 
         const publicProducts = products.map(toPublicDTO);
 
-        return new Response(JSON.stringify(publicProducts), {
+        return Response.json(publicProducts, {
             status: 200,
             headers: {
-                'Content-Type': 'application/json',
                 'Cache-Control': 's-maxage=60, stale-while-revalidate=300',
             },
         });
