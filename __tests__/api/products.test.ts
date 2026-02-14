@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GET, POST, PATCH, DELETE } from '../../api/admin/products/index';
-import { prisma } from '../../src/lib/db';
+import { prisma } from '../../api/_db';
 import { SignJWT } from 'jose';
 
 // Mock prisma
-vi.mock('../../src/lib/db', () => ({
+vi.mock('../../api/_db', () => ({
     prisma: {
         product: {
             findMany: vi.fn(),

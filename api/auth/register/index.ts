@@ -1,4 +1,4 @@
-import { prisma } from '../../../src/lib/db';
+import { prisma } from '../../_db.js';
 
 export const config = {
     runtime: 'nodejs',

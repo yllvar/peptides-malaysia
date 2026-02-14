@@ -31,7 +31,7 @@ describe('Shop Page', () => {
 
     it('renders the page heading', () => {
         renderShop();
-        expect(screen.getByText(/THE EVO™ SERIES/i)).toBeInTheDocument();
+        expect(screen.getByRole('heading', { level: 1, name: /THE EVO™ SERIES/i })).toBeInTheDocument();
     });
 
     it('renders all category filter buttons', () => {
@@ -51,11 +51,10 @@ describe('Shop Page', () => {
         });
     });
 
-    it('filters products by category when a filter is clicked', async () => {
+    it('filters products by category', async () => {
         renderShop();
         const user = userEvent.setup();
 
-        // Click "Recovery" filter button (the first one which is the filter button)
         const recoveryButtons = screen.getAllByText('Recovery');
         // The filter button is the first one (before product cards)
         await user.click(recoveryButtons[0]);
@@ -86,19 +85,18 @@ describe('Shop Page', () => {
 
     it('displays the wholesale inquiry section', () => {
         renderShop();
-        expect(screen.getByText('Researching for a team?')).toBeInTheDocument();
-        expect(screen.getByText('WHOLESALE INQUIRY')).toBeInTheDocument();
+        expect(screen.getByRole('heading', { level: 2, name: /INSTITUTIONAL ACQUISITION/i })).toBeInTheDocument();
     });
 
     it('shows "No products found" for an empty category result', async () => {
         renderShop();
         // "All" is active by default and shows all products, so no empty state
-        expect(screen.queryByText('No products found in this category.')).not.toBeInTheDocument();
+        expect(screen.queryByText('SEQUENCE NOT FOUND')).not.toBeInTheDocument();
     });
 
     // --- P3: New test cases ---
 
-    it('shows "Out of Stock" overlay for out-of-stock products', () => {
+    it('shows "Depleted" overlay for out-of-stock products', () => {
         const outOfStockProduct: Product = createMockProduct({
             id: 'oos-product',
             name: 'Out of Stock Peptide',
@@ -114,7 +112,7 @@ describe('Shop Page', () => {
 
         renderWithRouter(<Shop />);
 
-        expect(screen.getByText('Out of Stock')).toBeInTheDocument();
+        expect(screen.getByText('Depleted')).toBeInTheDocument();
         expect(screen.getByText('Out of Stock Peptide')).toBeInTheDocument();
     });
 
@@ -133,9 +131,10 @@ describe('Shop Page', () => {
         const user = userEvent.setup();
 
         // Click "Performance" filter — no products exist for this category
+        // Use original case from categories array
         await user.click(screen.getByText('Performance'));
 
-        expect(screen.getByText('No products found in this category.')).toBeInTheDocument();
+        expect(screen.getByText('SEQUENCE NOT FOUND')).toBeInTheDocument();
     });
 
     it('shows loading state', () => {

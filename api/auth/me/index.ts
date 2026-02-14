@@ -3,7 +3,7 @@ import { jwtVerify } from 'jose';
 export const config = {
     runtime: 'nodejs',
 };
-import { prisma } from '../../../src/lib/db';
+import { prisma } from '../../_db.js';
 
 export async function GET(request: Request) {
     const authHeader = request.headers.get('Authorization');

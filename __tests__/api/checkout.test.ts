@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { POST as checkoutPOST } from '../../api/checkout/index';
-import { prisma } from '../../src/lib/db';
+import { prisma } from '../../api/_db';
 
 // Mock prisma
-vi.mock('../../src/lib/db', () => ({
+vi.mock('../../api/_db', () => ({
     prisma: {
         order: {
             create: vi.fn(),
