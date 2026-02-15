@@ -92,11 +92,19 @@ export async function POST(request: Request) {
 
         // 4. Prepare ToyyibPay Payload
         const formData = new URLSearchParams();
-        formData.append('userSecretKey', process.env.TOYYIBPAY_SECRET_KEY!);
-        formData.append('categoryCode', process.env.TOYYIBPAY_CATEGORY_CODE!);
+        const secretKey = (process.env.TOYYIBPAY_SECRET_KEY || '').trim();
+        const categoryCode = (process.env.TOYYIBPAY_CATEGORY_CODE || '').trim();
+        const baseUrl = (process.env.TOYYIBPAY_BASE_URL || 'https://toyyibpay.com').trim();
+
+        console.log('Using ToyyibPay Base URL:', baseUrl);
+        console.log('Secret Key Length:', secretKey.length);
+        console.log('Category Code:', categoryCode);
+
+        formData.append('userSecretKey', secretKey);
+        formData.append('categoryCode', categoryCode);
         formData.append('billName', orderNumber);
         formData.append('billDescription', 'Evo Peptides Research Order');
-        formData.append('billPriceSetting', '1');
+        formData.append('billPriceSetting', '0'); // 0 for Fixed Price
         formData.append('billPayorInfo', '1');
         formData.append('billAmount', Math.round(finalTotal * 100).toString());
         formData.append('billReturnUrl', `${process.env.VITE_APP_URL || 'https://peptides-malaysia.vercel.app'}/payment/status`);
@@ -110,7 +118,7 @@ export async function POST(request: Request) {
         console.log('Calling ToyyibPay API...');
         let tpResponse;
         try {
-            tpResponse = await fetch('https://toyyibpay.com/index.php/api/createBill', {
+            tpResponse = await fetch(`${baseUrl}/index.php/api/createBill`, {
                 method: 'POST',
                 body: formData,
             });
