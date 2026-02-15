@@ -69,7 +69,8 @@ export async function POST(request: Request) {
 
         // 4. Prepare ToyyibPay Payload
         const formData = new URLSearchParams();
-        const baseUrl = (process.env.TOYYIBPAY_BASE_URL || 'https://dev.toyyibpay.com').trim();
+        // FORCE Sandbox for verification
+        const baseUrl = 'https://dev.toyyibpay.com';
 
         formData.append('userSecretKey', (process.env.TOYYIBPAY_SECRET_KEY || '').trim());
         formData.append('categoryCode', (process.env.TOYYIBPAY_CATEGORY_CODE || '').trim());
