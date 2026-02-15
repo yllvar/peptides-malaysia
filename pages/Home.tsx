@@ -23,36 +23,37 @@ const Home: React.FC = () => {
           <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-evo-black to-transparent"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full pt-32 pb-20">
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left transition-all duration-1000">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full pt-20 pb-10">
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
             {/* Badge */}
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full border border-evo-orange/20 bg-black/60 backdrop-blur-md mb-10 animate-fade-in-up">
-              <span className="w-2 h-2 rounded-full bg-evo-orange mr-3 animate-pulse shadow-[0_0_10px_#ff4d00]"></span>
-              <span className="text-white text-[10px] font-bold tracking-[0.3em] uppercase">Malaysian Ready Stock</span>
+            <div className="inline-flex items-center px-3 py-1 rounded-full border border-evo-orange/20 bg-black/60 backdrop-blur-md mb-6 animate-fade-in-up">
+              <span className="w-1.5 h-1.5 rounded-full bg-evo-orange mr-2 animate-pulse shadow-[0_0_8px_#ff4d00]"></span>
+              <span className="text-white text-[9px] font-bold tracking-[0.2em] uppercase">Malaysian Ready Stock</span>
             </div>
 
-            {/* Headline */}
-            <h1 className="text-6xl md:text-8xl xl:text-9xl font-display font-bold text-white mb-8 tracking-tighter leading-[0.85] animate-fade-in-up delay-100 uppercase italic">
+            {/* Headline - Scaled down for harmony */}
+            <h1 className="text-5xl md:text-7xl xl:text-8xl font-display font-bold text-white mb-6 tracking-tight leading-[0.9] animate-fade-in-up delay-100 uppercase italic">
               SPORTY <span className="text-gray-500">LUXURY.</span><br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-evo-orange to-red-600">SCIENCE EVOLVED.</span>
             </h1>
 
-            {/* Subtext */}
-            <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-xl leading-relaxed font-light animate-fade-in-up delay-200 italic border-l-2 border-white/10 pl-6">
-              The exclusive gateway to Evo™ Laboratory Excellence. High-performance research peptides for the elite Malaysian scientific community.
+            {/* Subtext - Compact and balanced */}
+            <p className="text-base md:text-lg text-gray-400 mb-10 max-w-lg leading-relaxed font-light animate-fade-in-up delay-200 italic border-l border-white/10 pl-5">
+              The exclusive gateway to Evo™ Laboratory Excellence. <br className="hidden md:block" />
+              High-performance research peptides for the elite scientific community.
             </p>
 
-            {/* Buttons positioned to align with background design layout */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8 animate-fade-in-up delay-300">
+            {/* Buttons - Sized for balance */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 animate-fade-in-up delay-300">
               <Link
                 to="/shop"
-                className="group relative px-10 py-5 bg-evo-orange hover:bg-evo-orangeHover text-white font-bold tracking-widest rounded transition-all shadow-[0_10px_30px_rgba(255,77,0,0.4)] hover:scale-105"
+                className="group relative px-8 py-3.5 bg-evo-orange hover:bg-evo-orangeHover text-white font-bold tracking-widest rounded transition-all shadow-[0_10px_30px_rgba(255,77,0,0.3)] hover:scale-105"
               >
-                <span className="flex items-center text-sm uppercase">SHOP COLLECTION <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" /></span>
+                <span className="flex items-center text-xs uppercase">SHOP COLLECTION <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" /></span>
               </Link>
               <Link
                 to="/about"
-                className="px-10 py-5 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold tracking-widest rounded backdrop-blur-sm transition-all hover:border-white/30 text-sm uppercase"
+                className="px-8 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold tracking-widest rounded backdrop-blur-sm transition-all text-xs uppercase"
               >
                 OUR DNA
               </Link>
