@@ -51,11 +51,6 @@ const Navbar: React.FC = () => {
                   <img src="/logo/reta-logo.png" alt="Evo Logo" className="h-9 w-9 object-contain" />
                 </div>
               </div>
-              <div className="flex flex-col">
-                <span className="font-display font-bold text-lg tracking-[0.2em] text-white leading-none group-hover:text-evo-orange transition-colors uppercase">
-                  EVO<span className="text-white">PEPTIDES</span>
-                </span>
-              </div>
             </Link>
 
             {/* --- RIGHT SIDE: NAV + ACTIONS --- */}

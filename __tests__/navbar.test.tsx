@@ -21,13 +21,6 @@ vi.mock('../src/stores/authStore', () => ({
 }));
 
 describe('Navbar Component', () => {
-    it('renders the brand name', () => {
-        mockGetItemCount.mockReturnValue(0);
-        renderWithRouter(<Navbar />);
-        expect(screen.getByText('EVO')).toBeInTheDocument();
-        expect(screen.getByText('PEPTIDES')).toBeInTheDocument();
-    });
-
     it('renders the official logo image', () => {
         mockGetItemCount.mockReturnValue(0);
         renderWithRouter(<Navbar />);
