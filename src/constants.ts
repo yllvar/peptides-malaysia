@@ -7,7 +7,7 @@ export const PRODUCTS: Product[] = [
   {
     id: 'evo-retat-kit',
     name: 'Retatrutide 20mg + BAC Water Kit (Combo Reta-Bac)',
-    price: 500,
+    price: 580,
     category: 'Weight Management',
     description: 'The absolute zenith of metabolic capability. Retatrutide (GGG Tri-Agonist) paired with our signature bacteriostatic solvent. This combo is designed for advanced research protocols focusing on metabolic efficiency.',
     image: '/images/evo_retatrutide.jpg',
