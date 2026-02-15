@@ -13,7 +13,7 @@ const About: React.FC = () => {
             <Star className="h-8 w-8 text-evo-orange" />
           </div>
           <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-none">
-            PEPTIDES MALAYSIA: <br />
+            EVO PEPTIDES: <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-evo-orange to-red-600 uppercase">The Vanguard Series.</span>
           </h1>
           <p className="text-xl text-gray-300 tracking-widest uppercase font-light">
@@ -26,7 +26,7 @@ const About: React.FC = () => {
           <div>
             <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-evo-orange pl-4 uppercase tracking-tighter">THE MISSION</h2>
             <p className="text-gray-400 leading-relaxed mb-6">
-              <span className="text-white font-bold">Peptides Malaysia</span> is the operational engine behind the <span className="text-evo-orange font-bold">Evo™ Series</span>. We are here to eliminate the reliance on questionable international shipping by providing elite, lab-verified compounds housed right here in <span className="text-white font-bold">Kuala Lumpur</span>.
+              <span className="text-white font-bold">Evo Peptides</span> is the operational engine behind the <span className="text-evo-orange font-bold">Evo™ Series</span>. We are here to eliminate the reliance on questionable international shipping by providing elite, lab-verified compounds housed right here in <span className="text-white font-bold">Kuala Lumpur</span>.
             </p>
             <p className="text-gray-400 leading-relaxed">
               Our products are engineered for those who demand surgical precision and maximum stability. We don't just supply; we provide the foundation for the most ambitious research protocols in the country.

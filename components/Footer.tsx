@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1">
             <span className="font-display font-bold text-xl text-white tracking-tight">
-              PEPTIDES<span className="text-evo-orange">MALAYSIA</span>
+              EVO<span className="text-evo-orange">PEPTIDES</span>
             </span>
             <p className="mt-4 text-sm text-gray-400 leading-relaxed">
               Redefining the peak of Malaysian research standards. Premium grade compounds for laboratory use only.
@@ -47,16 +47,16 @@ const Footer: React.FC = () => {
               Legal Disclaimer
             </h3>
             <p className="text-xs text-gray-500 leading-relaxed text-justify">
-              All products sold by Peptides Malaysia (Evo™) are strictly for in-vitro laboratory research purposes only. They are not intended for human consumption, diagnostic, therapeutic, or clinical use. By purchasing, you acknowledge you are a qualified researcher.
+              All products sold by Evo Peptides (Evo™) are strictly for in-vitro laboratory research purposes only. They are not intended for human consumption, diagnostic, therapeutic, or clinical use. By purchasing, you acknowledge you are a qualified researcher.
             </p>
           </div>
         </div>
 
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-xs text-gray-600">© {new Date().getFullYear()} Peptides Malaysia. All rights reserved.</p>
+          <p className="text-xs text-gray-600">© {new Date().getFullYear()} Evo Peptides. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-             <Link to="/privacy" className="text-xs text-gray-600 hover:text-white transition-colors">Privacy Policy</Link>
-             <Link to="/terms" className="text-xs text-gray-600 hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="/privacy" className="text-xs text-gray-600 hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="text-xs text-gray-600 hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { renderWithRouter } from './helpers';
 describe('Footer Component', () => {
     it('renders the brand name', () => {
         renderWithRouter(<Footer />);
+        expect(screen.getByText('EVO')).toBeInTheDocument();
         expect(screen.getByText('PEPTIDES')).toBeInTheDocument();
     });
 

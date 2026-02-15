@@ -79,7 +79,7 @@ export async function POST(request: Request) {
         formData.append('userSecretKey', process.env.TOYYIBPAY_SECRET_KEY!);
         formData.append('categoryCode', process.env.TOYYIBPAY_CATEGORY_CODE!);
         formData.append('billName', orderNumber);
-        formData.append('billDescription', 'Peptides Malaysia Research Order');
+        formData.append('billDescription', 'Evo Peptides Research Order');
         formData.append('billPriceSetting', '1');
         formData.append('billPayorInfo', '1');
         formData.append('billAmount', Math.round(finalTotal * 100).toString());

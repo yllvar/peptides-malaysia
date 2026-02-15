@@ -26,7 +26,7 @@ const ProductDetail: React.FC = () => {
 
   const handleWhatsAppBuy = () => {
     const priceText = product.price > 0 ? `RM${product.price}` : 'price upon request';
-    const message = `Hi Peptides Malaysia, I would like to purchase the ${product.name} (${priceText}). Is it in stock?`;
+    const message = `Hi Evo Peptides, I would like to purchase the ${product.name} (${priceText}). Is it in stock?`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
   };
 

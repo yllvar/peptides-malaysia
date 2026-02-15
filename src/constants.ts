@@ -107,7 +107,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     id: '3',
     title: "Local Excellence & Logistics Hub",
-    excerpt: "How Peptides Malaysia is eliminating international shipping risk with KL Ready Stock.",
+    excerpt: "How Evo Peptides is eliminating international shipping risk with KL Ready Stock.",
     content: "Operating from our hub in Kuala Lumpur, we utilize local logistics like Lalamove and Grab for same-day delivery in the Klang Valley. Our mission is to provide the elite Malaysian research community with immediate access to verified, lab-tested compounds without the uncertainty of customs.",
     date: "Feb 11, 2024",
     category: "Operations",

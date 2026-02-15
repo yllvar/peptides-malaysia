@@ -24,8 +24,8 @@ describe('Navbar Component', () => {
     it('renders the brand name', () => {
         mockGetItemCount.mockReturnValue(0);
         renderWithRouter(<Navbar />);
+        expect(screen.getByText('EVO')).toBeInTheDocument();
         expect(screen.getByText('PEPTIDES')).toBeInTheDocument();
-        expect(screen.getByText('MALAYSIA')).toBeInTheDocument();
     });
 
     it('renders the official logo image', () => {

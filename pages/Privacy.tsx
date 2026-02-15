@@ -8,15 +8,15 @@ const Privacy: React.FC = () => {
         <div className="space-y-6 text-gray-300 leading-relaxed">
           <section>
             <h2 className="text-xl font-bold text-white mb-4">1. Data Collection</h2>
-            <p>Peptides Malaysia ("We") respects the privacy of our research community. We do not create persistent user accounts on this platform. Order data is generated locally in your browser and transmitted directly to our sales team via WhatsApp encryption. We do not store your shipping address or phone number in any centralized database connected to this website.</p>
+            <p>Evo Peptides ("We") respects the privacy of our research community. We do not create persistent user accounts on this platform. Order data is generated locally in your browser and transmitted directly to our sales team via WhatsApp encryption. We do not store your shipping address or phone number in any centralized database connected to this website.</p>
           </section>
           <section>
             <h2 className="text-xl font-bold text-white mb-4">2. Usage of Information</h2>
             <p>Information provided during the checkout process is strictly used for:</p>
             <ul className="list-disc ml-6 mt-2 space-y-1">
-                <li>Processing your immediate order.</li>
-                <li>Arranging logistics via third-party couriers (J&T, Lalamove, PosLaju).</li>
-                <li>Communicating payment details.</li>
+              <li>Processing your immediate order.</li>
+              <li>Arranging logistics via third-party couriers (J&T, Lalamove, PosLaju).</li>
+              <li>Communicating payment details.</li>
             </ul>
           </section>
           <section>

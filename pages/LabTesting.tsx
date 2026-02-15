@@ -33,7 +33,7 @@ const LabTesting: React.FC = () => {
               <div className="col-span-2 sm:col-span-1 text-right">
                 <button
                   onClick={() => {
-                    const msg = `Hi Peptides Malaysia, I'm researching ${coa.productName} (Batch: ${coa.batchNumber}). Could you please share the full PDF HPLC/Mass-Spec report?`;
+                    const msg = `Hi Evo Peptides, I'm researching ${coa.productName} (Batch: ${coa.batchNumber}). Could you please share the full PDF HPLC/Mass-Spec report?`;
                     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
                   }}
                   className="inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors"
