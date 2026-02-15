@@ -3,7 +3,7 @@ import { prisma } from '../_db.js';
 export const config = {
     runtime: 'nodejs',
 };
-import { calculateShippingCost } from '../../src/lib/utils/shipping';
+import { calculateShippingCost } from '../../src/lib/utils/shipping.js';
 
 export async function POST(request: Request) {
     try {
