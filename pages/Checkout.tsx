@@ -212,7 +212,11 @@ const Checkout: React.FC = () => {
                                     </>
                                 ) : (
                                     <>
-                                        Pay Securely RM{(getTotalPrice() + calculateShippingCost(form.postcode, getTotalPrice())).toFixed(2)}
+                                        {getTotalPrice() > 0 ? (
+                                            `Pay Securely RM${(getTotalPrice() + calculateShippingCost(form.postcode, getTotalPrice())).toFixed(2)}`
+                                        ) : (
+                                            'Place Order (Pricing TBA)'
+                                        )}
                                         <ShieldCheck className="h-5 w-5" />
                                     </>
                                 )}
@@ -234,7 +238,9 @@ const Checkout: React.FC = () => {
                                         <div className="flex-grow">
                                             <div className="text-white text-sm font-bold line-clamp-1">{item.name}</div>
                                             <div className="text-gray-500 text-xs mt-1">QTY: {item.quantity}</div>
-                                            <div className="text-evo-orange text-xs font-mono mt-1">RM{(item.price * item.quantity).toFixed(2)}</div>
+                                            <div className="text-evo-orange text-xs font-mono mt-1">
+                                                {item.price > 0 ? `RM${(item.price * item.quantity).toFixed(2)}` : 'TBA'}
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
@@ -243,7 +249,7 @@ const Checkout: React.FC = () => {
                             <div className="space-y-3 border-t border-white/10 pt-6">
                                 <div className="flex justify-between text-sm">
                                     <span className="text-gray-500">Subtotal</span>
-                                    <span className="text-white">RM{getTotalPrice().toFixed(2)}</span>
+                                    <span className="text-white">{getTotalPrice() > 0 ? `RM${getTotalPrice().toFixed(2)}` : 'TBA'}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span className="text-gray-500">Shipping</span>
@@ -256,7 +262,7 @@ const Checkout: React.FC = () => {
                                 <div className="flex justify-between pt-4 border-t border-white/10">
                                     <span className="text-white font-bold uppercase tracking-wider">Total Amount</span>
                                     <span className="text-2xl font-display font-bold text-evo-orange">
-                                        RM{(getTotalPrice() + calculateShippingCost(form.postcode, getTotalPrice())).toFixed(2)}
+                                        {getTotalPrice() > 0 ? `RM${(getTotalPrice() + calculateShippingCost(form.postcode, getTotalPrice())).toFixed(2)}` : 'TBA / INQUIRE'}
                                     </span>
                                 </div>
                             </div>

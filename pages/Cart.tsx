@@ -25,7 +25,8 @@ const Cart: React.FC = () => {
   }
 
   const handleWhatsAppInquiry = () => {
-    let message = `Hi Evo Team, I have ${getItemCount()} item(s) in my cart totaling RM${subtotal.toFixed(2)}. I'd like to inquire about this order.`;
+    const totalText = subtotal > 0 ? `totaling RM${subtotal.toFixed(2)}` : 'with unlisted items';
+    let message = `Hi Evo Team, I have ${getItemCount()} item(s) in my cart ${totalText}. I'd like to inquire about this order.`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
@@ -56,7 +57,9 @@ const Cart: React.FC = () => {
                 <div className="flex-grow min-w-0">
                   <Link to={`/product/${item.id}`} className="text-white font-bold text-sm sm:text-base hover:text-evo-orange transition-colors line-clamp-1">{item.name}</Link>
                   <div className="text-xs text-gray-500 mt-0.5">{item.category}</div>
-                  <div className="text-sm text-gray-400 mt-1">RM{item.price.toFixed(2)} each</div>
+                  <div className="text-sm text-gray-400 mt-1">
+                    {item.price > 0 ? `RM${item.price.toFixed(2)} each` : 'Price TBA'}
+                  </div>
                 </div>
 
                 {/* Quantity Controls */}
@@ -78,7 +81,9 @@ const Cart: React.FC = () => {
 
                 {/* Line total & remove */}
                 <div className="text-right flex-shrink-0 ml-2">
-                  <div className="text-evo-orange font-bold">RM{(item.price * item.quantity).toFixed(2)}</div>
+                  <div className="text-evo-orange font-bold">
+                    {item.price > 0 ? `RM${(item.price * item.quantity).toFixed(2)}` : 'TBA'}
+                  </div>
                   <button
                     onClick={() => removeFromCart(item.id)}
                     className="text-xs text-gray-600 hover:text-red-500 mt-1.5 flex items-center justify-end transition-colors"
@@ -103,7 +108,9 @@ const Cart: React.FC = () => {
                 {cart.map((item) => (
                   <div key={item.id} className="flex justify-between text-sm">
                     <span className="text-gray-400 truncate mr-4">{item.name} × {item.quantity}</span>
-                    <span className="text-white flex-shrink-0">RM{(item.price * item.quantity).toFixed(2)}</span>
+                    <span className="text-white flex-shrink-0">
+                      {item.price > 0 ? `RM${(item.price * item.quantity).toFixed(2)}` : 'TBA'}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -111,7 +118,7 @@ const Cart: React.FC = () => {
               <div className="border-t border-white/10 pt-4 space-y-3">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Subtotal</span>
-                  <span className="text-white">RM{subtotal.toFixed(2)}</span>
+                  <span className="text-white">{subtotal > 0 ? `RM${subtotal.toFixed(2)}` : 'TBA / INQUIRE'}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Shipping</span>
@@ -122,7 +129,7 @@ const Cart: React.FC = () => {
               <div className="flex justify-between pt-4 mt-4 border-t border-white/10">
                 <span className="text-white font-bold uppercase tracking-wider">Subtotal</span>
                 <span className="text-2xl font-display font-bold text-evo-orange">
-                  RM{subtotal.toFixed(2)}
+                  {subtotal > 0 ? `RM${subtotal.toFixed(2)}` : 'TBA / INQUIRE'}
                 </span>
               </div>
 

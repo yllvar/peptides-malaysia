@@ -122,7 +122,9 @@ const Shop: React.FC = () => {
                   <div className="flex items-end justify-between pt-4 border-t border-white/5">
                     <div>
                       <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">MSRP / Research Unit</p>
-                      <span className="text-2xl font-bold text-white tracking-tighter">RM{product.price.toFixed(2)}</span>
+                      <span className="text-2xl font-bold text-white tracking-tighter">
+                        {product.price > 0 ? `RM${product.price.toFixed(2)}` : 'TBA / INQUIRE'}
+                      </span>
                     </div>
                     <div className="bg-white/5 p-2 rounded-xl group-hover:bg-evo-orange group-hover:text-white transition-all duration-300">
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

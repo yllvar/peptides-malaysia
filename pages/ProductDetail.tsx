@@ -25,7 +25,8 @@ const ProductDetail: React.FC = () => {
   }
 
   const handleWhatsAppBuy = () => {
-    const message = `Hi Peptides Malaysia, I would like to purchase the ${product.name} (RM${product.price}). Is it in stock?`;
+    const priceText = product.price > 0 ? `RM${product.price}` : 'price upon request';
+    const message = `Hi Peptides Malaysia, I would like to purchase the ${product.name} (${priceText}). Is it in stock?`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
@@ -55,7 +56,9 @@ const ProductDetail: React.FC = () => {
           {/* Info Section */}
           <div>
             <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-2 uppercase tracking-tight">{product.name}</h1>
-            <div className="text-2xl text-evo-orange font-bold mb-6">RM{product.price.toFixed(2)}</div>
+            <div className="text-2xl text-evo-orange font-bold mb-6">
+              {product.price > 0 ? `RM${product.price.toFixed(2)}` : 'TBA / INQUIRE'}
+            </div>
 
             <div className="bg-white/5 border-l-4 border-evo-orange p-4 mb-8">
               <p className="text-sm text-gray-300 leading-relaxed italic">
@@ -68,8 +71,8 @@ const ProductDetail: React.FC = () => {
               <button
                 onClick={handleAddToCart}
                 className={`flex-1 py-4 font-bold rounded border flex items-center justify-center transition-all ${showAdded
-                    ? 'bg-green-600 border-green-500 text-white'
-                    : 'bg-neutral-800 hover:bg-neutral-700 text-white border-white/10'
+                  ? 'bg-green-600 border-green-500 text-white'
+                  : 'bg-neutral-800 hover:bg-neutral-700 text-white border-white/10'
                   }`}
               >
                 {showAdded ? (

@@ -83,6 +83,39 @@ export const PRODUCTS: Product[] = [
     inStock: true,
     features: ['Dual Agonist', '99.5% Purity', 'Cold-Chain'],
     techSpec: { mass: '4813.5 g/mol', halfLife: '~5 Days', focus: 'Metabolic Efficiency', formula: 'C225H348N48O68' }
+  },
+  {
+    id: 'evo-bpc-tb-blend',
+    name: 'Evo BPC-157 + TB-500 Blend 10mg (5mg/5mg)',
+    price: 0,
+    category: 'Recovery',
+    description: 'The ultimate recovery synergy. Combining the regenerative power of BPC-157 with the cellular migration capabilities of TB-500 for maximum tissue repair.',
+    image: '/images/evo-bpc-tb.jpeg',
+    inStock: true,
+    features: ['Synergistic Blend', 'HPLC Verified', 'Elite Recovery Protocol'],
+    techSpec: { mass: 'Multiple', halfLife: 'Variable', focus: 'Systemic Regeneration', formula: 'C62H98N16O22 + C212H350N56O78S' }
+  },
+  {
+    id: 'evo-ghk-cu',
+    name: 'Evo GHK-Cu 50mg',
+    price: 0,
+    category: 'Anti-Aging',
+    description: 'Elite Copper Peptide. Engineered for biological tissue remodeling, collagen synthesis, and DNA repair research protocols.',
+    image: '/images/evo-ghk-cu.jpeg',
+    inStock: true,
+    features: ['Tissue Remodeling', 'High Concentration 50mg', '99.9% Purity'],
+    techSpec: { mass: '340.38 g/mol', halfLife: '~30 Min (Plasma)', focus: 'Copper-Dependent Repair', formula: 'C14H24N6O4' }
+  },
+  {
+    id: 'evo-pt-141',
+    name: 'Evo PT-141 10mg (Bremelanotide)',
+    price: 0,
+    category: 'Performance',
+    description: 'Synthetic peptide agonist of the melanocortin receptors. Research focused on sexual dysfunction and libido enhancement through CNS pathways.',
+    image: '/images/evo-pt-141.jpeg',
+    inStock: true,
+    features: ['CNS Agonist', 'Purity Verified', 'Research Grade'],
+    techSpec: { mass: '1025.2 g/mol', halfLife: '~2 Hours', focus: 'MC3R/MC4R Agonism', formula: 'C50H68N14O10' }
   }
 ];
 
@@ -91,7 +124,9 @@ export const TECHNICAL_SPECS = [
   { name: 'Evo BPC-157', category: 'Healing / Recovery', formula: 'C62H98N16O22', mass: '1419.5 g/mol', focus: 'Angiogenesis', halfLife: '~4-6 Hours' },
   { name: 'Evo TB-500', category: 'Tissue Repair', formula: 'C212H350N56O78S', mass: '4963.5 g/mol', focus: 'Cellular Migration', halfLife: '~7-10 Days' },
   { name: 'Evo Melanotan II', category: 'UV / Pigmentation', formula: 'C50H69N11O9', mass: '1024.2 g/mol', focus: 'MC4R Agonism', halfLife: '~2-3 Hours' },
-  { name: 'Evo CJC-1295', category: 'GH Performance', formula: 'C165H271N47O46', mass: '3647.2 g/mol', focus: 'Pituitary GH', halfLife: '~30 Min' }
+  { name: 'Evo CJC-1295', category: 'GH Performance', formula: 'C165H271N47O46', mass: '3647.2 g/mol', focus: 'Pituitary GH', halfLife: '~30 Min' },
+  { name: 'Evo GHK-Cu', category: 'Tissue Repair/Anti-Aging', formula: 'C14H24N6O4', mass: '340.38 g/mol', focus: 'Copper-Dependent Repair', halfLife: '~30 Min' },
+  { name: 'Evo PT-141', category: 'CNS Performance', formula: 'C50H68N14O10', mass: '1025.2 g/mol', focus: 'MC3R/MC4R Agonism', halfLife: '~2 Hours' }
 ];
 
 export const STORAGE_PROTOCOLS = {
@@ -147,4 +182,6 @@ export const COA_DATA: COADocument[] = [
   { id: 'c5', productName: 'CJC-1295 (No DAC)', batchNumber: 'EVO-CJ-4412', purity: '99.7%', date: '2023-11-20' },
   { id: 'c6', productName: 'Melanotan II 10mg', batchNumber: 'EVO-MT-0031', purity: '99.4%', date: '2024-02-05' },
   { id: 'c7', productName: 'GHK-Cu 50mg', batchNumber: 'EVO-GK-0021', purity: '99.9%', date: '2023-12-05' },
+  { id: 'c8', productName: 'BPC-157 + TB-500 Blend', batchNumber: 'EVO-BL-9921', purity: '99.8%', date: '2024-01-15' },
+  { id: 'c9', productName: 'PT-141 10mg', batchNumber: 'EVO-PT-0772', purity: '99.7%', date: '2024-01-20' },
 ];
