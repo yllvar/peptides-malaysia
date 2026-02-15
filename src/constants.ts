@@ -42,13 +42,13 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: 'evo-ghk-cu',
-    name: 'Evo GHK-Cu 50mg',
+    name: 'Evo GHK-Cu 100mg',
     price: 0,
     category: 'Anti-Aging',
     description: 'Elite Copper Peptide. Engineered for biological tissue remodeling, collagen synthesis, and DNA repair research protocols.',
     image: '/images/evo-ghk-cu.jpeg',
     inStock: true,
-    features: ['Tissue Remodeling', 'High Concentration 50mg', '99.9% Purity'],
+    features: ['Tissue Remodeling', 'High Concentration 100mg', '99.9% Purity'],
     techSpec: { mass: '340.38 g/mol', halfLife: '~30 Min (Plasma)', focus: 'Copper-Dependent Repair', formula: 'C14H24N6O4' }
   },
   {
@@ -117,7 +117,7 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export const COA_DATA: COADocument[] = [
   { id: 'c1', productName: 'Retatrutide 20mg', batchNumber: 'EVO-RT-0092', purity: '99.8%', date: '2023-11-15' },
-  { id: 'c7', productName: 'GHK-Cu 50mg', batchNumber: 'EVO-GK-0021', purity: '99.9%', date: '2023-12-05' },
+  { id: 'c7', productName: 'GHK-Cu 100mg', batchNumber: 'EVO-GK-0021', purity: '99.9%', date: '2023-12-05' },
   { id: 'c8', productName: 'BPC-157 + TB-500 Blend', batchNumber: 'EVO-BL-9921', purity: '99.8%', date: '2024-01-15' },
   { id: 'c9', productName: 'PT-141 10mg', batchNumber: 'EVO-PT-0772', purity: '99.7%', date: '2024-01-20' },
 ];
