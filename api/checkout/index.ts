@@ -94,10 +94,17 @@ export async function POST(request: Request) {
         const formData = new URLSearchParams();
         const secretKey = (process.env.TOYYIBPAY_SECRET_KEY || '').trim();
         const categoryCode = (process.env.TOYYIBPAY_CATEGORY_CODE || '').trim();
-        const baseUrl = (process.env.TOYYIBPAY_BASE_URL || 'https://toyyibpay.com').trim();
 
-        console.log('Using ToyyibPay Base URL:', baseUrl);
-        console.log('Secret Key Length:', secretKey.length);
+        // AUTO-DETECTION: If key starts with 'osh', force Sandbox URL unless explicitly overridden
+        let baseUrl = (process.env.TOYYIBPAY_BASE_URL || '').trim();
+        if (!baseUrl) {
+            baseUrl = secretKey.startsWith('osh')
+                ? 'https://dev.toyyibpay.com'
+                : 'https://toyyibpay.com';
+        }
+
+        console.log('Final ToyyibPay Endpoint:', baseUrl);
+        console.log('Secret Key (First 5):', secretKey.substring(0, 5) + '...');
         console.log('Category Code:', categoryCode);
 
         formData.append('userSecretKey', secretKey);
