@@ -24,11 +24,10 @@ const Home: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-evo-black via-transparent to-transparent"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-
-            {/* Left Side: Content */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-20">
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left pt-20">
+            {/* Visually Hide Redundant Elements (Already in Background Image) */}
+            <div className="opacity-0 pointer-events-none select-none">
               {/* Badge */}
               <div className="inline-flex items-center px-3 py-1 rounded-full border border-evo-orange/20 bg-black/40 backdrop-blur-md mb-8 animate-fade-in-up">
                 <span className="w-1.5 h-1.5 rounded-full bg-white mr-2 shadow-[0_0_8px_white]"></span>
@@ -45,46 +44,23 @@ const Home: React.FC = () => {
               <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-xl leading-relaxed font-light animate-fade-in-up delay-200">
                 The exclusive gateway to Evo™ Laboratory Excellence. High-performance research peptides for the elite Malaysian scientific community.
               </p>
-
-              {/* Buttons */}
-              <div className="flex flex-wrap items-center gap-6 animate-fade-in-up delay-300 w-full">
-                <Link
-                  to="/shop"
-                  className="group relative px-8 py-4 bg-evo-orange hover:bg-evo-orangeHover text-white font-bold tracking-widest rounded transition-all shadow-[0_10px_30px_rgba(255,77,0,0.3)] hover:scale-105"
-                >
-                  <span className="flex items-center text-sm uppercase">SHOP COLLECTION <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" /></span>
-                </Link>
-                <Link
-                  to="/about"
-                  className="px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold tracking-widest rounded backdrop-blur-sm transition-all hover:border-white/30 text-sm uppercase"
-                >
-                  OUR DNA
-                </Link>
-              </div>
             </div>
 
-            {/* Right Side: Product Visuals */}
-            <div className="lg:col-span-5 relative hidden lg:flex justify-center items-center">
-              {/* The Orange Blob Shape */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[350px] bg-evo-orange/90 rounded-[40%_60%_70%_30%/50%_40%_60%_50%] blur-sm animate-pulse-slow"></div>
-
-              {/* Product Vials Stack */}
-              <div className="relative z-10 flex items-end gap-x-0 animate-float">
-                {/* Vial Left */}
-                <div className="w-32 -mr-8 -mb-4 transform -rotate-6 grayscale-0 contrast-125 z-0">
-                  <img src="/images/evo_retatrutide.jpg" alt="Evo Peptide Vial" className="w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]" />
-                </div>
-                {/* Vial Center (Main) */}
-                <div className="w-44 z-20">
-                  <img src="/images/evo_retatrutide.jpg" alt="Evo Peptide Vial" className="w-full drop-shadow-[0_30px_60px_rgba(0,0,0,0.7)]" />
-                </div>
-                {/* Vial Right */}
-                <div className="w-32 -ml-8 -mb-4 transform rotate-6 grayscale-0 contrast-125 z-10">
-                  <img src="/images/evo_retatrutide.jpg" alt="Evo Peptide Vial" className="w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]" />
-                </div>
-              </div>
+            {/* Interactive Buttons (Visible and Positioned) */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8 animate-fade-in-up delay-300 w-full lg:w-auto -mt-[300px] md:-mt-[400px] lg:mt-[-100px]">
+              <Link
+                to="/shop"
+                className="group relative px-10 py-5 bg-evo-orange hover:bg-evo-orangeHover text-white font-bold tracking-widest rounded transition-all shadow-[0_10px_30px_rgba(255,77,0,0.4)] hover:scale-105"
+              >
+                <span className="flex items-center text-sm uppercase">SHOP COLLECTION <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" /></span>
+              </Link>
+              <Link
+                to="/about"
+                className="px-10 py-5 bg-black/40 border border-white/10 hover:bg-white/10 text-white font-bold tracking-widest rounded backdrop-blur-sm transition-all hover:border-white/30 text-sm uppercase"
+              >
+                OUR DNA
+              </Link>
             </div>
-
           </div>
         </div>
       </section>
