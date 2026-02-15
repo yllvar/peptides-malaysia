@@ -52,7 +52,14 @@ const Checkout: React.FC = () => {
                 }),
             });
 
-            const data = await response.json();
+            const text = await response.text();
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (pErr) {
+                console.error('Non-JSON response:', text);
+                throw new Error('A server error occurred. Please try again later.');
+            }
 
             if (!response.ok) {
                 throw new Error(data.error || 'Checkout failed');
@@ -189,7 +196,7 @@ const Checkout: React.FC = () => {
                                             <div className="text-xs text-gray-500">Secure payment via ToyyibPay</div>
                                         </div>
                                     </div>
-                                    <img src="/logo/toyyibpay.png" alt="ToyyibPay" className="h-6 opacity-80" />
+                                    <img src="/logo/toyibpay-logo.png" alt="ToyyibPay" className="h-6 opacity-80" />
                                 </div>
                             </section>
 
