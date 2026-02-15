@@ -7,10 +7,19 @@ import { calculateShippingCost } from '../../src/lib/utils/shipping';
 
 export async function POST(request: Request) {
     try {
-        const { items, shippingInfo, userId } = await request.json();
+        const body = await request.clone().json();
+        console.log('Checkout Request Body:', JSON.stringify(body, null, 2));
+
+        const { items, shippingInfo, userId } = body;
 
         if (!items || items.length === 0 || !shippingInfo) {
+            console.error('Missing order data:', { items: !!items, shippingInfo: !!shippingInfo });
             return Response.json({ error: 'Invalid order data' }, { status: 400 });
+        }
+
+        if (!process.env.TOYYIBPAY_SECRET_KEY || !process.env.TOYYIBPAY_CATEGORY_CODE) {
+            console.error('ToyyibPay environment variables are missing');
+            return Response.json({ error: 'Payment gateway misconfigured' }, { status: 500 });
         }
 
         // 1. Fetch products to get canonical prices and validate stock
@@ -52,27 +61,34 @@ export async function POST(request: Request) {
         // 3. Create Order in Database
         const orderNumber = `EVO-${Date.now().toString().slice(-8)}`;
 
-        const order = await prisma.order.create({
-            data: {
-                orderNumber,
-                userId: userId || null,
-                guestName: !userId ? shippingInfo.fullName : undefined,
-                guestEmail: !userId ? shippingInfo.email : undefined,
-                guestPhone: !userId ? shippingInfo.phone : undefined,
-                shippingName: shippingInfo.fullName,
-                shippingPhone: shippingInfo.phone,
-                shippingAddress: shippingInfo.address,
-                shippingCity: shippingInfo.city,
-                shippingPostcode: shippingInfo.postcode,
-                shippingCost: shippingCost,
-                subtotal: calculatedSubtotal,
-                total: finalTotal,
-                status: 'pending',
-                items: {
-                    create: validatedItems
+        let order;
+        try {
+            order = await prisma.order.create({
+                data: {
+                    orderNumber,
+                    userId: userId || null,
+                    guestName: !userId ? shippingInfo.fullName : undefined,
+                    guestEmail: !userId ? shippingInfo.email : undefined,
+                    guestPhone: !userId ? shippingInfo.phone : undefined,
+                    shippingName: shippingInfo.fullName,
+                    shippingPhone: shippingInfo.phone,
+                    shippingAddress: shippingInfo.address,
+                    shippingCity: shippingInfo.city,
+                    shippingPostcode: shippingInfo.postcode,
+                    shippingCost: shippingCost,
+                    subtotal: calculatedSubtotal,
+                    total: finalTotal,
+                    status: 'pending',
+                    items: {
+                        create: validatedItems
+                    },
                 },
-            },
-        });
+            });
+            console.log('Order created successfully:', order.id);
+        } catch (dbError) {
+            console.error('Database Error during order creation:', dbError);
+            throw new Error('Database operation failed');
+        }
 
         // 4. Prepare ToyyibPay Payload
         const formData = new URLSearchParams();
@@ -83,20 +99,36 @@ export async function POST(request: Request) {
         formData.append('billPriceSetting', '1');
         formData.append('billPayorInfo', '1');
         formData.append('billAmount', Math.round(finalTotal * 100).toString());
-        formData.append('billReturnUrl', `${process.env.VITE_APP_URL}/payment/status`);
-        formData.append('billCallbackUrl', `${process.env.VITE_APP_URL}/api/checkout/webhook`);
+        formData.append('billReturnUrl', `${process.env.VITE_APP_URL || 'https://peptides-malaysia.vercel.app'}/payment/status`);
+        formData.append('billCallbackUrl', `${process.env.VITE_APP_URL || 'https://peptides-malaysia.vercel.app'}/api/checkout/webhook`);
         formData.append('billExternalReferenceNo', order.id);
         formData.append('billTo', shippingInfo.fullName);
         formData.append('billEmail', shippingInfo.email);
         formData.append('billPhone', shippingInfo.phone);
 
         // 5. Call ToyyibPay
-        const tpResponse = await fetch('https://toyyibpay.com/index.php/api/createBill', {
-            method: 'POST',
-            body: formData,
-        });
+        console.log('Calling ToyyibPay API...');
+        let tpResponse;
+        try {
+            tpResponse = await fetch('https://toyyibpay.com/index.php/api/createBill', {
+                method: 'POST',
+                body: formData,
+            });
+        } catch (fetchError) {
+            console.error('ToyyibPay Fetch Error:', fetchError);
+            throw new Error('Failed to reach payment gateway');
+        }
 
-        const data = await tpResponse.json();
+        const rawData = await tpResponse.text();
+        console.log('ToyyibPay Raw Response:', rawData);
+
+        let data;
+        try {
+            data = JSON.parse(rawData);
+        } catch (jsonError) {
+            console.error('Failed to parse ToyyibPay response as JSON:', rawData);
+            return Response.json({ error: 'Gateway returned invalid response' }, { status: 502 });
+        }
 
         if (Array.isArray(data) && data[0]?.BillCode) {
             const billCode = data[0].BillCode;
