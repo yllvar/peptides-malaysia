@@ -10,57 +10,37 @@ const Home: React.FC = () => {
     <div className="bg-evo-black overflow-hidden relative">
 
 
-      {/* Hero Section */}
-      <section className="relative h-screen min-h-[800px] flex items-center overflow-hidden z-10">
-        {/* Background Image with Overlay */}
+      {/* Hero Section - Simplified Evo-Noir Implementation */}
+      <section className="relative h-screen min-h-[700px] flex items-center z-10">
+        {/* Stable Background Asset */}
         <div className="absolute inset-0 z-0">
           <img
             src="/images/evo-header-bg.png"
-            alt="Evo Background"
-            className="w-full h-full object-cover opacity-80 scale-105 animate-pulse-slow"
+            alt="Evo Peptides Laboratory Excellence"
+            className="w-full h-full object-cover"
           />
-          {/* Gradients to ensure text readability and blend with black background */}
-          <div className="absolute inset-0 bg-gradient-to-r from-evo-black via-evo-black/60 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-evo-black via-transparent to-transparent"></div>
+          {/* Subtle bottom fade to blend with next section */}
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-evo-black to-transparent"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-20">
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left pt-20">
-            {/* Visually Hide Redundant Elements (Already in Background Image) */}
-            <div className="opacity-0 pointer-events-none select-none">
-              {/* Badge */}
-              <div className="inline-flex items-center px-3 py-1 rounded-full border border-evo-orange/20 bg-black/40 backdrop-blur-md mb-8 animate-fade-in-up">
-                <span className="w-1.5 h-1.5 rounded-full bg-white mr-2 shadow-[0_0_8px_white]"></span>
-                <span className="text-evo-orange text-[9px] font-bold tracking-[0.2em] uppercase">Malaysian Ready Stock</span>
-              </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
+          {/* SEO Anchor (Hidden) */}
+          <h1 className="sr-only">Evo Peptides - Sporty Luxury. Science Evolved.</h1>
 
-              {/* Headline */}
-              <h1 className="text-6xl md:text-8xl xl:text-9xl font-display font-bold text-white mb-6 tracking-tight leading-[0.85] animate-fade-in-up delay-100 uppercase italic">
-                SPORTY <span className="text-gray-400">LUXURY.</span><br />
-                <span className="text-evo-orange">SCIENCE EVOLVED.</span>
-              </h1>
-
-              {/* Subtext */}
-              <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-xl leading-relaxed font-light animate-fade-in-up delay-200">
-                The exclusive gateway to Evo™ Laboratory Excellence. High-performance research peptides for the elite Malaysian scientific community.
-              </p>
-            </div>
-
-            {/* Interactive Buttons (Visible and Positioned) */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8 animate-fade-in-up delay-300 w-full lg:w-auto -mt-[300px] md:-mt-[400px] lg:mt-[-100px]">
-              <Link
-                to="/shop"
-                className="group relative px-10 py-5 bg-evo-orange hover:bg-evo-orangeHover text-white font-bold tracking-widest rounded transition-all shadow-[0_10px_30px_rgba(255,77,0,0.4)] hover:scale-105"
-              >
-                <span className="flex items-center text-sm uppercase">SHOP COLLECTION <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" /></span>
-              </Link>
-              <Link
-                to="/about"
-                className="px-10 py-5 bg-black/40 border border-white/10 hover:bg-white/10 text-white font-bold tracking-widest rounded backdrop-blur-sm transition-all hover:border-white/30 text-sm uppercase"
-              >
-                OUR DNA
-              </Link>
-            </div>
+          {/* Interactive Layer: Positioned to match the background design */}
+          <div className="mt-[280px] md:mt-[320px] lg:mt-[220px] flex flex-wrap items-center justify-center lg:justify-start gap-6 animate-fade-in-up delay-200">
+            <Link
+              to="/shop"
+              className="px-8 py-4 bg-evo-orange hover:bg-evo-orangeHover text-white font-bold tracking-widest rounded transition-all shadow-[0_10px_30px_rgba(255,77,0,0.3)] uppercase text-xs"
+            >
+              SHOP COLLECTION →
+            </Link>
+            <Link
+              to="/about"
+              className="px-8 py-4 bg-black/40 border border-white/10 hover:bg-white/10 text-white font-bold tracking-widest rounded backdrop-blur-sm transition-all text-xs uppercase"
+            >
+              OUR DNA
+            </Link>
           </div>
         </div>
       </section>
