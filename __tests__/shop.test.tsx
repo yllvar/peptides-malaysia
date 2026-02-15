@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -6,16 +6,13 @@ import Shop from '../pages/Shop';
 import { renderWithRouter, createMockProduct } from './helpers';
 import { PRODUCTS } from '../src/constants';
 import { Product } from '../src/types';
+import '@testing-library/jest-dom'; // Ensure types are loaded
 
 // Default mock returns PRODUCTS from constants
-const mockUseProducts = vi.fn(() => ({
-    data: PRODUCTS,
-    isLoading: false,
-    error: null,
-}));
+const mockUseProducts = vi.fn();
 
 vi.mock('../src/hooks/useProducts', () => ({
-    useProducts: (...args: any[]) => mockUseProducts(...args),
+    useProducts: () => mockUseProducts(),
 }));
 
 describe('Shop Page', () => {
@@ -139,7 +136,7 @@ describe('Shop Page', () => {
 
     it('shows loading state', () => {
         mockUseProducts.mockReturnValue({
-            data: undefined,
+            data: [],
             isLoading: true,
             error: null,
         });
@@ -150,7 +147,7 @@ describe('Shop Page', () => {
 
     it('shows error state', () => {
         mockUseProducts.mockReturnValue({
-            data: undefined,
+            data: [],
             isLoading: false,
             error: new Error('Network error'),
         });
