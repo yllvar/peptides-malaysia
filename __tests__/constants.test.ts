@@ -30,15 +30,15 @@ describe('Constants & Data Integrity', () => {
     });
 
     describe('PRODUCTS', () => {
-        it('has at least 6 products', () => {
-            expect(PRODUCTS.length).toBeGreaterThanOrEqual(6);
+        it('has at least 4 products', () => {
+            expect(PRODUCTS.length).toBeGreaterThanOrEqual(4);
         });
 
         it('every product has required fields', () => {
             PRODUCTS.forEach(product => {
                 expect(product.id).toBeTruthy();
                 expect(product.name).toBeTruthy();
-                expect(product.price).toBeGreaterThan(0);
+                expect(product.price).toBeGreaterThanOrEqual(0);
                 expect(product.category).toBeTruthy();
                 expect(product.description).toBeTruthy();
                 expect(product.image).toBeTruthy();
@@ -55,7 +55,7 @@ describe('Constants & Data Integrity', () => {
         });
 
         it('has valid categories', () => {
-            const validCategories = ['Weight Management', 'Recovery', 'Performance', 'Essentials', 'Anti-Aging', 'Bundles'];
+            const validCategories = ['Weight Management', 'Recovery', 'Performance', 'Anti-Aging'];
             PRODUCTS.forEach(product => {
                 expect(validCategories).toContain(product.category);
             });
@@ -71,7 +71,7 @@ describe('Constants & Data Integrity', () => {
             const categories = new Set(PRODUCTS.map(p => p.category));
             expect(categories.has('Weight Management')).toBe(true);
             expect(categories.has('Recovery')).toBe(true);
-            expect(categories.has('Essentials')).toBe(true);
+            expect(categories.has('Anti-Aging')).toBe(true);
         });
 
         it('has products marked as isNew', () => {

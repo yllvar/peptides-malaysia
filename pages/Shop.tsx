@@ -5,7 +5,7 @@ import { WHATSAPP_NUMBER } from '../src/constants';
 
 const Shop: React.FC = () => {
   const [filter, setFilter] = useState<string>('All');
-  const categories = ['All', 'Weight Management', 'Recovery', 'Performance', 'Anti-Aging', 'Bundles', 'Essentials'];
+  const categories = ['All', 'Weight Management', 'Recovery', 'Performance', 'Anti-Aging'];
 
   const { data: products, isLoading, error } = useProducts();
 

@@ -33,7 +33,7 @@ describe('Shop Page', () => {
 
     it('renders all category filter buttons', () => {
         renderShop();
-        const expectedCategories = ['All', 'Weight Management', 'Recovery', 'Performance', 'Anti-Aging', 'Bundles', 'Essentials'];
+        const expectedCategories = ['All', 'Weight Management', 'Recovery', 'Performance', 'Anti-Aging'];
         expectedCategories.forEach(cat => {
             // Use getAllByText since categories also appear on product cards
             const elements = screen.getAllByText(cat);
@@ -75,9 +75,10 @@ describe('Shop Page', () => {
 
     it('displays product prices in RM format', () => {
         renderShop();
-        // Just verify some prices exist, avoiding duplicate text issues
-        const priceElements = screen.getAllByText(/^RM\d+\.\d{2}$/);
-        expect(priceElements.length).toBe(PRODUCTS.length);
+        // Just verify prices exist for products that have them
+        const pricedProductsCount = PRODUCTS.filter(p => p.price > 0).length;
+        const priceElements = screen.queryAllByText(/^RM\d+\.\d{2}$/);
+        expect(priceElements.length).toBe(pricedProductsCount);
     });
 
     it('displays the wholesale inquiry section', () => {

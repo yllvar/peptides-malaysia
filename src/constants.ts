@@ -30,61 +30,6 @@ export const PRODUCTS: Product[] = [
     }
   },
   {
-    id: 'evo-bpc-157',
-    name: 'BPC-157 5mg',
-    price: 180,
-    category: 'Recovery',
-    description: 'The body protection compound. Engineered for localized healing and systemic recovery protocols.',
-    image: '/images/evo_bpc157.jpg',
-    inStock: true,
-    features: ['Regenerative Agonist', '99.9% Purity HPLC', 'Cold-Chain Shipping'],
-    techSpec: { mass: '1419.5 g/mol', halfLife: '~4-6 Hours', focus: 'Angiogenesis', formula: 'C62H98N16O22' }
-  },
-  {
-    id: 'evo-tb-500',
-    name: 'TB-500 5mg',
-    price: 220,
-    category: 'Recovery',
-    description: 'Thymosin Beta-4 synthetic analogue. Designed for cellular migration and rapid tissue repair.',
-    image: '/images/evo_tb500.jpg',
-    inStock: true,
-    features: ['Tissue Repair Spec', 'HPLC Verified', 'Cold-Chain'],
-    techSpec: { mass: '4963.5 g/mol', halfLife: '~7-10 Days', focus: 'Cellular Migration', formula: 'C212H350N56O78S' }
-  },
-  {
-    id: 'evo-mt2',
-    name: 'Melanotan II 10mg',
-    price: 150,
-    category: 'Essentials',
-    description: 'Pigmentation research and UV protection protocols.',
-    image: '/images/evo_mt2.jpg',
-    inStock: true,
-    features: ['UV Pigmentation', 'High Purity', 'Cold-Chain'],
-    techSpec: { mass: '1024.2 g/mol', halfLife: '~2-3 Hours', focus: 'MC4R Agonism', formula: 'C50H69N11O9' }
-  },
-  {
-    id: 'evo-cjc-no-dac',
-    name: 'CJC-1295 (No DAC)',
-    price: 190,
-    category: 'Essentials',
-    description: 'Growth hormone secretagogue for episodic research.',
-    image: '/images/evo_cjc.jpg',
-    inStock: true,
-    features: ['Pituitary GH Support', 'Verified Sequence', 'Cold-Chain'],
-    techSpec: { mass: '3647.2 g/mol', halfLife: '~30 Min', focus: 'Pituitary GH', formula: 'C165H271N47O46' }
-  },
-  {
-    id: 'evo-tirz-10',
-    name: 'Tirzepatide 10mg',
-    price: 350,
-    category: 'Weight Management',
-    description: 'Dual agonist (GLP-1/GIP) for metabolic research.',
-    image: '/images/evo_tirzepatide.jpg',
-    inStock: true,
-    features: ['Dual Agonist', '99.5% Purity', 'Cold-Chain'],
-    techSpec: { mass: '4813.5 g/mol', halfLife: '~5 Days', focus: 'Metabolic Efficiency', formula: 'C225H348N48O68' }
-  },
-  {
     id: 'evo-bpc-tb-blend',
     name: 'Evo BPC-157 + TB-500 Blend 10mg (5mg/5mg)',
     price: 0,
@@ -121,10 +66,6 @@ export const PRODUCTS: Product[] = [
 
 export const TECHNICAL_SPECS = [
   { name: 'Evo Retatrutide', category: 'Weight / Metabolic', formula: 'C221H342N54O67', mass: '4731.33 g/mol', focus: 'Triple-G Agonism', halfLife: '~6 Days' },
-  { name: 'Evo BPC-157', category: 'Healing / Recovery', formula: 'C62H98N16O22', mass: '1419.5 g/mol', focus: 'Angiogenesis', halfLife: '~4-6 Hours' },
-  { name: 'Evo TB-500', category: 'Tissue Repair', formula: 'C212H350N56O78S', mass: '4963.5 g/mol', focus: 'Cellular Migration', halfLife: '~7-10 Days' },
-  { name: 'Evo Melanotan II', category: 'UV / Pigmentation', formula: 'C50H69N11O9', mass: '1024.2 g/mol', focus: 'MC4R Agonism', halfLife: '~2-3 Hours' },
-  { name: 'Evo CJC-1295', category: 'GH Performance', formula: 'C165H271N47O46', mass: '3647.2 g/mol', focus: 'Pituitary GH', halfLife: '~30 Min' },
   { name: 'Evo GHK-Cu', category: 'Tissue Repair/Anti-Aging', formula: 'C14H24N6O4', mass: '340.38 g/mol', focus: 'Copper-Dependent Repair', halfLife: '~30 Min' },
   { name: 'Evo PT-141', category: 'CNS Performance', formula: 'C50H68N14O10', mass: '1025.2 g/mol', focus: 'MC3R/MC4R Agonism', halfLife: '~2 Hours' }
 ];
@@ -176,11 +117,6 @@ export const BLOG_POSTS: BlogPost[] = [
 
 export const COA_DATA: COADocument[] = [
   { id: 'c1', productName: 'Retatrutide 20mg', batchNumber: 'EVO-RT-0092', purity: '99.8%', date: '2023-11-15' },
-  { id: 'c2', productName: 'Tirzepatide 10mg', batchNumber: 'EVO-TZ-1102', purity: '99.5%', date: '2023-11-10' },
-  { id: 'c3', productName: 'BPC-157 5mg', batchNumber: 'EVO-BP-0044', purity: '99.9%', date: '2023-10-22' },
-  { id: 'c4', productName: 'TB-500 5mg', batchNumber: 'EVO-TB-0881', purity: '99.6%', date: '2023-10-25' },
-  { id: 'c5', productName: 'CJC-1295 (No DAC)', batchNumber: 'EVO-CJ-4412', purity: '99.7%', date: '2023-11-20' },
-  { id: 'c6', productName: 'Melanotan II 10mg', batchNumber: 'EVO-MT-0031', purity: '99.4%', date: '2024-02-05' },
   { id: 'c7', productName: 'GHK-Cu 50mg', batchNumber: 'EVO-GK-0021', purity: '99.9%', date: '2023-12-05' },
   { id: 'c8', productName: 'BPC-157 + TB-500 Blend', batchNumber: 'EVO-BL-9921', purity: '99.8%', date: '2024-01-15' },
   { id: 'c9', productName: 'PT-141 10mg', batchNumber: 'EVO-PT-0772', purity: '99.7%', date: '2024-01-20' },
