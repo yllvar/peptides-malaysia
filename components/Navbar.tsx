@@ -52,8 +52,8 @@ const Navbar: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col">
-                <span className="font-display font-bold text-xl tracking-tight text-white leading-none group-hover:text-gray-200 transition-colors">
-                  EVO<span className="text-evo-orange">PEPTIDES</span>
+                <span className="font-display font-bold text-lg tracking-[0.2em] text-white leading-none group-hover:text-evo-orange transition-colors uppercase">
+                  EVO<span className="text-white">PEPTIDES</span>
                 </span>
               </div>
             </Link>
@@ -110,7 +110,7 @@ const Navbar: React.FC = () => {
                       </div>
                     </div>
                   )}
-                  <Link to="/orders" className="flex items-center gap-2 text-xs font-bold uppercase text-gray-300 hover:text-white transition-colors group">
+                  <Link to="/orders" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-gray-300 hover:text-white transition-colors group">
                     <UserIcon className="h-4 w-4 group-hover:text-evo-orange" />
                     <span className="hidden xl:inline">History</span>
                   </Link>
@@ -121,16 +121,16 @@ const Navbar: React.FC = () => {
               ) : (
                 <Link
                   to="/login"
-                  className="hidden md:flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-white/10 hover:border-evo-orange/50 transition-all text-gray-300 hover:text-white"
+                  className="hidden md:flex items-center gap-2 px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/10 hover:border-evo-orange/50 transition-all text-gray-300 hover:text-white"
                 >
-                  <UserIcon className="h-4 w-4" />
-                  <span>Login</span>
+                  <UserIcon className="h-3.5 w-3.5" />
+                  <span>LOGIN</span>
                 </Link>
               )}
 
               {/* Cart Button */}
-              <Link to="/cart" className="relative group p-2 hover:bg-white/5 rounded-full transition-colors">
-                <ShoppingCart className={`h-5 w-5 transition-colors ${cartCount > 0 ? 'text-white' : 'text-gray-400 group-hover:text-evo-orange'}`} />
+              <Link to="/cart" className="relative group p-2 hover:bg-white/5 rounded-full transition-colors flex items-center justify-center">
+                <ShoppingCart className={`h-4 w-4 transition-colors ${cartCount > 0 ? 'text-white' : 'text-gray-400 group-hover:text-evo-orange'}`} />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-evo-orange text-[9px] font-bold text-white shadow-[0_0_10px_rgba(255,77,0,0.5)]">
                     {cartCount}
