@@ -92,12 +92,21 @@ export async function POST(request: Request) {
         formData.append('billPhone', shippingInfo.phone);
 
         // 5. Call ToyyibPay
+        console.log(`Calling ToyyibPay at: ${baseUrl}/index.php/api/createBill`);
         const tpResponse = await fetch(`${baseUrl}/index.php/api/createBill`, {
             method: 'POST',
             body: formData,
         });
 
-        const data = await tpResponse.json();
+        const rawText = await tpResponse.text();
+        console.log('ToyyibPay Raw Response:', rawText);
+
+        let data;
+        try {
+            data = JSON.parse(rawText);
+        } catch (e) {
+            console.error('Failed to parse ToyyibPay JSON:', rawText);
+        }
 
         if (Array.isArray(data) && data[0]?.BillCode) {
             const billCode = data[0].BillCode;
@@ -116,7 +125,10 @@ export async function POST(request: Request) {
 
             return Response.json({ paymentUrl, orderId: order.id });
         } else {
-            return Response.json({ error: 'Failed to generate payment link' }, { status: 500 });
+            console.error('ToyyibPay Error Payload:', data);
+            return Response.json({
+                error: (Array.isArray(data) && typeof data[0] === 'string') ? data[0] : 'Failed to generate payment link'
+            }, { status: 500 });
         }
 
     } catch (error: any) {
