@@ -64,6 +64,10 @@ describe('Checkout Webhook API', () => {
         expect(response.status).toBe(200);
         expect(data.success).toBe(true);
 
+        // Verify ToyyibPay Verification URL usage (default to sandbox in tests)
+        const [url] = (global.fetch as any).mock.calls[0];
+        expect(url).toBe('https://dev.toyyibpay.com/index.php/api/getBillTransactions');
+
         // Check if stock update was called for each product
         expect(prisma.product.update).toHaveBeenCalledTimes(2);
     });

@@ -27,6 +27,12 @@ export async function POST(request: Request) {
             if (!product) {
                 return Response.json({ error: `Product ${item.id} not found` }, { status: 404 });
             }
+            if (!item.quantity || item.quantity <= 0) {
+                return Response.json({ error: `Invalid quantity for item ${item.id}` }, { status: 400 });
+            }
+            if (product.stockQuantity < item.quantity) {
+                return Response.json({ error: `Insufficient stock for ${product.name}. Available: ${product.stockQuantity}` }, { status: 400 });
+            }
             const price = Number(product.price);
             calculatedSubtotal += price * item.quantity;
             validatedItems.push({
@@ -69,8 +75,7 @@ export async function POST(request: Request) {
 
         // 4. Prepare ToyyibPay Payload
         const formData = new URLSearchParams();
-        // FORCE Sandbox for verification
-        const baseUrl = 'https://dev.toyyibpay.com';
+        const baseUrl = (process.env.TOYYIBPAY_BASE_URL || 'https://dev.toyyibpay.com').trim();
 
         formData.append('userSecretKey', (process.env.TOYYIBPAY_SECRET_KEY || '').trim());
         formData.append('categoryCode', (process.env.TOYYIBPAY_CATEGORY_CODE || '').trim());

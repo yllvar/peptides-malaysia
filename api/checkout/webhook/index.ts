@@ -13,7 +13,9 @@ async function verifyPaymentWithGateway(billCode: string): Promise<boolean> {
         const verifyData = new URLSearchParams();
         verifyData.append('billCode', billCode);
 
-        const response = await fetch('https://toyyibpay.com/index.php/api/getBillTransactions', {
+        const baseUrl = (process.env.TOYYIBPAY_BASE_URL || 'https://dev.toyyibpay.com').trim();
+
+        const response = await fetch(`${baseUrl}/index.php/api/getBillTransactions`, {
             method: 'POST',
             body: verifyData,
         });

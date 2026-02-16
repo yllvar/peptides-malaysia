@@ -116,11 +116,15 @@ describe('Checkout API', () => {
         const data = await res.json();
 
         expect(res.status).toBe(200);
-        expect(data.paymentUrl).toBe('https://toyyibpay.com/BILL123');
+        expect(data.paymentUrl).toBe('https://dev.toyyibpay.com/BILL123');
 
-        // Subtotal: 2 * 100 = 200
-        // Shipping Zone A: 8
-        // Total: 208
+        // Verify ToyyibPay Payload
+        const [url, options] = mockFetch.mock.calls[0];
+        expect(url).toBe('https://dev.toyyibpay.com/index.php/api/createBill');
+        const body = options.body as URLSearchParams;
+        expect(body.get('billPriceSetting')).toBe('0');
+        expect(body.get('billAmount')).toBe('20800'); // RM208.00 in cents
+
         expect(prisma.order.create).toHaveBeenCalledWith(expect.objectContaining({
             data: expect.objectContaining({
                 subtotal: 200,
@@ -239,5 +243,24 @@ describe('Checkout API', () => {
                 guestName: undefined
             })
         }));
+    });
+
+    it('should respect TOYYIBPAY_BASE_URL override', async () => {
+        process.env.TOYYIBPAY_BASE_URL = 'https://custom-gate.com';
+        const orderData = {
+            items: [{ id: 'p1', name: 'P1', quantity: 1 }],
+            shippingInfo: { fullName: 'U', email: 'u@e.com', phone: '1', address: 'A', city: 'C', postcode: '40000' }
+        };
+
+        (prisma.order.create as any).mockResolvedValue({ id: 'o-1' });
+        (prisma.orderPayment.create as any).mockResolvedValue({});
+        mockFetch.mockResolvedValue({ json: async () => [{ BillCode: 'BC' }] });
+
+        const res = await checkoutPOST(new Request('h', { method: 'POST', body: JSON.stringify(orderData) }));
+        const data = await res.json();
+
+        expect(data.paymentUrl).toBe('https://custom-gate.com/BC');
+        const [url] = mockFetch.mock.calls[0];
+        expect(url).toBe('https://custom-gate.com/index.php/api/createBill');
     });
 });
