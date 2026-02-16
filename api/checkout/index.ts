@@ -84,8 +84,8 @@ export async function POST(request: Request) {
         formData.append('billPriceSetting', '0');
         formData.append('billPayorInfo', '1');
         formData.append('billAmount', Math.round(finalTotal * 100).toString());
-        formData.append('billReturnUrl', `${process.env.VITE_APP_URL || 'https://peptides-malaysia.vercel.app'}/payment/status`);
-        formData.append('billCallbackUrl', `${process.env.VITE_APP_URL || 'https://peptides-malaysia.vercel.app'}/api/checkout/webhook`);
+        formData.append('billReturnUrl', `${process.env.VITE_APP_URL || 'https://evopeptides.shop'}/payment/status`);
+        formData.append('billCallbackUrl', `${process.env.VITE_APP_URL || 'https://evopeptides.shop'}/api/checkout/webhook`);
         formData.append('billExternalReferenceNo', order.id);
         formData.append('billTo', shippingInfo.fullName);
         formData.append('billEmail', shippingInfo.email);

@@ -17,7 +17,7 @@ const Contact: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const fullMessage = `*NEW INQUIRY - PEPTIDES MALAYSIA*\n\n` +
+    const fullMessage = `*NEW INQUIRY - EVO PEPTIDES*\n\n` +
       `*From:* ${formData.firstName} ${formData.lastName}\n` +
       `*Email:* ${formData.email}\n` +
       `*Type:* ${formData.inquiryType}\n\n` +
@@ -64,7 +64,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <div className="text-sm text-gray-400">Email Inquiries</div>
-                    <div className="text-white font-bold text-lg">support@peptidesmalaysia.com</div>
+                    <div className="text-white font-bold text-lg">support@evopeptides.shop</div>
                   </div>
                 </div>
 

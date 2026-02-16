@@ -68,7 +68,7 @@ describe('Contact Page', () => {
 
     it('displays email and location info', () => {
         renderContact();
-        expect(screen.getByText('support@peptidesmalaysia.com')).toBeInTheDocument();
+        expect(screen.getByText('support@evopeptides.shop')).toBeInTheDocument();
         const locationElements = screen.getAllByText('Kuala Lumpur, Malaysia');
         expect(locationElements.length).toBeGreaterThanOrEqual(1);
     });
