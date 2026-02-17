@@ -9,9 +9,11 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1">
-            <span className="font-display font-bold text-2xl text-white tracking-tighter italic uppercase">
-              EVO<span className="text-gray-500">PEPTIDES</span>
-            </span>
+            <Link to="/" className="inline-block group">
+              <span className="font-display font-bold text-2xl text-white tracking-tighter italic uppercase transition-colors group-hover:text-evo-orange">
+                EVO<span className="text-gray-500 group-hover:text-white transition-colors">PEPTIDES</span>
+              </span>
+            </Link>
             <p className="mt-4 text-sm text-gray-400 leading-relaxed">
               Redefining the peak of Malaysian research standards. Premium grade compounds for laboratory use only.
             </p>
@@ -26,8 +28,8 @@ const Footer: React.FC = () => {
             <h3 className="text-sm font-semibold text-white tracking-wider uppercase mb-4">Shop</h3>
             <ul className="space-y-3">
               <li><Link to="/shop" className="text-gray-400 hover:text-evo-orange text-sm transition-colors">All Products</Link></li>
-              <li><Link to="/shop" className="text-gray-400 hover:text-evo-orange text-sm transition-colors">Weight Management</Link></li>
-              <li><Link to="/shop" className="text-gray-400 hover:text-evo-orange text-sm transition-colors">Recovery</Link></li>
+              <li><Link to="/shop?category=Weight Management" className="text-gray-400 hover:text-evo-orange text-sm transition-colors">Weight Management</Link></li>
+              <li><Link to="/shop?category=Recovery" className="text-gray-400 hover:text-evo-orange text-sm transition-colors">Recovery</Link></li>
             </ul>
           </div>
 

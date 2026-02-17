@@ -2,12 +2,25 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../src/hooks/useProducts';
 import { WHATSAPP_NUMBER } from '../src/constants';
+import { useSearchParams } from 'react-router-dom';
 
 const Shop: React.FC = () => {
-  const [filter, setFilter] = useState<string>('All');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialFilter = searchParams.get('category') || 'All';
+  const [filter, setFilter] = useState<string>(initialFilter);
   const categories = ['All', 'Weight Management', 'Recovery', 'Performance', 'Anti-Aging'];
 
   const { data: products, isLoading, error } = useProducts();
+
+  const handleFilterChange = (cat: string) => {
+    setFilter(cat);
+    if (cat === 'All') {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', cat);
+    }
+    setSearchParams(searchParams);
+  };
 
   if (isLoading) return <div className="pt-32 text-center text-white">Loading products...</div>;
   if (error) return <div className="pt-32 text-center text-red-500">Error loading products.</div>;
@@ -44,7 +57,7 @@ const Shop: React.FC = () => {
             {categories.map(cat => (
               <button
                 key={cat}
-                onClick={() => setFilter(cat)}
+                onClick={() => handleFilterChange(cat)}
                 className={`px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all duration-300 ${filter === cat
                   ? 'bg-evo-orange text-white shadow-[0_0_20px_rgba(255,77,0,0.4)]'
                   : 'bg-transparent text-gray-500 hover:text-white hover:bg-white/5'
