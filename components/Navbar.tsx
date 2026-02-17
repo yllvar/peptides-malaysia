@@ -45,12 +45,7 @@ const Navbar: React.FC = () => {
 
             {/* --- LEFT SIDE: LOGO --- */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-evo-orange blur opacity-20 group-hover:opacity-60 transition-opacity duration-500"></div>
-                <div className="relative bg-neutral-900 border border-white/10 p-1 rounded-lg group-hover:border-evo-orange/50 transition-colors overflow-hidden">
-                  <img src="/logo/reta-logo.png" alt="Evo Logo" className="h-9 w-9 object-contain" />
-                </div>
-              </div>
+              <img src="/logo/header-logo-grey.png" alt="Evo Peptides" className="h-8 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity" />
             </Link>
 
             {/* --- RIGHT SIDE: NAV + ACTIONS --- */}

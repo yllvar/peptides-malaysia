@@ -1,64 +1,87 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, Zap, Truck, FlaskConical, Flame, Activity, Dumbbell, ChevronRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Zap, Truck, FlaskConical, Flame, Activity, Dumbbell, ChevronRight, Clock } from 'lucide-react';
 import { PRODUCTS } from '../src/constants';
 
 const Home: React.FC = () => {
   const featuredProduct = PRODUCTS[0]; // Retatrutide Kit
+  const [timeLeft, setTimeLeft] = React.useState(1621); // 27:01 in seconds
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 1621));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
 
   return (
     <div className="bg-evo-black overflow-hidden relative">
 
 
       {/* Hero Section - Simplified Evo-Noir Implementation */}
-      <section className="relative h-screen min-h-[700px] flex items-center z-10">
-        {/* Stable Background Asset */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/images/evo-header-bg.png"
-            alt="Evo Peptides Laboratory Excellence"
-            className="w-full h-full object-cover"
-          />
-          {/* Subtle bottom fade to blend with next section */}
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-evo-black to-transparent"></div>
+      {/* Mobile-First Hero Section */}
+      <div className="bg-evo-lime text-black font-bold py-2 px-4 flex items-center justify-between text-xs md:text-sm uppercase tracking-wider relative z-40 mt-20">
+        <div className="flex items-center gap-2">
+          <span className="text-lg">🇲🇾</span>
+          <div className="bg-red-500 text-white rounded-full p-0.5"><Clock size={12} /></div>
+          <span>Limited Stock!</span>
+        </div>
+        <div className="font-mono text-lg tracking-widest font-black bg-black text-white px-2 rounded">
+          {formatTime(timeLeft)}
+        </div>
+      </div>
+
+      <section className="relative bg-gradient-to-b from-[#1a0b2e] via-black to-black pt-12 pb-24 px-4 overflow-hidden">
+        {/* Background Blob - Positioned behind the product */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-40 pointer-events-none">
+          <img src="/images/evo-blob.png" alt="Blob" className="w-full h-full object-contain blur-3xl" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full pt-20 pb-10">
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-            {/* Badge */}
-            <div className="inline-flex items-center px-3 py-1 rounded-full border border-evo-orange/20 bg-black/60 backdrop-blur-md mb-6 animate-fade-in-up">
-              <span className="w-1.5 h-1.5 rounded-full bg-evo-orange mr-2 animate-pulse shadow-[0_0_8px_#ff4d00]"></span>
-              <span className="text-white text-[9px] font-bold tracking-[0.2em] uppercase">Malaysian Ready Stock</span>
-            </div>
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-2 leading-[0.9] uppercase italic tracking-tighter">
+            Sporty Luxury <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-evo-lime to-white">Science Evolved.</span>
+          </h1>
 
-            {/* Headline - Scaled down for harmony */}
-            <h1 className="text-5xl md:text-7xl xl:text-8xl font-display font-bold text-white mb-6 tracking-tight leading-[0.9] animate-fade-in-up delay-100 uppercase italic">
-              SPORTY <span className="text-gray-500">LUXURY.</span><br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-evo-orange to-red-600">SCIENCE EVOLVED.</span>
-            </h1>
-
-            {/* Subtext - Compact and balanced */}
-            <p className="text-base md:text-lg text-gray-400 mb-10 max-w-lg leading-relaxed font-light animate-fade-in-up delay-200 italic border-l border-white/10 pl-5">
-              The exclusive gateway to Evo™ Laboratory Excellence. <br className="hidden md:block" />
-              High-performance research peptides for the elite scientific community.
-            </p>
-
-            {/* Buttons - Sized for balance */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 animate-fade-in-up delay-300">
-              <Link
-                to="/shop"
-                className="group relative px-8 py-3.5 bg-evo-orange hover:bg-evo-orangeHover text-white font-bold tracking-widest rounded transition-all shadow-[0_10px_30px_rgba(255,77,0,0.3)] hover:scale-105"
-              >
-                <span className="flex items-center text-xs uppercase">SHOP COLLECTION <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" /></span>
-              </Link>
-              <Link
-                to="/about"
-                className="px-8 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold tracking-widest rounded backdrop-blur-sm transition-all text-xs uppercase"
-              >
-                OUR DNA
-              </Link>
-            </div>
+          {/* Main Product Image (3 Bottles) */}
+          <div className="relative w-full max-w-sm md:max-w-md mx-auto mb-8 mt-8 animate-float">
+            <img
+              src="/images/evo-landing-header.png"
+              alt="Evo Peptides Research Kit"
+              className="w-full h-auto drop-shadow-[0_0_50px_rgba(204,255,0,0.2)]"
+            />
           </div>
+
+          <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-10 max-w-lg mx-auto font-light px-4">
+            The exclusive gateway to Evo™ Laboratory Excellence.<br className="hidden md:block" />
+            High-performance research peptides for the elite scientific community.
+          </p>
+
+          <div className="flex flex-col gap-4 max-w-xs mx-auto w-full">
+            <button
+              onClick={() => window.location.href = '/shop'}
+              className="w-full py-4 bg-evo-lime text-black font-black text-lg rounded-full uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(204,255,0,0.4)]"
+            >
+              Add to Cart
+            </button>
+            <Link
+              to="/about"
+              className="w-full py-4 bg-white text-black font-black text-lg rounded-full uppercase tracking-widest hover:bg-gray-200 hover:scale-105 transition-all text-center"
+            >
+              See how it works
+            </Link>
+          </div>
+        </div>
+
+        {/* Gold Stroke Bottom */}
+        <div className="absolute bottom-0 left-0 w-full pointer-events-none z-20">
+          <img src="/images/evo-gold-stroke.png" alt="" className="w-full h-auto object-cover opacity-80" />
         </div>
       </section>
 
