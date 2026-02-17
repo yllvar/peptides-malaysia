@@ -165,12 +165,12 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 
-            {/* Image Side - Centered Spotlight */}
-            <div className="order-2 lg:order-1 relative py-12 flex justify-center items-center">
+            {/* Image Side - Centered Spotlight (TOP on mobile) */}
+            <div className="order-1 lg:order-1 relative py-12 flex justify-center items-center">
               {/* Local Spotlight */}
               <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 aspect-square bg-evo-orange/20 blur-[120px] rounded-full opacity-30 pointer-events-none"></div>
 
-              <div className="relative z-10 w-full max-w-md">
+              <div className="relative z-10 w-full max-w-md px-10">
                 <img
                   src="/images/evo-research-kit.png"
                   alt="Evo Research Kit"
@@ -179,8 +179,8 @@ const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* Text Side */}
-            <div className="order-1 lg:order-2 space-y-8">
+            {/* Text Side (BOTTOM on mobile) */}
+            <div className="order-2 lg:order-2 space-y-8">
               <div>
                 <div className="inline-block px-3 py-1 border border-evo-orange/30 text-evo-orange text-[10px] font-bold tracking-[0.3em] uppercase mb-4 rounded-sm">FLAGSHIP SERIES</div>
                 <h2 className="text-5xl md:text-7xl font-display font-bold text-white leading-none italic uppercase">
