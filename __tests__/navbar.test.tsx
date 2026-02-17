@@ -24,7 +24,7 @@ describe('Navbar Component', () => {
     it('renders the official logo image', () => {
         mockGetItemCount.mockReturnValue(0);
         renderWithRouter(<Navbar />);
-        expect(screen.getByAltText('Evo Logo')).toBeInTheDocument();
+        expect(screen.getByAltText('Evo Peptides')).toBeInTheDocument();
     });
 
     it('renders all navigation links', () => {
