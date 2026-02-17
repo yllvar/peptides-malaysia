@@ -25,8 +25,21 @@ const ProductDetail: React.FC = () => {
   }
 
   const handleWhatsAppBuy = () => {
-    const priceText = product.price > 0 ? `RM${product.price}` : 'price upon request';
-    const message = `Hi Evo Peptides, I would like to purchase the ${product.name} (${priceText}). Is it in stock?`;
+    const priceText = product.price > 0 ? `RM${product.price.toFixed(2)}` : 'TBA';
+
+    const message = `🚀 *NEW EVO™ RESEARCH ORDER*
+*Product:* ${product.name}
+*Quantity:* 1 Kit
+*Total Amount:* ${priceText}
+
+*Customer Details:*
+* Name: 
+* Location: [City/State - e.g. Penang / JB / Kuching / Singapore]
+* Shipping Preference: [Standard J&T / Same-Day Lalamove / International Air]
+
+*Payment Status:* [Pending / Receipt Attached]
+_I have read and accepted the Research Use Only terms for the Evo™ Series._`;
+
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
