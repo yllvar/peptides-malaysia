@@ -22,6 +22,7 @@ import OrderHistory from './pages/OrderHistory';
 import AdminOrders from './pages/admin/Orders';
 import AdminProducts from './pages/admin/Products';
 import AdminDashboard from './pages/admin/Dashboard';
+import RetatrutideGuidance from './pages/RetatrutideGuidance';
 import NotFound from './pages/NotFound';
 import { WHATSAPP_NUMBER } from './src/constants';
 
@@ -50,6 +51,7 @@ const AppContent: React.FC = () => {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/lab-testing" element={<LabTesting />} />
           <Route path="/education" element={<Education />} />
+          <Route path="/guidance/retatrutide-20mg" element={<RetatrutideGuidance />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />

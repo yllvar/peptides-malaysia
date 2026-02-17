@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../src/hooks/useProducts';
 import { useCartStore } from '../src/stores/cartStore';
 import { WHATSAPP_NUMBER, STORAGE_PROTOCOLS } from '../src/constants';
-import { Check, AlertCircle, ShoppingCart, MessageCircle, FileText, Activity, CheckCircle2 } from 'lucide-react';
+import { Check, AlertCircle, ShoppingCart, MessageCircle, FileText, Activity, CheckCircle2, ChevronRight } from 'lucide-react';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -192,6 +192,23 @@ const ProductDetail: React.FC = () => {
                         </ul>
                       </div>
                     </div>
+                    {product.name.toLowerCase().includes('retatrutide') && (
+                      <Link
+                        to="/guidance/retatrutide-20mg"
+                        className="flex items-center justify-between p-4 bg-evo-lime/5 border border-evo-lime/20 rounded group hover:border-evo-lime transition-all mb-4"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="bg-evo-lime p-2 rounded-full text-black">
+                            <FileText size={16} />
+                          </div>
+                          <div>
+                            <div className="text-white font-bold text-xs uppercase tracking-widest">Retatrutide Protocol v1.4</div>
+                            <div className="text-[10px] text-gray-500 uppercase font-medium">9-Step Visual Preparation Guide</div>
+                          </div>
+                        </div>
+                        <ChevronRight className="h-4 w-4 text-evo-lime group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    )}
                     <p className="text-xs">Optimized for <strong>Evo™ Bacteriostatic (BAC) Water</strong> (0.9% Benzyl Alcohol).</p>
                   </div>
                 )}
