@@ -85,55 +85,55 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* EVO DNA Section - New Design */}
-      <section className="bg-evo-black relative z-10">
-        {/* Full Width Impact Image */}
-        <div className="w-full h-[400px] md:h-[600px] overflow-hidden">
-          <img
-            src="/images/evo-research.png"
-            alt="Evo Research DNA"
-            className="w-full h-full object-cover"
-          />
-        </div>
+      {/* EVO DNA Section - Refined Design */}
+      <section className="bg-evo-black py-20 relative z-10">
+        <div className="max-w-4xl mx-auto px-4">
+          {/* Constrained Impact Image */}
+          <div className="relative w-full aspect-[4/3] md:aspect-[16/9] overflow-hidden rounded-2xl mb-12 shadow-[0_0_50px_rgba(255,255,255,0.05)]">
+            <img
+              src="/images/evo-research.png"
+              alt="Evo Research DNA"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
 
-        {/* Protocols Listing */}
-        <div className="bg-[#0a0a1a] py-12 px-6">
-          <div className="max-w-xl mx-auto">
-            <h2 className="text-6xl md:text-7xl font-display font-bold text-white text-center mb-10 uppercase tracking-tighter">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl md:text-6xl font-display font-bold text-white mb-2 uppercase tracking-tighter italic">
               EVO DNA
             </h2>
+            <div className="w-16 h-1 bg-evo-orange mx-auto rounded-full"></div>
+          </div>
 
-            <div className="flex flex-col gap-4">
-              {[
-                {
-                  title: 'WEIGHT MANAGEMENT',
-                  desc: 'Optimal weight with triple-agonist precision for lasting results.',
-                  path: '/shop'
-                },
-                {
-                  title: 'RECOVERY & HEALING',
-                  desc: 'Accelerate muscle repair and speed healing to get you back faster.',
-                  path: '/shop'
-                },
-                {
-                  title: 'PERFORMANCE',
-                  desc: 'Boost energy metabolism to elevate output for superior athletic results.',
-                  path: '/shop'
-                }
-              ].map((item, idx) => (
-                <Link
-                  key={idx}
-                  to={item.path}
-                  className="group bg-white rounded-2xl p-5 flex items-center justify-between border-l-[6px] border-evo-orange hover:scale-[1.02] transition-transform shadow-lg"
-                >
-                  <div className="flex-1 pr-4">
-                    <h3 className="text-xl font-display font-bold text-black leading-tight uppercase italic">{item.title}</h3>
-                    <p className="text-gray-600 text-xs mt-1 font-medium leading-snug">{item.desc}</p>
-                  </div>
-                  <ChevronRight className="h-10 w-10 text-evo-orange transition-transform group-hover:translate-x-1" strokeWidth={3} />
-                </Link>
-              ))}
-            </div>
+          <div className="flex flex-col gap-4 max-w-2xl mx-auto">
+            {[
+              {
+                title: 'WEIGHT MANAGEMENT',
+                desc: 'Optimal weight with triple-agonist precision for lasting results.',
+                path: '/shop'
+              },
+              {
+                title: 'RECOVERY & HEALING',
+                desc: 'Accelerate muscle repair and speed healing to get you back faster.',
+                path: '/shop'
+              },
+              {
+                title: 'PERFORMANCE',
+                desc: 'Boost energy metabolism to elevate output for superior athletic results.',
+                path: '/shop'
+              }
+            ].map((item, idx) => (
+              <Link
+                key={idx}
+                to={item.path}
+                className="group bg-white rounded-xl p-4 flex items-center justify-between border-l-[4px] border-evo-orange hover:bg-gray-50 transition-all shadow-md"
+              >
+                <div className="flex-1 pr-4">
+                  <h3 className="text-lg font-display font-bold text-black leading-tight uppercase italic">{item.title}</h3>
+                  <p className="text-gray-500 text-[10px] sm:text-xs mt-0.5 font-medium leading-tight">{item.desc}</p>
+                </div>
+                <ChevronRight className="h-6 w-6 text-evo-orange transition-transform group-hover:translate-x-1" strokeWidth={3} />
+              </Link>
+            ))}
           </div>
         </div>
       </section>
