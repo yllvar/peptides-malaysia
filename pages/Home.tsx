@@ -246,6 +246,66 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Technical Guidance Preview Section - NEW */}
+      <section className="py-24 bg-gradient-to-b from-evo-black to-[#050505] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+            {/* Text Side */}
+            <div className="lg:col-span-5 space-y-8">
+              <div>
+                <div className="inline-block px-3 py-1 bg-evo-lime/10 border border-evo-lime/20 text-evo-lime text-[10px] font-bold tracking-[0.3em] uppercase mb-4 rounded-sm">Protocol v1.4</div>
+                <h2 className="text-5xl md:text-6xl font-display font-bold text-white leading-[0.9] italic uppercase">
+                  TECHNICAL <br />
+                  <span className="text-gray-500 text-3xl md:text-5xl">PREPARATION</span>
+                </h2>
+              </div>
+
+              <p className="text-gray-400 text-lg leading-relaxed font-light italic border-l-2 border-evo-lime pl-8">
+                Master the precision of Retatrutide 20mg unit reconstitution. Ensure maximum peptide integrity through our validated 9-step laboratory protocol.
+              </p>
+
+              <div className="space-y-4">
+                {[
+                  'Validated Solution Clarity',
+                  'Optimized Storage Parameters',
+                  'Syringe Unit Titration'
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3 text-[10px] font-bold text-white/50 uppercase tracking-widest italic group">
+                    <div className="w-1.5 h-1.5 bg-evo-lime rounded-full"></div>
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              <Link
+                to="/guidance/retatrutide-20mg"
+                className="inline-flex items-center gap-4 bg-white text-black px-10 py-5 rounded-full font-black uppercase tracking-[0.2em] text-xs hover:bg-evo-lime transition-all group shadow-2xl"
+              >
+                View Full Protocol <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+
+            {/* Image Side - Teaser */}
+            <div className="lg:col-span-7 relative">
+              <div className="absolute -inset-10 bg-evo-lime/5 blur-[100px] rounded-full pointer-events-none"></div>
+              <div className="relative z-10 rounded-2xl border border-white/5 overflow-hidden shadow-[0_0_50px_rgba(193,255,114,0.1)] group">
+                <img
+                  src="/images/evo-education-1.png"
+                  alt="Protocol Preparation Preview"
+                  className="w-full h-auto transform group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-evo-black via-transparent to-transparent opacity-60"></div>
+                <div className="absolute bottom-6 left-6 flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-evo-lime flex items-center justify-center text-black font-black text-xs">01</div>
+                  <span className="text-white font-bold text-xs uppercase tracking-widest italic drop-shadow-lg">Initial Sanitization Phase</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
