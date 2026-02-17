@@ -97,16 +97,25 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Section Separator */}
-      <div className="bg-evo-lime py-3 overflow-hidden border-y border-black/10">
-        <div className="flex whitespace-nowrap animate-marquee">
-          {[...Array(10)].map((_, i) => (
-            <span key={i} className="text-black font-black text-[10px] tracking-[0.3em] uppercase mx-8 flex items-center gap-4">
-              <Zap size={14} fill="black" /> 99.9% PURITY HPLC VERIFIED <Zap size={14} fill="black" /> ELITE RESEARCH PROTOCOLS
+      {/* CTA Banner Separator */}
+      <Link to="/shop" className="block bg-evo-lime py-10 relative overflow-hidden group border-y border-black/10">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16">
+          <div className="flex items-center gap-4">
+            <Zap size={32} fill="black" className="animate-pulse" />
+            <span className="text-black font-black text-2xl md:text-4xl italic uppercase tracking-tighter leading-none text-center md:text-left">
+              Join the Elite <br className="md:hidden" /> Research Community
             </span>
-          ))}
+          </div>
+
+          <div className="flex items-center gap-3 bg-black text-white px-12 py-4 rounded-full font-black uppercase tracking-[0.2em] text-sm shadow-2xl group-hover:bg-evo-orange transition-all group-hover:scale-110 group-active:scale-95">
+            Shop Now <ArrowRight size={20} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+          </div>
         </div>
-      </div>
+
+        {/* Subtle Decorative Elements */}
+        <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-white/20 to-transparent pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-32 h-full bg-gradient-to-r from-black/5 to-transparent pointer-events-none"></div>
+      </Link>
 
       {/* EVO DNA Section - Restored High-Impact Design */}
       <section className="bg-evo-black relative z-10">
