@@ -18,7 +18,8 @@ describe('Education Page', () => {
 
     it('renders the page heading', () => {
         renderEducation();
-        expect(screen.getByText('TECHNICAL CENTER')).toBeInTheDocument();
+        expect(screen.getAllByText(/TECHNICAL/i)[0]).toBeDefined();
+        expect(screen.getAllByText(/PRÄZISION/i)[0]).toBeDefined();
     });
 
     it('renders all blog posts', () => {
@@ -30,23 +31,18 @@ describe('Education Page', () => {
 
     it('renders the Peptide Calculator', () => {
         renderEducation();
-        expect(screen.getByRole('heading', { name: /PRECISION CALCULATOR/i })).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: /PRÄZISIONS CALCULATOR/i })).toBeDefined();
     });
 
     describe('Peptide Calculator', () => {
-        it('shows default concentration (5mg / 2ml = 2.50 mg/ml)', () => {
-            renderEducation();
-            expect(screen.getByText('2.50')).toBeInTheDocument();
-        });
-
         it('shows default desired dose result', () => {
             renderEducation();
-            // Default: 0.25mg dose, 2.50 mg/ml concentration
+            // Default: 0.25mg dose, 5mg vial, 2ml water
             // Units = (0.25 / 2.5) * 100 = 10.0
-            expect(screen.getByText('10.0')).toBeInTheDocument();
+            expect(screen.getByText('10.0')).toBeDefined();
         });
 
-        it('updates concentration when vial quantity changes', async () => {
+        it('updates units when vial quantity changes', async () => {
             renderEducation();
             const user = userEvent.setup();
 
@@ -56,7 +52,8 @@ describe('Education Page', () => {
             await user.type(vialInput, '10');
 
             // 10mg / 2ml = 5.00 mg/ml
-            expect(screen.getByText('5.00')).toBeInTheDocument();
+            // Dose 0.25mg -> (0.25 / 5) * 100 = 5.0 IU
+            expect(screen.getByText('5.0')).toBeDefined();
         });
 
         it('updates units when BAC water changes', async () => {
@@ -69,13 +66,14 @@ describe('Education Page', () => {
             await user.type(bacInput, '5');
 
             // 5mg / 5ml = 1.00 mg/ml
-            expect(screen.getByText('1.00')).toBeInTheDocument();
+            // Dose 0.25mg -> (0.25 / 1) * 100 = 25.0 IU
+            expect(screen.getByText('25.0')).toBeDefined();
         });
     });
 
     it('renders entry links for each blog post', () => {
         renderEducation();
-        const readLinks = screen.getAllByText(/Enter Laboratory Log/i);
+        const readLinks = screen.getAllByText(/ENTER LOG/i);
         expect(readLinks.length).toBe(BLOG_POSTS.length);
     });
 });

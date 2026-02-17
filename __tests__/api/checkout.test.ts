@@ -104,7 +104,7 @@ describe('Checkout API', () => {
         (prisma.orderPayment.create as any).mockResolvedValue({});
 
         mockFetch.mockResolvedValue({
-            json: async () => [{ BillCode: 'BILL123' }]
+            text: async () => JSON.stringify([{ BillCode: 'BILL123' }])
         });
 
         const req = new Request('http://localhost/api/checkout', {
@@ -149,7 +149,7 @@ describe('Checkout API', () => {
 
         (prisma.order.create as any).mockResolvedValue({ id: 'order-1' });
         (prisma.orderPayment.create as any).mockResolvedValue({});
-        mockFetch.mockResolvedValue({ json: async () => [{ BillCode: 'B' }] });
+        mockFetch.mockResolvedValue({ text: async () => JSON.stringify([{ BillCode: 'B' }]) });
 
         const res = await checkoutPOST(new Request('h', { method: 'POST', body: JSON.stringify(orderData) }));
 
@@ -178,7 +178,7 @@ describe('Checkout API', () => {
         (prisma.order.create as any).mockResolvedValue({ id: 'order-1' });
 
         mockFetch.mockResolvedValue({
-            json: async () => ({ status: 'error' })
+            text: async () => JSON.stringify({ status: 'error' })
         });
 
         const req = new Request('http://localhost/api/checkout', {
@@ -201,7 +201,7 @@ describe('Checkout API', () => {
 
         (prisma.order.create as any).mockResolvedValue({ id: 'order-guest' });
         (prisma.orderPayment.create as any).mockResolvedValue({});
-        mockFetch.mockResolvedValue({ json: async () => [{ BillCode: 'BILL' }] });
+        mockFetch.mockResolvedValue({ text: async () => JSON.stringify([{ BillCode: 'BILL' }]) });
 
         const req = new Request('http://localhost/api/checkout', {
             method: 'POST',
@@ -228,7 +228,7 @@ describe('Checkout API', () => {
 
         (prisma.order.create as any).mockResolvedValue({ id: 'order-user' });
         (prisma.orderPayment.create as any).mockResolvedValue({});
-        mockFetch.mockResolvedValue({ json: async () => [{ BillCode: 'BILL' }] });
+        mockFetch.mockResolvedValue({ text: async () => JSON.stringify([{ BillCode: 'BILL' }]) });
 
         const req = new Request('http://localhost/api/checkout', {
             method: 'POST',
@@ -254,7 +254,7 @@ describe('Checkout API', () => {
 
         (prisma.order.create as any).mockResolvedValue({ id: 'o-1' });
         (prisma.orderPayment.create as any).mockResolvedValue({});
-        mockFetch.mockResolvedValue({ json: async () => [{ BillCode: 'BC' }] });
+        mockFetch.mockResolvedValue({ text: async () => JSON.stringify([{ BillCode: 'BC' }]) });
 
         const res = await checkoutPOST(new Request('h', { method: 'POST', body: JSON.stringify(orderData) }));
         const data = await res.json();
