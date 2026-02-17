@@ -30,7 +30,7 @@ describe('Static Pages', () => {
     describe('Lab Testing Page', () => {
         it('renders the page heading', () => {
             renderWithRouter(<LabTesting />);
-            expect(screen.getByText(/Evo.*Grade Purity/i)).toBeInTheDocument();
+            expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/LABORATORY TRANSPARENCY LEDGER/i);
         });
 
         it('renders all COA entries', () => {

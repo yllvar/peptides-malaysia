@@ -92,8 +92,10 @@ test.describe('Checkout Flow', () => {
     test('should handle a successful payment redirect and clear the cart', async ({ page }) => {
         // 1. Visit Shop and add a product to populate cart
         await page.goto('/shop');
+        await expect(page.getByRole('heading', { name: /THE EVO/i })).toBeVisible();
         await page.locator('div.grid a.group').first().click();
         await page.getByRole('button', { name: /ADD TO CART/i }).click();
+        await expect(page.getByText(/ADDED TO CART/i)).toBeVisible();
         await expect(page.locator('nav').getByText('1')).toBeVisible();
 
         // 2. Simulate returning from ToyyibPay with a success status
