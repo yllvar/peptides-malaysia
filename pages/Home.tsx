@@ -85,35 +85,55 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Shop By Goal - Enhanced Cards */}
-      <section className="py-32 bg-neutral-950 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl font-display font-bold text-white mb-6">RESEARCH PROTOCOLS</h2>
-            <div className="w-24 h-1 bg-evo-orange mx-auto rounded-full"></div>
-          </div>
+      {/* EVO DNA Section - New Design */}
+      <section className="bg-evo-black relative z-10">
+        {/* Full Width Impact Image */}
+        <div className="w-full h-[400px] md:h-[600px] overflow-hidden">
+          <img
+            src="/images/evo-research.png"
+            alt="Evo Research DNA"
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { title: 'WEIGHT MANAGEMENT', icon: Flame, desc: 'GLP-1 & GIP Agonists. Retatrutide, Tirzepatide, Semaglutide.', gradient: 'from-evo-orange/10' },
-              { title: 'RECOVERY & HEALING', icon: Activity, desc: 'Tissue repair and inflammation modulation. BPC-157, TB-500.', gradient: 'from-white/5' },
-              { title: 'PERFORMANCE', icon: Dumbbell, desc: 'Growth Hormone Secretagogues. CJC-1295, Ipamorelin.', gradient: 'from-evo-orange/5' }
-            ].map((item, idx) => (
-              <Link key={idx} to="/shop" className="group relative bg-neutral-900 border border-white/5 rounded-sm p-12 hover:border-evo-orange transition-all duration-700 overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-t ${item.gradient} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700`}></div>
+        {/* Protocols Listing */}
+        <div className="bg-[#0a0a1a] py-12 px-6">
+          <div className="max-w-xl mx-auto">
+            <h2 className="text-6xl md:text-7xl font-display font-bold text-white text-center mb-10 uppercase tracking-tighter">
+              EVO DNA
+            </h2>
 
-                <div className="relative z-10">
-                  <div className="w-12 h-12 flex items-center justify-center mb-10 border-l border-evo-orange pl-4">
-                    <item.icon className="h-8 w-8 text-white group-hover:text-evo-orange transition-colors" />
+            <div className="flex flex-col gap-4">
+              {[
+                {
+                  title: 'WEIGHT MANAGEMENT',
+                  desc: 'Optimal weight with triple-agonist precision for lasting results.',
+                  path: '/shop'
+                },
+                {
+                  title: 'RECOVERY & HEALING',
+                  desc: 'Accelerate muscle repair and speed healing to get you back faster.',
+                  path: '/shop'
+                },
+                {
+                  title: 'PERFORMANCE',
+                  desc: 'Boost energy metabolism to elevate output for superior athletic results.',
+                  path: '/shop'
+                }
+              ].map((item, idx) => (
+                <Link
+                  key={idx}
+                  to={item.path}
+                  className="group bg-white rounded-2xl p-5 flex items-center justify-between border-l-[6px] border-evo-orange hover:scale-[1.02] transition-transform shadow-lg"
+                >
+                  <div className="flex-1 pr-4">
+                    <h3 className="text-xl font-display font-bold text-black leading-tight uppercase italic">{item.title}</h3>
+                    <p className="text-gray-600 text-xs mt-1 font-medium leading-snug">{item.desc}</p>
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-6 font-display tracking-tight uppercase italic leading-none">{item.title}</h3>
-                  <p className="text-gray-500 text-sm mb-10 leading-relaxed font-light">{item.desc}</p>
-                  <span className="text-white text-[10px] font-bold flex items-center tracking-[0.3em] uppercase group-hover:text-evo-orange transition-colors">
-                    EXPLORE <ChevronRight className="h-3 w-3 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </div>
-              </Link>
-            ))}
+                  <ChevronRight className="h-10 w-10 text-evo-orange transition-transform group-hover:translate-x-1" strokeWidth={3} />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
