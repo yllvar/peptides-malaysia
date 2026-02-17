@@ -10,7 +10,7 @@ export const PRODUCTS: Product[] = [
     price: 580,
     category: 'Weight Management',
     description: 'The absolute zenith of metabolic capability. Retatrutide (GGG Tri-Agonist) paired with our signature bacteriostatic solvent. This combo is designed for advanced research protocols focusing on metabolic efficiency.',
-    image: '/images/evo_retatrutide.jpg',
+    image: '/images/evo-retatrutide.png',
     badge: 'BEST SELLER',
     isNew: true,
     inStock: true,
@@ -35,7 +35,7 @@ export const PRODUCTS: Product[] = [
     price: 0,
     category: 'Recovery',
     description: 'The ultimate recovery synergy. Combining the regenerative power of BPC-157 with the cellular migration capabilities of TB-500 for maximum tissue repair.',
-    image: '/images/evo-bpc-tb.jpeg',
+    image: '/images/evo-bpc-tb.png',
     inStock: true,
     features: ['Synergistic Blend', 'HPLC Verified', 'Elite Recovery Protocol'],
     techSpec: { mass: 'Multiple', halfLife: 'Variable', focus: 'Systemic Regeneration', formula: 'C62H98N16O22 + C212H350N56O78S' }
@@ -46,7 +46,7 @@ export const PRODUCTS: Product[] = [
     price: 0,
     category: 'Anti-Aging',
     description: 'Elite Copper Peptide. Engineered for biological tissue remodeling, collagen synthesis, and DNA repair research protocols.',
-    image: '/images/evo-ghk-cu.jpeg',
+    image: '/images/evo-ghk-cu.png',
     inStock: true,
     features: ['Tissue Remodeling', 'High Concentration 100mg', '99.9% Purity'],
     techSpec: { mass: '340.38 g/mol', halfLife: '~30 Min (Plasma)', focus: 'Copper-Dependent Repair', formula: 'C14H24N6O4' }
@@ -57,7 +57,7 @@ export const PRODUCTS: Product[] = [
     price: 0,
     category: 'Performance',
     description: 'Synthetic peptide agonist of the melanocortin receptors. Research focused on sexual dysfunction and libido enhancement through CNS pathways.',
-    image: '/images/evo-pt-141.jpeg',
+    image: '/images/evo-pt-141.png',
     inStock: true,
     features: ['CNS Agonist', 'Purity Verified', 'Research Grade'],
     techSpec: { mass: '1025.2 g/mol', halfLife: '~2 Hours', focus: 'MC3R/MC4R Agonism', formula: 'C50H68N14O10' }
