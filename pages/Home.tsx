@@ -161,51 +161,57 @@ const Home: React.FC = () => {
       </div>
 
       {/* Research Kit Section - Refined Design */}
-      <section className="py-32 bg-evo-black border-y border-white/5 relative overflow-hidden">
-        {/* Spotlight Effect Background */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(255,77,0,0.1)_0%,_transparent_70%)] pointer-events-none"></div>
-
+      <section className="py-24 bg-evo-black border-y border-white/5 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
 
-            {/* Image Side - Static High-Res Product */}
-            <div className="order-2 lg:order-1 relative flex justify-center py-10">
-              <div className="relative w-full max-w-lg">
+            {/* Image Side - Centered Spotlight */}
+            <div className="order-2 lg:order-1 relative py-12 flex justify-center items-center">
+              {/* Local Spotlight */}
+              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 aspect-square bg-evo-orange/20 blur-[120px] rounded-full opacity-30 pointer-events-none"></div>
+
+              <div className="relative z-10 w-full max-w-md">
                 <img
                   src="/images/evo-research-kit.png"
                   alt="Evo Research Kit"
-                  className="w-full h-auto drop-shadow-[0_0_80px_rgba(255,77,0,0.2)]"
+                  className="w-full h-auto drop-shadow-[0_0_100px_rgba(255,77,0,0.3)] transition-transform hover:scale-105 duration-1000"
                 />
               </div>
             </div>
 
             {/* Text Side */}
-            <div className="order-1 lg:order-2">
-              <div className="inline-block px-3 py-1 border border-evo-orange/30 text-evo-orange text-[10px] font-bold tracking-[0.3em] uppercase mb-8 rounded-sm">FLAGSHIP SERIES</div>
-              <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-8 leading-none italic uppercase">
-                RETATRUTIDE <br />
-                <span className="text-gray-500">RESEARCH KIT</span>
-              </h2>
-              <p className="text-gray-400 mb-10 leading-relaxed text-lg border-l-2 border-evo-orange pl-8 font-light italic">
-                The pinnacle of metabolic research. This exclusive Evo™ kit is engineered for those who demand precision. Sold as a complete research unit to ensure protocol integrity and structural stability.
-              </p>
+            <div className="order-1 lg:order-2 space-y-8">
+              <div>
+                <div className="inline-block px-3 py-1 border border-evo-orange/30 text-evo-orange text-[10px] font-bold tracking-[0.3em] uppercase mb-4 rounded-sm">FLAGSHIP SERIES</div>
+                <h2 className="text-5xl md:text-7xl font-display font-bold text-white leading-none italic uppercase">
+                  RETATRUTIDE <br />
+                  <span className="text-gray-500">RESEARCH KIT</span>
+                </h2>
+              </div>
 
-              <div className="grid grid-cols-2 gap-3 mb-12">
+              <div className="relative">
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-evo-orange"></div>
+                <p className="text-gray-400 leading-relaxed text-lg pl-8 font-light italic">
+                  The pinnacle of metabolic research. This exclusive Evo™ kit is engineered for those who demand precision. Sold as a complete research unit to ensure protocol integrity and structural stability.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
                 {[
                   { icon: ShieldCheck, text: '99.9% PURITY' },
                   { icon: FlaskConical, text: 'SOLVENT INCL.' },
                   { icon: Truck, text: 'KL HUB READY' },
                   { icon: Zap, text: 'TRIPLE-G AGON.' }
                 ].map((tag, i) => (
-                  <div key={i} className="flex items-center text-white bg-white/5 p-3 border border-white/5 hover:border-evo-orange/20 transition-all rounded-sm">
-                    <tag.icon className="h-3.5 w-3.5 text-evo-orange mr-4" />
+                  <div key={i} className="flex items-center text-white bg-white/5 p-3 border border-white/5 hover:border-evo-orange/20 transition-all rounded-sm group/tag">
+                    <tag.icon className="h-3.5 w-3.5 text-evo-orange mr-4 group-hover/tag:scale-110 transition-transform" />
                     <span className="text-[9px] font-bold tracking-widest uppercase">{tag.text}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-10">
-                <div className="text-5xl font-display font-bold text-white italic">RM{featuredProduct.price}</div>
+              <div className="flex flex-col sm:flex-row items-center gap-8 pt-4">
+                <div className="text-5xl font-display font-bold text-white italic tracking-tighter">RM{featuredProduct.price}</div>
                 <Link to={`/product/${featuredProduct.id}`} className="group w-full sm:w-auto px-12 py-5 bg-white text-black font-black hover:bg-evo-orange hover:text-white transition-all text-center uppercase tracking-widest text-xs rounded-full">
                   ANALYSIS DATA <ChevronRight className="inline-block ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
