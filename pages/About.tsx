@@ -24,29 +24,29 @@ const About: React.FC = () => {
         {/* Mission */}
         <div className="mb-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-evo-orange pl-4 uppercase tracking-tighter">THE MISSION</h2>
+            <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-evo-orange pl-4 uppercase tracking-tighter italic">THE MISSION</h2>
             <p className="text-gray-400 leading-relaxed mb-6 font-light">
-              <span className="text-white font-bold italic uppercase">Peptides Malaysia</span> is the primary pulse for advanced biochemistry. We eliminate the reliance on erratic international shipping by providing elite, lab-verified compounds across the entire <span className="text-white font-bold italic">Malaysian Peninsula and Southeast Asian research corridor.</span>
+              <span className="text-white font-bold italic uppercase">Evo Peptides</span> is the operational engine behind the <span className="text-evo-orange font-bold italic uppercase">Evo™ Series</span>. We are here to eliminate the reliance on questionable international shipping by providing elite, lab-verified compounds housed right here in <span className="text-white font-bold italic uppercase">Kuala Lumpur</span>.
             </p>
             <p className="text-gray-400 leading-relaxed font-light italic">
-              Our products are engineered for those who demand surgical precision and maximum stability. We don't just supply; we provide the foundation for the most ambitious research protocols in the region.
+              Our products are engineered for those who demand surgical precision and maximum stability. We don't just supply; we provide the foundation for the most ambitious research protocols in the country.
             </p>
           </div>
           <div className="relative">
             <div className="absolute inset-0 bg-evo-orange/20 blur-3xl rounded-full"></div>
             <div className="relative bg-neutral-900 border border-white/10 p-8 rounded-lg overflow-hidden group">
               <div className="absolute top-0 right-0 w-32 h-32 bg-evo-orange/5 -translate-y-16 translate-x-16 rounded-full group-hover:bg-evo-orange/10 transition-all duration-700"></div>
-              <h3 className="text-white font-bold mb-4 uppercase tracking-wider relative z-10 italic">The Regional Blueprint</h3>
-              <p className="text-sm text-gray-400 mb-6 relative z-10">Evo positions itself as a dominant high-performance hub for the elite Southeast Asian research community.</p>
+              <h3 className="text-white font-bold mb-4 uppercase tracking-wider relative z-10 italic">The Evo™ Blueprint</h3>
+              <p className="text-sm text-gray-400 mb-6 relative z-10 font-light italic">Unlike sterile medical brands, Evo positions itself as a high-performance brand for the elite research community.</p>
               <ul className="space-y-4 relative z-10">
                 <li className="flex items-center text-sm text-gray-300">
-                  <ShieldCheck className="h-4 w-4 text-evo-orange mr-3 shrink-0" /> <span className="uppercase tracking-widest font-bold text-[10px]">Verified Analytical Purity</span>
+                  <ShieldCheck className="h-4 w-4 text-evo-orange mr-3 shrink-0" /> <span className="uppercase tracking-widest font-bold text-[10px]">Evo-Grade Purity (HPLC/MS Verified)</span>
                 </li>
                 <li className="flex items-center text-sm text-gray-300">
                   <Zap className="h-4 w-4 text-evo-orange mr-3 shrink-0" /> <span className="uppercase tracking-widest font-bold text-[10px]">Sporty-Noir Luxury Aesthetic</span>
                 </li>
                 <li className="flex items-center text-sm text-gray-300">
-                  <Truck className="h-4 w-4 text-evo-orange mr-3 shrink-0" /> <span className="uppercase tracking-widest font-bold text-[10px]">Cross-Border Logistics Network</span>
+                  <Truck className="h-4 w-4 text-evo-orange mr-3 shrink-0" /> <span className="uppercase tracking-widest font-bold text-[10px]">KL Ready Stock (Same-Day Hub)</span>
                 </li>
               </ul>
             </div>
@@ -86,7 +86,7 @@ const About: React.FC = () => {
 
         {/* Core Standards */}
         <div className="mb-32">
-          <h2 className="text-2xl md:text-4xl font-display font-bold text-white mb-12 text-center uppercase tracking-tighter italic">CORE RESEARCH STANDARDS</h2>
+          <h2 className="text-2xl md:text-4xl font-display font-bold text-white mb-12 text-center uppercase tracking-tighter italic">CORE STANDARDS</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-evo-orange transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-evo-orange/5 -translate-y-12 translate-x-12 rounded-full group-hover:bg-evo-orange/10 transition-all"></div>
@@ -95,13 +95,13 @@ const About: React.FC = () => {
             </div>
             <div className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-evo-orange transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-evo-orange/5 -translate-y-12 translate-x-12 rounded-full group-hover:bg-evo-orange/10 transition-all"></div>
-              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-widest">02. EVO KIT LOGIC</div>
+              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-widest">02. "EVO KIT" LOGIC</div>
               <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">We bundle our signature peptides with high-purity Evo Bacteriostatic (BAC) Water, ensuring immediate, stable reconstitution.</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-evo-orange transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-evo-orange/5 -translate-y-12 translate-x-12 rounded-full group-hover:bg-evo-orange/10 transition-all"></div>
-              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-widest">03. REGIONAL COMMAND</div>
-              <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">Utilizing hyper-local dispatch for Central regions and specialized Air Freight for East Malaysia and International hubs. Speed and discretion mirrored.</p>
+              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-widest">03. KL COMMAND CENTER</div>
+              <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">Utilizing Lalamove and Grab for same-day delivery in Klang Valley. Speed and discretion mirroring high-performance expectations.</p>
             </div>
           </div>
         </div>
