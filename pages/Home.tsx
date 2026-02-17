@@ -85,6 +85,17 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Section Separator */}
+      <div className="bg-evo-lime py-3 overflow-hidden border-y border-black/10">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {[...Array(10)].map((_, i) => (
+            <span key={i} className="text-black font-black text-[10px] tracking-[0.3em] uppercase mx-8 flex items-center gap-4">
+              <Zap size={14} fill="black" /> 99.9% PURITY HPLC VERIFIED <Zap size={14} fill="black" /> ELITE RESEARCH PROTOCOLS
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* EVO DNA Section - Restored High-Impact Design */}
       <section className="bg-evo-black relative z-10">
         {/* Full Width Impact Image */}
@@ -137,6 +148,17 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Section Separator */}
+      <div className="bg-evo-lime py-3 overflow-hidden border-y border-black/10">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {[...Array(10)].map((_, i) => (
+            <span key={i} className="text-black font-black text-[10px] tracking-[0.3em] uppercase mx-8 flex items-center gap-4">
+              <Zap size={14} fill="black" /> 99.9% PURITY HPLC VERIFIED <Zap size={14} fill="black" /> ELITE RESEARCH PROTOCOLS
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* Research Kit Section - Refined Design */}
       <section className="py-32 bg-evo-black border-y border-white/5 relative overflow-hidden">
