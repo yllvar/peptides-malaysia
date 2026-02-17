@@ -85,6 +85,18 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Brand Showcase - Logo Display */}
+      <section className="bg-evo-black py-16 flex justify-center items-center relative overflow-hidden border-t border-white/5">
+        <div className="absolute inset-0 bg-gradient-to-b from-evo-lime/5 to-transparent pointer-events-none"></div>
+        <div className="relative z-10 w-full max-w-2xl px-8">
+          <img
+            src="/logo/reta-logo.png"
+            alt="Evo Peptides Branding"
+            className="w-full h-auto drop-shadow-[0_0_30px_rgba(193,255,114,0.15)] opacity-90"
+          />
+        </div>
+      </section>
+
       {/* Section Separator */}
       <div className="bg-evo-lime py-3 overflow-hidden border-y border-black/10">
         <div className="flex whitespace-nowrap animate-marquee">
