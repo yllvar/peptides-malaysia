@@ -262,7 +262,7 @@ const Checkout: React.FC = () => {
                                             <div className="text-[10px] text-gray-500 uppercase tracking-[0.1em] mt-0.5 font-medium">Verified Gateway: ToyyibPay Encryption</div>
                                         </div>
                                     </div>
-                                    <img src="/logo/toyibpay-logo.png" alt="ToyyibPay" className="h-7 opacity-50 group-hover:opacity-100 transition-opacity" />
+                                    <img src="/logo/toyibpay-logo.webp" alt="ToyyibPay" className="h-7 opacity-50 group-hover:opacity-100 transition-opacity" />
                                 </div>
                             </section>
 

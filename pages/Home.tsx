@@ -48,11 +48,11 @@ const Home: React.FC = () => {
           <div className="relative w-full max-w-sm md:max-w-md mx-auto mb-4 mt-4">
             {/* Background Blob - Positioned behind the product bottles */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] opacity-60 pointer-events-none z-0">
-              <img src="/images/evo-blob.png" alt="" className="w-full h-full object-contain blur-2xl" />
+              <img src="/images/evo-blob.webp" alt="" className="w-full h-full object-contain blur-2xl" />
             </div>
 
             <img
-              src="/images/evo-landing-header.png"
+              src="/images/evo-landing-header.webp"
               alt="Evo Peptides Research Kit"
               className="relative z-10 w-full h-auto drop-shadow-[0_0_50px_rgba(193,255,114,0.3)]"
             />
@@ -66,7 +66,7 @@ const Home: React.FC = () => {
           <div className="relative flex flex-col gap-4 max-w-xs mx-auto w-full z-20">
             {/* Gold Stroke positioned behind buttons */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250%] h-auto pointer-events-none -z-10">
-              <img src="/images/evo-gold-stroke.png" alt="" className="w-full h-auto object-contain opacity-100" />
+              <img src="/images/evo-gold-stroke.webp" alt="" className="w-full h-auto object-contain opacity-100" />
             </div>
 
             <button
@@ -90,7 +90,7 @@ const Home: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-evo-lime/5 to-transparent pointer-events-none"></div>
         <div className="relative z-10 w-full max-w-2xl px-8">
           <img
-            src="/logo/reta-logo.png"
+            src="/logo/reta-logo.webp"
             alt="Evo Peptides Branding"
             className="w-full h-auto drop-shadow-[0_0_30px_rgba(193,255,114,0.15)] opacity-90"
           />
@@ -122,7 +122,7 @@ const Home: React.FC = () => {
         {/* Full Width Impact Image */}
         <div className="w-full h-[400px] md:h-[600px] overflow-hidden">
           <img
-            src="/images/evo-dna.png"
+            src="/images/evo-dna.webp"
             alt="Evo Research DNA"
             className="w-full h-full object-cover"
           />
@@ -198,7 +198,7 @@ const Home: React.FC = () => {
 
               <div className="relative z-10 w-full max-w-md px-10">
                 <img
-                  src="/images/evo-research-kit.png"
+                  src="/images/evo-research-kit.webp"
                   alt="Evo Research Kit"
                   className="w-full h-auto drop-shadow-[0_0_100px_rgba(255,77,0,0.3)] transition-transform hover:scale-105 duration-1000"
                 />
@@ -292,7 +292,7 @@ const Home: React.FC = () => {
               <div className="absolute -inset-10 bg-evo-lime/5 blur-[100px] rounded-full pointer-events-none"></div>
               <div className="relative z-10 rounded-2xl border border-white/5 overflow-hidden shadow-[0_0_50px_rgba(193,255,114,0.1)] group">
                 <img
-                  src="/images/evo-education-1.png"
+                  src="/images/evo-education-1.webp"
                   alt="Protocol Preparation Preview"
                   className="w-full h-auto transform group-hover:scale-105 transition-transform duration-700"
                 />

@@ -20,7 +20,7 @@ const RetatrutideGuidance: React.FC = () => {
             <section className="relative h-[70vh] flex items-center overflow-hidden">
                 <div className="absolute inset-0">
                     <img
-                        src="/images/reta-2.jpeg"
+                        src="/images/reta-2.webp"
                         alt="Retatrutide Kit Cinematic"
                         className="w-full h-full object-cover opacity-60"
                     />
@@ -75,7 +75,7 @@ const RetatrutideGuidance: React.FC = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="relative group">
                             <div className="absolute -inset-4 bg-evo-orange/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <img src="/images/evo-education-1.png" alt="Preparation" className="relative z-10 rounded-2xl border border-white/5 w-full shadow-2xl" />
+                            <img src="/images/evo-education-1.webp" alt="Preparation" className="relative z-10 rounded-2xl border border-white/5 w-full shadow-2xl" />
                         </div>
                         <div className="space-y-8">
                             {[
@@ -113,7 +113,7 @@ const RetatrutideGuidance: React.FC = () => {
                         </div>
                         <div className="order-1 lg:order-2 relative group">
                             <div className="absolute -inset-4 bg-evo-orange/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <img src="/images/evo-education-3.png" alt="Withdrawal" className="relative z-10 rounded-2xl border border-white/5 w-full shadow-2xl" />
+                            <img src="/images/evo-education-3.webp" alt="Withdrawal" className="relative z-10 rounded-2xl border border-white/5 w-full shadow-2xl" />
                         </div>
                     </div>
 
@@ -121,7 +121,7 @@ const RetatrutideGuidance: React.FC = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         <div className="relative group">
                             <div className="absolute -inset-4 bg-evo-orange/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <img src="/images/evo-education-4.png" alt="Mixing" className="relative z-10 rounded-2xl border border-white/5 w-full shadow-2xl" />
+                            <img src="/images/evo-education-4.webp" alt="Mixing" className="relative z-10 rounded-2xl border border-white/5 w-full shadow-2xl" />
                         </div>
                         <div className="space-y-8">
                             {[
@@ -156,7 +156,7 @@ const RetatrutideGuidance: React.FC = () => {
                         </div>
                         <div className="order-1 lg:order-2 relative group">
                             <div className="absolute -inset-4 bg-evo-orange/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <img src="/images/evo-education-5.png" alt="Final Dissolution" className="relative z-10 rounded-2xl border border-white/5 w-full shadow-2xl" />
+                            <img src="/images/evo-education-5.webp" alt="Final Dissolution" className="relative z-10 rounded-2xl border border-white/5 w-full shadow-2xl" />
                         </div>
                     </div>
                 </div>
@@ -164,7 +164,7 @@ const RetatrutideGuidance: React.FC = () => {
                 {/* Dosage Section */}
                 <div className="mt-48 relative rounded-3xl overflow-hidden border border-white/10">
                     <div className="absolute inset-0">
-                        <img src="/images/reta-3.jpeg" alt="Dosage Backdrop" className="w-full h-full object-cover opacity-20 blur-sm" />
+                        <img src="/images/reta-3.webp" alt="Dosage Backdrop" className="w-full h-full object-cover opacity-20 blur-sm" />
                         <div className="absolute inset-0 bg-evo-black/80"></div>
                     </div>
 
