@@ -37,12 +37,7 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      <section className="relative bg-gradient-to-b from-[#1a0b2e] via-black to-black pt-12 pb-24 px-4 overflow-hidden">
-        {/* Background Blob - Positioned behind the product */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] opacity-40 pointer-events-none">
-          <img src="/images/evo-blob.png" alt="Blob" className="w-full h-full object-contain blur-3xl" />
-        </div>
-
+      <section className="relative bg-gradient-to-b from-[#1a0b2e] via-black to-black pt-12 pb-24 px-4 overflow-hidden z-0">
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-2 leading-[0.9] uppercase italic tracking-tighter">
             Sporty Luxury <br />
@@ -51,10 +46,15 @@ const Home: React.FC = () => {
 
           {/* Main Product Image (3 Bottles) - Static */}
           <div className="relative w-full max-w-sm md:max-w-md mx-auto mb-4 mt-4">
+            {/* Background Blob - Positioned behind the product bottles */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] opacity-60 pointer-events-none z-0">
+              <img src="/images/evo-blob.png" alt="" className="w-full h-full object-contain blur-2xl" />
+            </div>
+
             <img
               src="/images/evo-landing-header.png"
               alt="Evo Peptides Research Kit"
-              className="w-full h-auto drop-shadow-[0_0_50px_rgba(204,255,0,0.2)]"
+              className="relative z-10 w-full h-auto drop-shadow-[0_0_50px_rgba(193,255,114,0.3)]"
             />
           </div>
 
@@ -63,15 +63,15 @@ const Home: React.FC = () => {
             High-performance research peptides for the elite scientific community.
           </p>
 
-          <div className="relative flex flex-col gap-4 max-w-xs mx-auto w-full">
+          <div className="relative flex flex-col gap-4 max-w-xs mx-auto w-full z-20">
             {/* Gold Stroke positioned behind buttons */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-auto pointer-events-none -z-10 opacity-60">
-              <img src="/images/evo-gold-stroke.png" alt="" className="w-full h-auto object-contain" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250%] h-auto pointer-events-none -z-10">
+              <img src="/images/evo-gold-stroke.png" alt="" className="w-full h-auto object-contain opacity-100" />
             </div>
 
             <button
               onClick={() => window.location.href = '/shop'}
-              className="w-full py-4 bg-evo-lime text-black font-black text-lg rounded-full uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(204,255,0,0.4)]"
+              className="w-full py-4 bg-evo-lime text-black font-black text-lg rounded-full uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(193,255,114,0.4)]"
             >
               Add to Cart
             </button>
