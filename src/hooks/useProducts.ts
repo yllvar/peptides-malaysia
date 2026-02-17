@@ -26,6 +26,6 @@ export function useProducts() {
                 } : undefined
             })) as Product[];
         },
-        staleTime: 0, // Keep disabled for now to ensure images refresh
+        staleTime: 1000 * 60 * 5, // 5 minutes cache
     });
 }
