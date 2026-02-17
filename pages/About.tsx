@@ -4,104 +4,110 @@ import { Link } from 'react-router-dom';
 
 const About: React.FC = () => {
   return (
-    <div className="pt-24 pb-16 bg-evo-black min-h-screen">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-24 pb-16 bg-evo-black min-h-screen relative overflow-hidden">
+      {/* Background Decorative Element */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-evo-orange/5 blur-[150px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-block p-3 rounded-full bg-evo-orange/10 mb-6">
-            <Star className="h-8 w-8 text-evo-orange" />
+        <div className="text-center mb-24">
+          <div className="inline-block p-4 rounded-full bg-evo-orange/5 border border-evo-orange/10 mb-8 relative group">
+            <div className="absolute inset-0 bg-evo-orange animate-pulse opacity-20 blur-xl rounded-full scale-125 group-hover:opacity-40 transition-opacity"></div>
+            <ShieldCheck className="h-10 w-10 text-evo-orange relative z-10" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-none">
-            EVO PEPTIDES: <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-evo-orange to-red-600 uppercase">The Vanguard Series.</span>
+          <h1 className="text-5xl md:text-8xl font-display font-bold text-white mb-6 leading-[0.85] italic tracking-tighter uppercase">
+            EVO™ PEPTIDES: <br />
+            <span className="text-gray-500">THE VANGUARD SERIES.</span>
           </h1>
-          <p className="text-xl text-gray-300 tracking-widest uppercase font-light">
-            Redefining the local research landscape with <span className="text-evo-orange">Sporty-Noir Luxury</span>.
-          </p>
+          <h3 className="text-xl md:text-3xl font-display font-bold text-evo-orange tracking-[0.2em] uppercase italic mb-8">
+            German Precision. Pan-Asian Authority.
+          </h3>
+          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-evo-orange to-transparent mx-auto"></div>
         </div>
 
         {/* Mission */}
-        <div className="mb-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-6 border-l-4 border-evo-orange pl-4 uppercase tracking-tighter italic">THE MISSION</h2>
-            <p className="text-gray-400 leading-relaxed mb-6 font-light">
-              <span className="text-white font-bold italic uppercase">Evo Peptides</span> is the operational engine behind the <span className="text-evo-orange font-bold italic uppercase">Evo™ Series</span>. We are here to eliminate the reliance on questionable international shipping by providing elite, lab-verified compounds housed right here in <span className="text-white font-bold italic uppercase">Kuala Lumpur</span>.
+        <div className="mb-32 grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+          <div className="space-y-8">
+            <h2 className="text-2xl font-display font-bold text-white border-l-4 border-evo-orange pl-6 uppercase tracking-widest italic">THE MISSION</h2>
+            <p className="text-gray-400 text-lg leading-relaxed font-light italic">
+              <span className="text-white font-bold uppercase not-italic">Evo™ Peptides</span> is the operational engine bringing world-class German biochemistry to Southeast Asia. We have eliminated the uncertainty of international transit by housing <span className="text-evo-orange font-bold">Germany’s elite, lab-verified compounds</span> right here in our regional hubs.
             </p>
-            <p className="text-gray-400 leading-relaxed font-light italic">
-              Our products are engineered for those who demand surgical precision and maximum stability. We don't just supply; we provide the foundation for the most ambitious research protocols in the country.
+            <p className="text-gray-400 text-lg leading-relaxed font-light italic">
+              Engineered in Germany and curated in Kuala Lumpur, our products are built for researchers who demand surgical precision. We don’t just supply chemicals; we provide the <span className="text-white font-bold">German-engineered foundation</span> for the most ambitious research protocols in Malaysia, Singapore, and Brunei.
             </p>
           </div>
           <div className="relative">
-            <div className="absolute inset-0 bg-evo-orange/20 blur-3xl rounded-full"></div>
-            <div className="relative bg-neutral-900 border border-white/10 p-8 rounded-lg overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-evo-orange/5 -translate-y-16 translate-x-16 rounded-full group-hover:bg-evo-orange/10 transition-all duration-700"></div>
-              <h3 className="text-white font-bold mb-4 uppercase tracking-wider relative z-10 italic">The Evo™ Blueprint</h3>
-              <p className="text-sm text-gray-400 mb-6 relative z-10 font-light italic">Unlike sterile medical brands, Evo positions itself as a high-performance brand for the elite research community.</p>
-              <ul className="space-y-4 relative z-10">
-                <li className="flex items-center text-sm text-gray-300">
-                  <ShieldCheck className="h-4 w-4 text-evo-orange mr-3 shrink-0" /> <span className="uppercase tracking-widest font-bold text-[10px]">Evo-Grade Purity (HPLC/MS Verified)</span>
-                </li>
-                <li className="flex items-center text-sm text-gray-300">
-                  <Zap className="h-4 w-4 text-evo-orange mr-3 shrink-0" /> <span className="uppercase tracking-widest font-bold text-[10px]">Sporty-Noir Luxury Aesthetic</span>
-                </li>
-                <li className="flex items-center text-sm text-gray-300">
-                  <Truck className="h-4 w-4 text-evo-orange mr-3 shrink-0" /> <span className="uppercase tracking-widest font-bold text-[10px]">KL Ready Stock (Same-Day Hub)</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+            {/* German Engineered Seal Placeholder/Illustration */}
+            <div className="relative bg-neutral-900/50 backdrop-blur-xl border border-white/10 p-10 rounded-3xl overflow-hidden group hover:border-evo-orange/30 transition-all duration-700">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-evo-orange/10 -translate-y-20 translate-x-20 rounded-full blur-3xl group-hover:bg-evo-orange/20 transition-all"></div>
 
-        {/* Coverage & Reach - NEW */}
-        <div className="mb-32">
-          <div className="bg-gradient-to-r from-evo-black to-neutral-900 border border-white/10 p-12 rounded-3xl relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-evo-orange/5 blur-[120px] rounded-full pointer-events-none group-hover:bg-evo-orange/10 transition-all duration-1000"></div>
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-8 italic uppercase tracking-tighter">
-                BEYOND BORDERS: <br />
-                <span className="text-evo-orange">THE PAN-ASIAN HUB.</span>
-              </h2>
-              <p className="text-gray-400 text-lg leading-relaxed font-light italic border-l-2 border-evo-orange pl-8 mb-12 max-w-3xl">
-                While our Command Center is rooted in Kuala Lumpur, the Evo™ Series knows no boundaries. Peptides Malaysia is the primary pulse for advanced biochemistry from the northern reaches of <span className="text-white">Penang and Kelantan</span> to the southern gates of <span className="text-white">Johor</span>, spanning across the sea to <span className="text-white">Sabah, Sarawak, Brunei, and Singapore</span>. We have optimized our cold-chain logistics to ensure that whether you are in a lab in Georgetown or a facility in Bandar Seri Begawan, your Evo™ compounds arrive with surgical precision and peak integrity.
+              <div className="flex items-center gap-4 mb-8">
+                <div className="p-3 bg-black border border-evo-orange/50 rounded-xl shadow-[0_0_20px_rgba(255,77,0,0.2)]">
+                  <span className="text-evo-orange font-black text-xs tracking-tighter">DE</span>
+                </div>
+                <div>
+                  <h3 className="text-white font-display font-bold text-lg uppercase italic tracking-widest">THE EVO™ BLUEPRINT</h3>
+                  <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">European Standard Synthesis</div>
+                </div>
+              </div>
+
+              <p className="text-sm text-gray-400 mb-8 font-light leading-relaxed italic">
+                Unlike generic medical brands, Evo™ is a high-performance lineage for the elite research community. We bridge the gap between European laboratory standards and Southeast Asian logistics.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <ul className="space-y-6">
                 {[
-                  { region: "Central Hub", cities: "KL, Perak, Kuantan", speed: "Same/Next Day" },
-                  { region: "North & South", cities: "Penang, Johor, Melaka", speed: "1-2 Days" },
-                  { region: "East Malaysia", cities: "Sabah & Sarawak", speed: "3-5 Days Air" },
-                  { region: "Cross-Border", cities: "Singapore & Brunei", speed: "Institutional Freight" }
-                ].map((item, i) => (
-                  <div key={i} className="bg-black/40 border border-white/5 p-6 rounded-2xl hover:border-evo-orange/30 transition-all">
-                    <div className="text-[10px] font-black text-evo-orange uppercase tracking-widest mb-2">{item.region}</div>
-                    <div className="text-white font-bold mb-3 italic">{item.cities}</div>
-                    <div className="text-[11px] text-gray-500 uppercase tracking-tighter font-medium">{item.speed}</div>
-                  </div>
+                  { icon: ShieldCheck, t: "German-Synthesized Purity", d: "HPLC/MS Verified at source (>99.9% Purity)." },
+                  { icon: Zap, t: "Sporty-Noir Luxury", d: "A premium aesthetic for high-performance research." },
+                  { icon: Truck, t: "Regional Ready Stock", d: "Localized hubs for rapid, tax-paid delivery." }
+                ].map((item, idx) => (
+                  <li key={idx} className="flex gap-4 group/item">
+                    <item.icon className="h-5 w-5 text-evo-orange shrink-0 group-hover/item:scale-110 transition-transform" />
+                    <div>
+                      <div className="text-white text-xs font-black uppercase tracking-widest mb-1">{item.t}</div>
+                      <div className="text-[11px] text-gray-500 font-medium italic">{item.d}</div>
+                    </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </div>
 
         {/* Core Standards */}
         <div className="mb-32">
-          <h2 className="text-2xl md:text-4xl font-display font-bold text-white mb-12 text-center uppercase tracking-tighter italic">CORE STANDARDS</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-4 uppercase italic tracking-tighter">CORE STANDARDS</h2>
+            <p className="text-[10px] text-gray-500 font-black tracking-[0.4em] uppercase">Engineered Authority</p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-evo-orange transition-all duration-500 group relative overflow-hidden">
+            <div className="bg-white/5 border border-white/10 p-10 rounded-2xl hover:border-evo-orange/30 transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-evo-orange/5 -translate-y-12 translate-x-12 rounded-full group-hover:bg-evo-orange/10 transition-all"></div>
-              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-widest">01. ELITE STABILITY</div>
-              <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">Evo peptides are vacuum-sealed in specialized amber or light-protected black vials to prevent UV degradation, critical for sensitive compounds.</p>
+              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-[0.1em]">01. THE GERMAN SEAL</div>
+              <h4 className="text-white text-xs font-black uppercase tracking-widest mb-4 opacity-70 italic">Elite Stability</h4>
+              <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">
+                Every Evo™ peptide is synthesized in Germany and vacuum-sealed in specialized, light-protected black vials. This German-standard packaging prevents UV degradation and thermal fluctuation, ensuring the compound remains stable from the EU lab to your facility.
+              </p>
             </div>
-            <div className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-evo-orange transition-all duration-500 group relative overflow-hidden">
+
+            <div className="bg-white/5 border border-white/10 p-10 rounded-2xl hover:border-evo-orange/30 transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-evo-orange/5 -translate-y-12 translate-x-12 rounded-full group-hover:bg-evo-orange/10 transition-all"></div>
-              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-widest">02. "EVO KIT" LOGIC</div>
-              <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">We bundle our signature peptides with high-purity Evo Bacteriostatic (BAC) Water, ensuring immediate, stable reconstitution.</p>
+              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-[0.1em]">02. "EVO KIT" LOGIC</div>
+              <h4 className="text-white text-xs font-black uppercase tracking-widest mb-4 opacity-70 italic">Protocol Integrity</h4>
+              <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">
+                To maintain German purity standards, we do not leave reconstitution to chance. We bundle our signature peptides with high-purity <span className="text-white font-bold">Evo™ Bacteriostatic (BAC) Water</span>, ensuring a stable, sterile environment for your research compounds.
+              </p>
             </div>
-            <div className="bg-white/5 border border-white/10 p-8 rounded-2xl hover:border-evo-orange transition-all duration-500 group relative overflow-hidden">
+
+            <div className="bg-white/5 border border-white/10 p-10 rounded-2xl hover:border-evo-orange/30 transition-all duration-500 group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-evo-orange/5 -translate-y-12 translate-x-12 rounded-full group-hover:bg-evo-orange/10 transition-all"></div>
-              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-widest">03. KL COMMAND CENTER</div>
-              <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">Utilizing Lalamove and Grab for same-day delivery in Klang Valley. Speed and discretion mirroring high-performance expectations.</p>
+              <div className="text-evo-orange font-display font-bold text-xl mb-4 italic group-hover:translate-x-1 transition-transform relative z-10 tracking-[0.1em]">03. LOGISTICS COMMAND</div>
+              <h4 className="text-white text-xs font-black uppercase tracking-widest mb-4 opacity-70 italic">Pan-Asian Reach</h4>
+              <p className="text-sm text-gray-400 leading-relaxed font-light relative z-10 italic">
+                Headquartered in Kuala Lumpur, our network spans **Penang, Kelantan, Kuantan, Perak, Johor, Singapore, Sabah, Sarawak, and Brunei**. We utilize Lalamove, Grab, and specialized air freight to ensure German quality arrives with local speed.
+              </p>
             </div>
           </div>
         </div>
@@ -131,21 +137,27 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Closing */}
-        <div className="text-center border-t border-white/10 pt-16">
-          <h2 className="text-4xl font-display font-bold text-white mb-6 uppercase">Vanguard of Research.</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            The Evo™ Series represents the bleeding edge of adipose and restorative research. Join the elite community redefining Malaysian biochemistry.
+        {/* Closing / Vanguard Section */}
+        <div className="text-center py-20 border-t border-white/5 relative bg-gradient-to-b from-transparent to-evo-orange/5 rounded-b-[4rem]">
+          <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-8 uppercase italic tracking-tighter">VANGUARD OF BIOCHEMISTRY.</h2>
+          <p className="text-gray-400 max-w-3xl mx-auto mb-16 leading-relaxed font-light italic text-lg">
+            The <span className="text-white font-bold italic">Evo™ Series</span> represents the bleeding edge of German adipose and restorative research. By importing the finest European synthesis technology into the regional markets, we are redefining the Southeast Asian biochemistry landscape.
           </p>
-          <div className="inline-block border border-evo-orange p-1 rounded transition-transform hover:scale-105 duration-300">
-            <div className="bg-evo-orange/10 px-8 py-4">
-              <span className="text-white font-bold tracking-[0.3em] uppercase">Evo™ — High Performance</span>
-              <div className="text-xs text-evo-orange mt-2 uppercase tracking-widest font-bold">Precision. Stability. Authority.</div>
+
+          <div className="inline-block relative group">
+            <div className="absolute -inset-1 bg-evo-orange blur opacity-25 group-hover:opacity-50 transition-opacity rounded-full"></div>
+            <div className="relative bg-black border border-evo-orange/50 px-12 py-8 rounded-2xl text-center">
+              <div className="text-white font-display font-bold text-xl tracking-[0.3em] uppercase italic mb-2">
+                Evo™ — Engineered in Germany. <br />
+                <span className="text-evo-orange">Mastered in Malaysia.</span>
+              </div>
+              <div className="text-[10px] text-gray-500 uppercase tracking-[0.5em] font-black">Precision. Stability. Authority.</div>
             </div>
           </div>
-          <div className="mt-10">
-            <Link to="/shop" className="inline-flex items-center text-white hover:text-evo-orange font-bold transition-colors group">
-              EXPLORE THE COLLECTION <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+
+          <div className="mt-16">
+            <Link to="/shop" className="inline-flex items-center gap-4 bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-[0.2em] text-xs hover:bg-evo-orange hover:text-white transition-all group shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+              EXPLORE THE EVO™ COLLECTION <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
