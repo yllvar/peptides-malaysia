@@ -49,8 +49,8 @@ const Home: React.FC = () => {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-evo-lime to-white">Science Evolved.</span>
           </h1>
 
-          {/* Main Product Image (3 Bottles) */}
-          <div className="relative w-full max-w-sm md:max-w-md mx-auto mb-8 mt-8 animate-float">
+          {/* Main Product Image (3 Bottles) - Static */}
+          <div className="relative w-full max-w-sm md:max-w-md mx-auto mb-4 mt-4">
             <img
               src="/images/evo-landing-header.png"
               alt="Evo Peptides Research Kit"
@@ -58,12 +58,17 @@ const Home: React.FC = () => {
             />
           </div>
 
-          <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-10 max-w-lg mx-auto font-light px-4">
+          <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6 max-w-lg mx-auto font-light px-4">
             The exclusive gateway to Evo™ Laboratory Excellence.<br className="hidden md:block" />
             High-performance research peptides for the elite scientific community.
           </p>
 
-          <div className="flex flex-col gap-4 max-w-xs mx-auto w-full">
+          <div className="relative flex flex-col gap-4 max-w-xs mx-auto w-full">
+            {/* Gold Stroke positioned behind buttons */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200%] h-auto pointer-events-none -z-10 opacity-60">
+              <img src="/images/evo-gold-stroke.png" alt="" className="w-full h-auto object-contain" />
+            </div>
+
             <button
               onClick={() => window.location.href = '/shop'}
               className="w-full py-4 bg-evo-lime text-black font-black text-lg rounded-full uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(204,255,0,0.4)]"
@@ -77,11 +82,6 @@ const Home: React.FC = () => {
               See how it works
             </Link>
           </div>
-        </div>
-
-        {/* Gold Stroke Bottom */}
-        <div className="absolute bottom-0 left-0 w-full pointer-events-none z-20">
-          <img src="/images/evo-gold-stroke.png" alt="" className="w-full h-auto object-cover opacity-80" />
         </div>
       </section>
 
