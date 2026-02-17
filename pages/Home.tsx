@@ -138,58 +138,53 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Bundle - Floating Animation */}
+      {/* Research Kit Section - Refined Design */}
       <section className="py-32 bg-evo-black border-y border-white/5 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-evo-orange/10 to-transparent"></div>
+        {/* Spotlight Effect Background */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_rgba(255,77,0,0.1)_0%,_transparent_70%)] pointer-events-none"></div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
-            {/* Image Side */}
-            <div className="order-2 lg:order-1 relative group flex justify-center">
-              <div className="absolute inset-0 bg-evo-orange blur-[150px] opacity-10 rounded-full animate-pulse-slow"></div>
-
-              <div className="relative z-10 flex items-end gap-x-0 animate-float translate-y-10 scale-110">
-                {/* Vial Stack logic again for consistency */}
-                <div className="w-28 -mr-6 -mb-4 transform -rotate-6 grayscale contrast-125 z-0 opacity-50">
-                  <img src={featuredProduct.image} alt="Vial Left" className="w-full" />
-                </div>
-                <div className="w-40 z-20">
-                  <img src={featuredProduct.image} alt="Main Vial" className="w-full drop-shadow-[0_30px_60px_rgba(255,100,0,0.4)]" />
-                </div>
-                <div className="w-28 -ml-6 -mb-4 transform rotate-6 grayscale contrast-125 z-10 opacity-50">
-                  <img src={featuredProduct.image} alt="Vial Right" className="w-full" />
-                </div>
+            {/* Image Side - Static High-Res Product */}
+            <div className="order-2 lg:order-1 relative flex justify-center py-10">
+              <div className="relative w-full max-w-lg">
+                <img
+                  src="/images/evo-research-kit.png"
+                  alt="Evo Research Kit"
+                  className="w-full h-auto drop-shadow-[0_0_80px_rgba(255,77,0,0.2)]"
+                />
               </div>
             </div>
 
             {/* Text Side */}
             <div className="order-1 lg:order-2">
-              <div className="inline-block px-3 py-1 border border-evo-orange/30 text-evo-orange text-[10px] font-bold tracking-[0.3em] uppercase mb-8">FLAGSHIP SERIES</div>
+              <div className="inline-block px-3 py-1 border border-evo-orange/30 text-evo-orange text-[10px] font-bold tracking-[0.3em] uppercase mb-8 rounded-sm">FLAGSHIP SERIES</div>
               <h2 className="text-5xl md:text-7xl font-display font-bold text-white mb-8 leading-none italic uppercase">
                 RETATRUTIDE <br />
-                <span className="text-gray-600">RESEARCH KIT</span>
+                <span className="text-gray-500">RESEARCH KIT</span>
               </h2>
               <p className="text-gray-400 mb-10 leading-relaxed text-lg border-l-2 border-evo-orange pl-8 font-light italic">
                 The pinnacle of metabolic research. This exclusive Evo™ kit is engineered for those who demand precision. Sold as a complete research unit to ensure protocol integrity and structural stability.
               </p>
 
-              <div className="grid grid-cols-2 gap-4 mb-12">
+              <div className="grid grid-cols-2 gap-3 mb-12">
                 {[
                   { icon: ShieldCheck, text: '99.9% PURITY' },
                   { icon: FlaskConical, text: 'SOLVENT INCL.' },
                   { icon: Truck, text: 'KL HUB READY' },
                   { icon: Zap, text: 'TRIPLE-G AGON.' }
                 ].map((tag, i) => (
-                  <div key={i} className="flex items-center text-white bg-white/5 p-4 border border-white/5 hover:border-evo-orange/30 transition-colors">
-                    <tag.icon className="h-4 w-4 text-evo-orange mr-4" />
-                    <span className="text-[10px] font-bold tracking-widest uppercase">{tag.text}</span>
+                  <div key={i} className="flex items-center text-white bg-white/5 p-3 border border-white/5 hover:border-evo-orange/20 transition-all rounded-sm">
+                    <tag.icon className="h-3.5 w-3.5 text-evo-orange mr-4" />
+                    <span className="text-[9px] font-bold tracking-widest uppercase">{tag.text}</span>
                   </div>
                 ))}
               </div>
 
               <div className="flex flex-col sm:flex-row items-center gap-10">
                 <div className="text-5xl font-display font-bold text-white italic">RM{featuredProduct.price}</div>
-                <Link to={`/product/${featuredProduct.id}`} className="group w-full sm:w-auto px-12 py-5 bg-white text-black font-bold hover:bg-evo-orange hover:text-white transition-all text-center uppercase tracking-widest text-xs">
+                <Link to={`/product/${featuredProduct.id}`} className="group w-full sm:w-auto px-12 py-5 bg-white text-black font-black hover:bg-evo-orange hover:text-white transition-all text-center uppercase tracking-widest text-xs rounded-full">
                   ANALYSIS DATA <ChevronRight className="inline-block ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>

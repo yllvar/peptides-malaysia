@@ -9,8 +9,8 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-1">
-            <span className="font-display font-bold text-xl text-white tracking-tight">
-              EVO<span className="text-evo-orange">PEPTIDES</span>
+            <span className="font-display font-bold text-2xl text-white tracking-tighter italic uppercase">
+              EVO<span className="text-gray-500">PEPTIDES</span>
             </span>
             <p className="mt-4 text-sm text-gray-400 leading-relaxed">
               Redefining the peak of Malaysian research standards. Premium grade compounds for laboratory use only.
@@ -41,12 +41,12 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Warning */}
-          <div>
-            <h3 className="text-sm font-semibold text-evo-orange tracking-wider uppercase mb-4 flex items-center">
+          <div className="md:col-span-1">
+            <h3 className="text-sm font-display font-bold text-evo-orange tracking-[0.2em] uppercase mb-4 flex items-center">
               <AlertTriangle className="h-4 w-4 mr-2" />
               Legal Disclaimer
             </h3>
-            <p className="text-xs text-gray-500 leading-relaxed text-justify">
+            <p className="text-[10px] text-gray-500 leading-relaxed text-justify italic">
               All products sold by Evo Peptides (Evo™) are strictly for in-vitro laboratory research purposes only. They are not intended for human consumption, diagnostic, therapeutic, or clinical use. By purchasing, you acknowledge you are a qualified researcher.
             </p>
           </div>
