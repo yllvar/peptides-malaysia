@@ -45,7 +45,7 @@ const Navbar: React.FC = () => {
 
             {/* --- LEFT SIDE: LOGO --- */}
             <Link to="/" className="flex items-center gap-3 group">
-              <img src="/logo/header-logo-grey.webp" alt="Evo Peptides" className="h-8 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity" />
+              <img src="/logo/header-logo-orange.webp" alt="Evo Peptides" className="h-8 w-auto object-contain transition-transform group-hover:scale-105" />
             </Link>
 
             {/* --- RIGHT SIDE: NAV + ACTIONS --- */}
