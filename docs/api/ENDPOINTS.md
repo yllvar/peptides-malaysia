@@ -96,3 +96,14 @@ Authorization: Bearer <your_jwt_token>
 - **`GET /api/admin/analytics`**
     - Returns dashboard metrics: Total Revenue, Total Orders, Active Orders, Low Stock Alerts.
     - **Response:** `{ stats: {...}, recentOrders: [...], lowStockProducts: [...] }`
+
+---
+
+## 🔮 Pending / Planned Endpoints
+
+### Discount Codes
+- **Schema:** `DiscountCode` model exists in `prisma/schema.prisma`.
+- **Status:** Backend logic and API implementation pending.
+- **Planned Routes:**
+    - `POST /api/checkout/discount` (Validate & Apply code)
+    - `GET /api/admin/discounts` (Manage codes)

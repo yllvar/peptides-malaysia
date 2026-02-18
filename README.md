@@ -17,6 +17,7 @@ We maintain comprehensive documentation for developers, architects, and testers.
 - **[🔌 API Reference](./docs/api/ENDPOINTS.md)** - Endpoints, Authentication, and Schemas.
 - **[📊 Database Schema](./docs/database/SCHEMA.md)** - Data models & relationships.
 - **[🧪 Testing Strategy](./docs/testing/TEST_STRATEGY.md)** - How to run and write tests.
+- **[🔄 Integrity Loop](./docs/workflows/INTEGRITY_LOOP.md)** - Workflow protocol.
 - **[🚀 Deployment Guide](./docs/deployment/VERCEL_GUIDE.md)** - Production setup instructions.
 
 ---

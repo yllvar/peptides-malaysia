@@ -161,6 +161,14 @@ test: {
 | `Privacy` | ✅ All sections | N/A | N/A |
 | `Terms` | ✅ Warning, sections | N/A | N/A |
 
+### Security Testing
+| Feature | Covered | Tests |
+|---------|---------|-------|
+| Auth Flow (Login/Register) | ✅ | Register, Login, Duplicate Email, Invalid Credentials |
+| Protected Routes (Client) | ✅ | Redirects unauthenticated users from `/orders` |
+| API Authorization | ⚠️ | **Gap:** `e2e/security.spec.ts` is currently missing. Basic role checks exist in code but need dedicated audit tests for 403 Forbidden scenarios. |
+
+
 ---
 
 ## Test Details by Module

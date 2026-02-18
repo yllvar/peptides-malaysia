@@ -25,6 +25,10 @@ Guidelines for writing and running tests, coverage reports, and specific impleme
 - **Integration Tests:** (Planned)
 - **Gap Analysis:** Current test coverage status.
 
+### [Integrity Loop](./workflows/INTEGRITY_LOOP.md)
+The core development workflow protocol, ensuring code quality and consistency.
+
+
 ### [Deployment Guide](./deployment/VERCEL_GUIDE.md)
 Instructions for deploying the application to production, managing environment variables, and performing database migrations.
 
@@ -34,6 +38,10 @@ Instructions for deploying the application to production, managing environment v
 
 ### [Content Management](./guides/CONTENT_MANAGEMENT.md)
 Instructions for the site owner on how to manage products, blogs, and technical reports.
+
+### [WhatsApp Bot Prompt](./guides/WHATSAPP_BOT_PROMPT.md)
+System instruction copy for the Python/Gemini WhatsApp bot, including persona, safety guidelines, and product knowledge.
+
 
 ### [Troubleshooting](./guides/TROUBLESHOOTING.md)
 Common errors, database connection issues, and frontend styling fixes.

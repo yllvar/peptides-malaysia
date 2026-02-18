@@ -47,6 +47,11 @@ We use **Tailwind CSS 4** with a dark-theme-first approach.
     - Display: *Oswald* (for impact)
     - Body: *Inter* (for readability)
 
+### Branding Assets
+- **Favicon:** Custom "Evo" logo alternatives in `public/evo-favicon/`.
+- **Theme:** "Premium Sporty" - High contrast, sharp angles, and vibrant accents.
+
+
 ## 📡 Data Fetching (React Query)
 
 API interactions are wrapped in custom hooks using `@tanstack/react-query`:
@@ -59,4 +64,12 @@ API interactions are wrapped in custom hooks using `@tanstack/react-query`:
 The application is **Mobile-First**.
 - **Breakpoints:** Consistent use of `sm`, `md`, `lg`, `xl` Tailwind prefixes.
 - **Navigation:** Mobile drawer menu for small screens.
-- **Images:** Optimized with `object-cover` and aspect ratios maintained.
+    - **Images:** Optimized with `object-cover` and aspect ratios maintained.
+
+## 🌍 Internationalization & Features
+
+### Tax Receipts Page
+- **Path:** `/tax-receipts`
+- **Tech:** Uses `react-i18next` logic (custom extraction via `t()` helper).
+- **Data:** Strings loaded from `donations.json`.
+- **Design:** Example of "Premium Table" implementation.

@@ -297,9 +297,8 @@ const Home: React.FC = () => {
                   className="w-full h-auto transform group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-evo-black via-transparent to-transparent opacity-60"></div>
-                <div className="absolute bottom-6 left-6 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-evo-lime flex items-center justify-center text-black font-black text-xs">01</div>
-                  <span className="text-white font-bold text-xs uppercase tracking-widest italic drop-shadow-lg">Initial Sanitization Phase</span>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none">
+                  <span className="text-[120px] md:text-[180px] font-display font-black text-evo-orange/20 italic tracking-tighter leading-none select-none">EVO</span>
                 </div>
               </div>
             </div>

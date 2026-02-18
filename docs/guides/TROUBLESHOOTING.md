@@ -10,6 +10,15 @@ This usually means a crash in the Vercel Serverless Function.
 - **Common Cause:** Missing environment variables (e.g., `DATABASE_URL` not set).
 - **Common Cause:** Database connection timeout or throttled (Neon free tier limits).
 
+### Database Verification
+If you suspect database connection or data integrity issues, use the included verification script:
+```bash
+node verify_db.cjs
+```
+This script attempts to connect to the database defined in your `.env` and fetches a list of products.
+- **Success:** Logs "Products in DB: [...]"
+- **Failure:** Logs connection error details. useful for diagnosing `PrismaClientInitializationError`.
+
 ### 401 Unauthorized
 The API requires a valid JWT token.
 - **Check Token:** Verify the `Authorization: Bearer <token>` header is sent.
