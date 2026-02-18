@@ -98,16 +98,16 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Banner Separator */}
-      <Link to="/shop" className="block bg-evo-lime py-10 relative overflow-hidden group border-y border-black/10">
+      <Link to="/shop" className="block bg-[#ff9820] py-10 relative overflow-hidden group border-y border-black/10">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16">
           <div className="flex items-center gap-4">
-            <Zap size={32} fill="black" className="animate-pulse" />
-            <span className="text-black font-black text-2xl md:text-4xl italic uppercase tracking-tighter leading-none text-center md:text-left">
+            <Zap size={32} fill="white" className="animate-pulse text-white" />
+            <span className="text-white font-black text-2xl md:text-4xl italic uppercase tracking-tighter leading-none text-center md:text-left">
               Join the Elite <br className="md:hidden" /> Research Community
             </span>
           </div>
 
-          <div className="flex items-center gap-3 bg-black text-white px-12 py-4 rounded-full font-black uppercase tracking-[0.2em] text-sm shadow-2xl group-hover:bg-evo-orange transition-all group-hover:scale-110 group-active:scale-95">
+          <div className="flex items-center gap-3 bg-black text-white px-12 py-4 rounded-full font-black uppercase tracking-[0.2em] text-sm shadow-2xl group-hover:bg-white group-hover:text-black transition-all group-hover:scale-110 group-active:scale-95">
             Shop Now <ArrowRight size={20} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
@@ -171,16 +171,16 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Banner Separator */}
-      <Link to="/shop" className="block bg-evo-lime py-10 relative overflow-hidden group border-y border-black/10">
+      <Link to="/shop" className="block bg-[#ff9820] py-10 relative overflow-hidden group border-y border-black/10">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16">
           <div className="flex items-center gap-4">
-            <ShieldCheck size={32} fill="black" className="animate-pulse" />
-            <span className="text-black font-black text-2xl md:text-3xl italic uppercase tracking-tighter leading-none text-center md:text-left">
+            <ShieldCheck size={32} fill="white" className="animate-pulse text-white" />
+            <span className="text-white font-black text-2xl md:text-3xl italic uppercase tracking-tighter leading-none text-center md:text-left">
               HPLC VERIFIED PURITY <br className="md:hidden" /> FOR ELITE RESULTS
             </span>
           </div>
 
-          <div className="flex items-center gap-3 bg-black text-white px-10 py-4 rounded-full font-black uppercase tracking-[0.2em] text-sm shadow-2xl group-hover:bg-evo-orange transition-all group-hover:scale-110 group-active:scale-95">
+          <div className="flex items-center gap-3 bg-black text-white px-10 py-4 rounded-full font-black uppercase tracking-[0.2em] text-sm shadow-2xl group-hover:bg-white group-hover:text-black transition-all group-hover:scale-110 group-active:scale-95">
             ACCESS LAB DATA <ArrowRight size={20} strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
