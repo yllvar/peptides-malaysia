@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../../src/stores/authStore';
+import { useNavigate, Link } from 'react-router-dom';
 import {
     Package,
     Plus,
@@ -69,13 +70,19 @@ const AdminProducts: React.FC = () => {
     const [error, setError] = useState('');
     const [filterLowStock, setFilterLowStock] = useState(false);
 
-    const { user, accessToken } = useAuthStore();
+    const { user, accessToken, logout } = useAuthStore();
+    const navigate = useNavigate();
 
     const fetchProducts = async () => {
         try {
             const response = await fetch('/api/admin/products', {
                 headers: { 'Authorization': `Bearer ${accessToken}` }
             });
+            if (response.status === 401) {
+                logout();
+                navigate('/login?from=/admin/products');
+                return;
+            }
             if (!response.ok) throw new Error('Failed to fetch products');
             const data = await response.json();
             setProducts(data);
@@ -126,6 +133,11 @@ const AdminProducts: React.FC = () => {
                 body: JSON.stringify(currentProduct)
             });
 
+            if (response.status === 401) {
+                logout();
+                navigate('/login?from=/admin/products');
+                return;
+            }
             if (!response.ok) {
                 const data = await response.json();
                 throw new Error(data.error || 'Failed to save product');
@@ -148,6 +160,11 @@ const AdminProducts: React.FC = () => {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${accessToken}` }
             });
+            if (response.status === 401) {
+                logout();
+                navigate('/login?from=/admin/products');
+                return;
+            }
             if (!response.ok) throw new Error('Failed to delete');
             await fetchProducts();
         } catch (err: any) {

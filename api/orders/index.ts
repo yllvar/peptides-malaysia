@@ -1,27 +1,16 @@
 import { prisma } from '../_db.js';
+import { requireAuth } from '../_auth.js';
 
 export const config = {
     runtime: 'nodejs',
 };
-import { jwtVerify } from 'jose';
 
 export async function GET(request: Request) {
     try {
-        const authHeader = request.headers.get('Authorization');
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return Response.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const auth = await requireAuth(request);
+        if (!auth.authorized) return auth.errorResponse!;
 
-        const token = authHeader.split(' ')[1];
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
-
-        let userId: string;
-        try {
-            const { payload } = await jwtVerify(token, secret);
-            userId = payload.sub as string;
-        } catch (err) {
-            return Response.json({ error: 'Invalid token' }, { status: 401 });
-        }
+        const userId = auth.userId!;
 
         const orders = await prisma.order.findMany({
             where: { userId },

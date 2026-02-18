@@ -1,28 +1,14 @@
 import { prisma } from '../../../src/lib/db';
+import { requireAdmin } from '../../_auth.js';
 
 export const config = {
     runtime: 'nodejs',
 };
-import { jwtVerify } from 'jose';
 
 export async function GET(request: Request) {
     try {
-        const authHeader = request.headers.get('Authorization');
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return Response.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
-        const token = authHeader.split(' ')[1];
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
-
-        try {
-            const { payload } = await jwtVerify(token, secret);
-            if (payload.role !== 'admin') {
-                return Response.json({ error: 'Forbidden' }, { status: 403 });
-            }
-        } catch (err) {
-            return Response.json({ error: 'Invalid token' }, { status: 401 });
-        }
+        const auth = await requireAdmin(request);
+        if (!auth.authorized) return auth.errorResponse!;
 
         const orders = await prisma.order.findMany({
             include: {
@@ -49,22 +35,8 @@ export async function GET(request: Request) {
 
 export async function PATCH(request: Request) {
     try {
-        const authHeader = request.headers.get('Authorization');
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return Response.json({ error: 'Unauthorized' }, { status: 401 });
-        }
-
-        const token = authHeader.split(' ')[1];
-        const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
-
-        try {
-            const { payload } = await jwtVerify(token, secret);
-            if (payload.role !== 'admin') {
-                return Response.json({ error: 'Forbidden' }, { status: 403 });
-            }
-        } catch (err) {
-            return Response.json({ error: 'Invalid token' }, { status: 401 });
-        }
+        const auth = await requireAdmin(request);
+        if (!auth.authorized) return auth.errorResponse!;
 
         const { orderId, status, trackingNumber, courier } = await request.json();
 

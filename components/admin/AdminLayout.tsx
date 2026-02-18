@@ -1,12 +1,13 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
     ShoppingBag,
     Package,
     ChevronLeft,
     LogOut,
-    ExternalLink
+    ExternalLink,
+    XCircle
 } from 'lucide-react';
 import { useAuthStore } from '../../src/stores/authStore';
 
@@ -16,7 +17,33 @@ interface AdminLayoutProps {
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
     const location = useLocation();
-    const { logout } = useAuthStore();
+    const navigate = useNavigate();
+    const { user, logout } = useAuthStore();
+
+    React.useEffect(() => {
+        if (!user) {
+            navigate(`/login?from=${location.pathname}`);
+        }
+    }, [user, navigate, location.pathname]);
+
+    if (!user || user.role !== 'admin') {
+        return (
+            <div className="min-h-screen bg-evo-black text-white flex flex-col items-center justify-center p-4">
+                <XCircle className="w-16 h-16 text-red-500 mb-4" />
+                <h1 className="text-2xl font-bold mb-2">Unauthorized</h1>
+                <p className="text-gray-400 mb-8 text-center max-w-md">
+                    You do not have access to the research command center.
+                    Please sign in with an administrative account.
+                </p>
+                <Link
+                    to="/"
+                    className="px-8 py-3 bg-zinc-900 border border-zinc-800 rounded-2xl text-sm font-bold hover:bg-zinc-800 transition-all"
+                >
+                    Return to Home
+                </Link>
+            </div>
+        );
+    }
 
     const menuItems = [
         { path: '/admin', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
@@ -46,8 +73,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
                             key={item.path}
                             to={item.path}
                             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${isActive(item.path)
-                                    ? 'bg-evo-orange text-white shadow-lg shadow-evo-orange/20'
-                                    : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                                ? 'bg-evo-orange text-white shadow-lg shadow-evo-orange/20'
+                                : 'text-gray-400 hover:bg-white/5 hover:text-white'
                                 }`}
                         >
                             {item.icon}

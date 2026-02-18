@@ -104,7 +104,7 @@ const Navbar: React.FC = () => {
                     <UserIcon className="h-4 w-4 group-hover:text-evo-orange" />
                     <span className="hidden xl:inline">History</span>
                   </Link>
-                  <button onClick={logout} className="text-gray-500 hover:text-red-500 transition-colors">
+                  <button onClick={logout} className="text-gray-500 hover:text-red-500 transition-colors" aria-label="Logout">
                     <LogOut className="h-4 w-4" />
                   </button>
                 </div>

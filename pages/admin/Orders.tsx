@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../../src/stores/authStore';
+import { useNavigate, Link } from 'react-router-dom';
 import {
     Package,
     Truck,
@@ -58,7 +59,8 @@ const AdminOrders: React.FC = () => {
     const [courierInput, setCourierInput] = useState('');
     const [trackingInput, setTrackingInput] = useState('');
 
-    const { user, accessToken } = useAuthStore();
+    const { accessToken, logout } = useAuthStore();
+    const navigate = useNavigate();
 
     const fetchOrders = async () => {
         try {
@@ -67,6 +69,11 @@ const AdminOrders: React.FC = () => {
                     'Authorization': `Bearer ${accessToken}`
                 }
             });
+            if (response.status === 401) {
+                logout();
+                navigate('/login?from=/admin/orders');
+                return;
+            }
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Failed to fetch orders');
             setOrders(data);
@@ -78,10 +85,10 @@ const AdminOrders: React.FC = () => {
     };
 
     useEffect(() => {
-        if (user?.role === 'admin') {
+        if (accessToken) {
             fetchOrders();
         }
-    }, [user, accessToken]);
+    }, [accessToken]);
 
     const updateOrderStatus = async (orderId: string, status: string, trackingNumber?: string, courier?: string) => {
         setUpdating(orderId);
@@ -94,6 +101,11 @@ const AdminOrders: React.FC = () => {
                 },
                 body: JSON.stringify({ orderId, status, trackingNumber, courier })
             });
+            if (response.status === 401) {
+                logout();
+                navigate('/login?from=/admin/orders');
+                return;
+            }
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Update failed');
 
@@ -129,16 +141,6 @@ const AdminOrders: React.FC = () => {
 
         return matchesSearch && matchesStatus;
     });
-
-    if (user?.role !== 'admin') {
-        return (
-            <div className="min-h-screen pt-32 px-4 flex flex-col items-center justify-center text-center">
-                <XCircle className="w-16 h-16 text-red-500 mb-4" />
-                <h1 className="text-3xl font-bold mb-2">Access Denied</h1>
-                <p className="text-gray-400">You do not have administrative privileges.</p>
-            </div>
-        );
-    }
 
     return (
         <AdminLayout>

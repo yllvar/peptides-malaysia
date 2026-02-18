@@ -4,40 +4,15 @@ export const config = {
     runtime: 'nodejs',
 };
 
-/**
- * Verify payment server-to-server with ToyyibPay API.
- * Returns true only if ToyyibPay confirms the bill is paid.
- */
-async function verifyPaymentWithGateway(billCode: string): Promise<boolean> {
-    try {
-        const verifyData = new URLSearchParams();
-        verifyData.append('billCode', billCode);
 
-        const baseUrl = (process.env.TOYYIBPAY_BASE_URL || 'https://dev.toyyibpay.com').trim();
-
-        const response = await fetch(`${baseUrl}/index.php/api/getBillTransactions`, {
-            method: 'POST',
-            body: verifyData,
-        });
-
-        const transactions = await response.json();
-
-        if (Array.isArray(transactions) && transactions.length > 0) {
-            // billpaymentStatus '1' = Success in ToyyibPay
-            return transactions.some((tx: any) => tx.billpaymentStatus === '1');
-        }
-        return false;
-    } catch (err) {
-        console.error('ToyyibPay verification failed:', err);
-        return false;
-    }
-}
 
 export async function POST(request: Request) {
     try {
         const formData = await request.formData();
-        const statusId = formData.get('status_id')?.toString();
-        const orderId = formData.get('order_id')?.toString();
+        // ToyyibPay sends 'refno' as the external reference (orderId), 'status' as the status code.
+        // We fallback to checking both potential parameter names to be robust.
+        const statusId = formData.get('status_id')?.toString() || formData.get('status')?.toString();
+        const orderId = formData.get('order_id')?.toString() || formData.get('refno')?.toString();
         const billCode = formData.get('billcode')?.toString();
         const transactionId = formData.get('transaction_id')?.toString();
 
@@ -59,10 +34,35 @@ export async function POST(request: Request) {
 
         if (isSuccess) {
             // --- SECURITY: Server-to-server verification with ToyyibPay ---
-            const verified = await verifyPaymentWithGateway(billCode);
-            if (!verified) {
-                console.error(`Webhook rejected: ToyyibPay verification failed for billCode ${billCode}`);
+            const verifyData = new URLSearchParams();
+            verifyData.append('billCode', billCode);
+            const baseUrl = (process.env.TOYYIBPAY_BASE_URL || 'https://dev.toyyibpay.com').trim();
+
+            const verifyResponse = await fetch(`${baseUrl}/index.php/api/getBillTransactions`, {
+                method: 'POST',
+                body: verifyData,
+            });
+            const transactions = await verifyResponse.json();
+
+            if (!Array.isArray(transactions) || transactions.length === 0) {
+                console.error(`Webhook rejected: No transactions found for billCode ${billCode}`);
                 return Response.json({ error: 'Payment verification failed' }, { status: 403 });
+            }
+
+            // Find the successful transaction and verify amount
+            const successTx = transactions.find((tx: any) => tx.billpaymentStatus === '1');
+            if (!successTx) {
+                console.error(`Webhook rejected: ToyyibPay report shows NO successful transaction for billCode ${billCode}`);
+                return Response.json({ error: 'Payment not verified' }, { status: 403 });
+            }
+
+            // Verify amount consistency (ToyyibPay sends amount in MYR as string, e.g. "100.00")
+            const paidAmount = parseFloat(successTx.billpaymentAmount);
+            const expectedAmount = Number(payment.amount);
+
+            if (Math.abs(paidAmount - expectedAmount) > 0.01) {
+                console.error(`Webhook rejected: Amount mismatch for order ${orderId}. Expected ${expectedAmount}, got ${paidAmount}`);
+                return Response.json({ error: 'Amount mismatch' }, { status: 403 });
             }
 
             const orderWithItems = await prisma.order.findUnique({

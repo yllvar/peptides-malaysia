@@ -36,11 +36,12 @@ describe('Checkout Webhook API', () => {
 
         (prisma.orderPayment.findUnique as any).mockResolvedValue({
             orderId: 'order-123',
-            gatewayRef: 'BILL123'
+            gatewayRef: 'BILL123',
+            amount: 200
         });
 
         (global.fetch as any).mockResolvedValue({
-            json: async () => [{ billpaymentStatus: '1' }]
+            json: async () => [{ billpaymentStatus: '1', billpaymentAmount: '200.00' }]
         });
 
         const mockOrder = {
@@ -126,11 +127,12 @@ describe('Checkout Webhook API', () => {
 
         (prisma.orderPayment.findUnique as any).mockResolvedValue({
             orderId: 'non-existent-order',
-            gatewayRef: 'BILL-MISSING'
+            gatewayRef: 'BILL-MISSING',
+            amount: 50
         });
 
         (global.fetch as any).mockResolvedValue({
-            json: async () => [{ billpaymentStatus: '1' }]
+            json: async () => [{ billpaymentStatus: '1', billpaymentAmount: '50.00' }]
         });
 
         (prisma.order.findUnique as any).mockResolvedValue(null);
@@ -154,11 +156,12 @@ describe('Checkout Webhook API', () => {
 
         (prisma.orderPayment.findUnique as any).mockResolvedValue({
             orderId: 'already-paid-order',
-            gatewayRef: 'BILL-PAID'
+            gatewayRef: 'BILL-PAID',
+            amount: 100
         });
 
         (global.fetch as any).mockResolvedValue({
-            json: async () => [{ billpaymentStatus: '1' }]
+            json: async () => [{ billpaymentStatus: '1', billpaymentAmount: '100.00' }]
         });
 
         const mockPaidOrder = {

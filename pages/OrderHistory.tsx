@@ -35,12 +35,12 @@ interface Order {
 const OrderHistory: React.FC = () => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
-    const { user, accessToken } = useAuthStore();
+    const { user, accessToken, logout } = useAuthStore();
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!user) {
-            navigate('/');
+            navigate('/login?from=/orders');
             return;
         }
 
@@ -51,6 +51,11 @@ const OrderHistory: React.FC = () => {
                         'Authorization': `Bearer ${accessToken}`
                     }
                 });
+                if (response.status === 401) {
+                    logout();
+                    navigate('/login?from=/orders');
+                    return;
+                }
                 const data = await response.json();
                 if (response.ok) {
                     setOrders(data);
@@ -116,9 +121,9 @@ const OrderHistory: React.FC = () => {
                                                 <div className="flex items-center gap-3 mb-1">
                                                     <h3 className="text-2xl font-bold tracking-tight">{order.orderNumber}</h3>
                                                     <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${order.status === 'paid' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' :
-                                                            order.status === 'shipped' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
-                                                                order.status === 'delivered' ? 'bg-purple-500/10 text-purple-500 border-purple-500/20' :
-                                                                    'bg-amber-500/10 text-amber-500 border-amber-500/20'
+                                                        order.status === 'shipped' ? 'bg-blue-500/10 text-blue-500 border-blue-500/20' :
+                                                            order.status === 'delivered' ? 'bg-purple-500/10 text-purple-500 border-purple-500/20' :
+                                                                'bg-amber-500/10 text-amber-500 border-amber-500/20'
                                                         }`}>
                                                         {order.status}
                                                     </span>

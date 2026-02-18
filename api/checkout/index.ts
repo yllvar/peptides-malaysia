@@ -84,8 +84,12 @@ export async function POST(request: Request) {
         formData.append('billPriceSetting', '0');
         formData.append('billPayorInfo', '1');
         formData.append('billAmount', Math.round(finalTotal * 100).toString());
-        formData.append('billReturnUrl', `${process.env.VITE_APP_URL || 'https://evopeptides.shop'}/payment/status`);
-        formData.append('billCallbackUrl', `${process.env.VITE_APP_URL || 'https://evopeptides.shop'}/api/checkout/webhook`);
+        const host = request.headers.get('host');
+        const protocol = host?.includes('localhost') ? 'http' : 'https';
+        const currentOrigin = host ? `${protocol}://${host}` : (process.env.VITE_APP_URL || 'https://evopeptides.shop');
+
+        formData.append('billReturnUrl', `${currentOrigin}/payment/status`);
+        formData.append('billCallbackUrl', `${currentOrigin}/api/checkout/webhook`);
         formData.append('billExternalReferenceNo', order.id);
         formData.append('billTo', shippingInfo.fullName);
         formData.append('billEmail', shippingInfo.email);

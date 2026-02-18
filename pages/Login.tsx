@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthStore } from '../src/stores/authStore';
 import { LogIn, Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
 
@@ -10,6 +10,8 @@ const Login: React.FC = () => {
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const from = searchParams.get('from') || '/';
     const setAuth = useAuthStore((state) => state.setAuth);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -31,7 +33,7 @@ const Login: React.FC = () => {
             }
 
             setAuth(data.user, data.accessToken, data.refreshToken);
-            navigate('/');
+            navigate(from);
         } catch (err: any) {
             setError(err.message);
         } finally {

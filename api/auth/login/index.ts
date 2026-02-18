@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         const accessToken = await new SignJWT({ sub: user.id, role: user.role })
             .setProtectedHeader({ alg: 'HS256' })
             .setIssuedAt()
-            .setExpirationTime('15m')
+            .setExpirationTime('24h')
             .sign(secret);
 
         // Generate Refresh Token (7d)

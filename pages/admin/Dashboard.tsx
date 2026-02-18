@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthStore } from '../../src/stores/authStore';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     LayoutDashboard,
     ShoppingBag,
@@ -17,7 +17,8 @@ import {
 import AdminLayout from '../../components/admin/AdminLayout';
 
 const AdminDashboard: React.FC = () => {
-    const { user, accessToken } = useAuthStore();
+    const { user, accessToken, logout } = useAuthStore();
+    const navigate = useNavigate();
     const [data, setData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -28,6 +29,11 @@ const AdminDashboard: React.FC = () => {
                 const res = await fetch('/api/admin/analytics', {
                     headers: { 'Authorization': `Bearer ${accessToken}` }
                 });
+                if (res.status === 401) {
+                    logout();
+                    navigate('/login?from=/admin');
+                    return;
+                }
                 if (!res.ok) throw new Error('Failed to fetch stats');
                 const json = await res.json();
                 setData(json);
@@ -38,10 +44,8 @@ const AdminDashboard: React.FC = () => {
             }
         };
 
-        if (user?.role === 'admin') fetchStats();
-    }, [user, accessToken]);
-
-    if (user?.role !== 'admin') return <div className="pt-32 text-center text-white">Unauthorized</div>;
+        if (accessToken) fetchStats();
+    }, [accessToken]);
 
     if (loading) return (
         <div className="min-h-screen pt-32 flex items-center justify-center">
