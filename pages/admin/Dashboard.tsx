@@ -47,6 +47,11 @@ const AdminDashboard: React.FC = () => {
         if (accessToken) fetchStats();
     }, [accessToken]);
 
+    const revenue = data?.stats?.totalRevenue ?? 0;
+    const activeOrders = data?.stats?.activeOrders ?? 0;
+    const totalOrders = data?.stats?.totalOrders ?? 0;
+    const lowStock = data?.stats?.lowStock ?? 0;
+
     return (
         <AdminLayout>
             {loading ? (
@@ -61,18 +66,24 @@ const AdminDashboard: React.FC = () => {
                             <p className="text-gray-400 mt-2">Global metabolic logistics and revenue oversight.</p>
                         </div>
 
+                        {error && (
+                            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm">
+                                ⚠️ {error}
+                            </div>
+                        )}
+
                         {/* Stats Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                             <StatCard
                                 title="Total Revenue"
-                                value={`RM ${data?.stats?.totalRevenue.toFixed(2)}`}
+                                value={`RM ${Number(revenue).toFixed(2)}`}
                                 icon={<DollarSign className="w-5 h-5" />}
                                 color="text-emerald-500"
                                 bg="bg-emerald-500/10"
                             />
                             <StatCard
                                 title="Active Orders"
-                                value={data?.stats?.activeOrders}
+                                value={activeOrders}
                                 icon={<ShoppingBag className="w-5 h-5" />}
                                 color="text-evo-orange"
                                 bg="bg-evo-orange/10"
@@ -80,7 +91,7 @@ const AdminDashboard: React.FC = () => {
                             />
                             <StatCard
                                 title="Total Orders"
-                                value={data?.stats?.totalOrders}
+                                value={totalOrders}
                                 icon={<TrendingUp className="w-5 h-5" />}
                                 color="text-blue-500"
                                 bg="bg-blue-500/10"
@@ -88,7 +99,7 @@ const AdminDashboard: React.FC = () => {
                             />
                             <StatCard
                                 title="Stock Alerts"
-                                value={data?.stats?.lowStock}
+                                value={lowStock}
                                 icon={<AlertTriangle className="w-5 h-5" />}
                                 color="text-red-500"
                                 bg="bg-red-500/10"
@@ -109,7 +120,7 @@ const AdminDashboard: React.FC = () => {
                                     </Link>
                                 </div>
                                 <div className="space-y-4">
-                                    {data?.recentOrders.length === 0 ? (
+                                    {!data?.recentOrders || data.recentOrders.length === 0 ? (
                                         <p className="text-gray-500 text-sm italic">No recent orders found.</p>
                                     ) : data?.recentOrders.map((order: any) => (
                                         <div key={order.id} className="flex items-center justify-between p-4 bg-black/40 border border-zinc-800/50 rounded-2xl">
@@ -140,11 +151,11 @@ const AdminDashboard: React.FC = () => {
                                     </h2>
                                 </div>
                                 <div className="space-y-4">
-                                    {data?.lowStockProducts.length === 0 ? (
+                                    {!data?.lowStockProducts || data.lowStockProducts.length === 0 ? (
                                         <div className="bg-emerald-500/5 border border-emerald-500/20 p-6 rounded-2xl text-center">
                                             <p className="text-emerald-500 text-sm font-bold uppercase tracking-widest">Inventory Optimized</p>
                                         </div>
-                                    ) : data?.lowStockProducts.map((p: any) => (
+                                    ) : data.lowStockProducts.map((p: any) => (
                                         <div key={p.id} className="flex items-center justify-between p-4 bg-red-500/5 border border-red-500/10 rounded-2xl">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-lg bg-black overflow-hidden shrink-0">
