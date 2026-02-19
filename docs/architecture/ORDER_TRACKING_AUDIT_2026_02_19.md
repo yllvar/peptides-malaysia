@@ -77,12 +77,13 @@ It is **not** legacy/dead code for the Web App itself — only irrelevant to the
 ## 5. Recommended Action Order
 | Priority | Action | Effort |
 |---|---|---|
-| **P0** | Sanitize phone at write time (`api/checkout/index.ts`) | 1 line |
-| **P1** | Send order confirmation via WhatsApp/Twilio after payment | Small |
+| **P0** | Sanitize phone at write time (`api/checkout/index.ts`) | DONE |
+| **P1** | Send order confirmation via Resend after payment | DONE |
 | **P2** | Guest tracking page (`/track`) | DONE |
-| **P3** | Non-sequential order IDs | Low priority |
+| **P3** | Non-sequential order IDs | DONE |
 
 ## 6. Status
 - [x] Audit complete
 - [x] P0 fix implemented
-- [ ] P1 fix implemented
+- [x] P1 fix implemented (Resend email on payment + shipping)
+- [x] P3 fix implemented (random UUID-based order IDs)

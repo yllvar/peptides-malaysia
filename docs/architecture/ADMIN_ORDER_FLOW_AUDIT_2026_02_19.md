@@ -55,10 +55,11 @@ Replace the separate "Shipped" button and "Update Fulfillment" section with a si
 4.  System updates Status to `Shipped` AND saves Fulfillment details in one atomic operation.
 **Status:** Implemented on 2026-02-19.
 
-### Phase 2: Email Notifications (High Priority)
+### Phase 2: Email Notifications (High Priority) - **[DONE]**
 Integrate an email service (e.g., Resend, SendGrid, or AWS SES) to:
 1.  Send "Order Received" email on creation.
 2.  Send "Shipping Confirmation" email (with tracking link) when status moves to `Shipped`.
+**Status:** Implemented on 2026-02-19 using Resend.
 
 ### Phase 3: Validation & Guardrails (Medium Priority)
 - Disable "Shipped" button if tracking number is empty.
