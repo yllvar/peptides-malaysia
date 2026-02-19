@@ -127,6 +127,7 @@ describe('Checkout API', () => {
 
         expect(prisma.order.create).toHaveBeenCalledWith(expect.objectContaining({
             data: expect.objectContaining({
+                orderNumber: expect.stringMatching(/^EVO-[A-F0-9]{8}$/),
                 subtotal: 200,
                 shippingCost: 8,
                 total: 208

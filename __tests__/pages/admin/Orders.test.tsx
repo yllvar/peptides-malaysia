@@ -18,9 +18,15 @@ vi.mock('../../../components/admin/AdminLayout', () => ({
 const fetchMock = vi.fn();
 global.fetch = fetchMock;
 
+const paginatedResponse = (orders: any[], hasMore = false, nextCursor: string | null = null) => ({
+    ok: true,
+    json: async () => ({ orders, nextCursor, hasMore })
+});
+
 describe('Admin Orders Page', () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        vi.useRealTimers(); // Ensure real timers
         (useAuthStore as any).mockReturnValue({
             user: { role: 'admin' },
             accessToken: 'token',
@@ -32,10 +38,10 @@ describe('Admin Orders Page', () => {
     const mockOrders = [
         {
             id: 'ord-123',
-            orderNumber: 'EVO-123',
+            orderNumber: 'EVO-A1B2C3D4',
             status: 'pending',
             total: 150,
-            createdAt: new Date().toISOString(),
+            createdAt: '2026-02-19T00:00:00.000Z',
             shippingName: 'John Doe',
             shippingPhone: '1234567890',
             shippingAddress: '123 St',
@@ -50,10 +56,10 @@ describe('Admin Orders Page', () => {
         },
         {
             id: 'ord-456',
-            orderNumber: 'EVO-456',
+            orderNumber: 'EVO-E5F6G7H8',
             status: 'paid',
             total: 300,
-            createdAt: new Date().toISOString(),
+            createdAt: '2026-02-19T00:00:00.000Z',
             shippingName: 'Jane Smith',
             shippingPhone: '0987654321',
             shippingAddress: '456 Ave',
@@ -68,116 +74,125 @@ describe('Admin Orders Page', () => {
         }
     ];
 
-    it('renders loading state initially', () => {
-        fetchMock.mockImplementationOnce(() => new Promise(() => { })); // Never resolves
+    it('renders loading state initially', async () => {
+        // Even with a resolved promise, the debounce (300ms) means 
+        // the component stays in loading state initially
+        fetchMock.mockResolvedValue(paginatedResponse(mockOrders));
         renderWithRouter(<AdminOrders />);
         expect(screen.getByTestId('orders-loading')).toBeInTheDocument();
+
+        // Wait for it to finish so we don't leave pending state
+        await waitFor(() => {
+            expect(screen.queryByTestId('orders-loading')).not.toBeInTheDocument();
+        }, { timeout: 2000 });
     });
 
     it('renders orders list correctly', async () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            json: async () => mockOrders
-        });
-
+        fetchMock.mockResolvedValue(paginatedResponse(mockOrders));
         renderWithRouter(<AdminOrders />);
 
         await waitFor(() => {
-            expect(screen.getByText('EVO-123')).toBeInTheDocument();
-            expect(screen.getByText('EVO-456')).toBeInTheDocument();
-        });
+            expect(screen.getByText('EVO-A1B2C3D4')).toBeInTheDocument();
+        }, { timeout: 2000 });
 
+        expect(screen.getByText('EVO-E5F6G7H8')).toBeInTheDocument();
         expect(screen.getByText('John Doe')).toBeInTheDocument();
         expect(screen.getByText('Jane Smith')).toBeInTheDocument();
         expect(screen.getByText('RM 150.00')).toBeInTheDocument();
     });
 
-    it('filters orders by search term', async () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            json: async () => mockOrders
-        });
-
+    it('sends search term as server-side query param', async () => {
+        fetchMock.mockResolvedValue(paginatedResponse(mockOrders));
         renderWithRouter(<AdminOrders />);
 
         await waitFor(() => {
-            expect(screen.getByText('EVO-123')).toBeInTheDocument();
+            expect(screen.getByText('EVO-A1B2C3D4')).toBeInTheDocument();
         });
 
+        // Test search interaction
+        fetchMock.mockResolvedValue(paginatedResponse([mockOrders[1]]));
         const searchInput = screen.getByPlaceholderText(/Search order number/i);
-        fireEvent.change(searchInput, { target: { value: 'EVO-456' } });
+        fireEvent.change(searchInput, { target: { value: 'EVO-E5F6' } });
 
         await waitFor(() => {
-            expect(screen.queryByText('EVO-123')).not.toBeInTheDocument();
-            expect(screen.getByText('EVO-456')).toBeInTheDocument();
-        });
+            // Check the most recent call
+            const calls = fetchMock.mock.calls;
+            const lastCallArgs = calls[calls.length - 1];
+            expect(lastCallArgs[0]).toContain('search=EVO-E5F6');
+        }, { timeout: 2000 });
     });
 
-    it('filters orders by status', async () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            json: async () => mockOrders
-        });
-
+    it('sends status filter as server-side query param', async () => {
+        fetchMock.mockResolvedValue(paginatedResponse(mockOrders));
         renderWithRouter(<AdminOrders />);
 
         await waitFor(() => {
-            expect(screen.getByText('EVO-123')).toBeInTheDocument(); // pending
-            expect(screen.getByText('EVO-456')).toBeInTheDocument(); // paid
+            expect(screen.getByText('EVO-A1B2C3D4')).toBeInTheDocument();
         });
 
-        // Use regex for select or display value? Select by display text "All Status" probably works for option, 
-        // but finding the select element is better via combobox role or query selector if simpler.
-        // Let's assume finding by display value of default option might be tricky if it's rendered as select.
-        // Use container query or label logic if accessible. Here we don't have label, just select.
-        // Using role 'combobox' might work if only one select.
-        // Or find specifically by the options.
-
-        // Actually, just finding by value (fireEvent.change) is easier if we target the element.
-        // The select has "All Status" option.
+        fetchMock.mockResolvedValue(paginatedResponse([mockOrders[1]]));
         const select = screen.getByRole('combobox');
         fireEvent.change(select, { target: { value: 'paid' } });
 
         await waitFor(() => {
-            expect(screen.queryByText('EVO-123')).not.toBeInTheDocument();
-            expect(screen.getByText('EVO-456')).toBeInTheDocument();
-        });
+            const calls = fetchMock.mock.calls;
+            const lastCallArgs = calls[calls.length - 1];
+            expect(lastCallArgs[0]).toContain('status=paid');
+        }, { timeout: 2000 });
     });
 
     it('shows order details when clicked', async () => {
-        fetchMock.mockResolvedValueOnce({
-            ok: true,
-            json: async () => mockOrders
-        });
-
+        fetchMock.mockResolvedValue(paginatedResponse(mockOrders));
         renderWithRouter(<AdminOrders />);
 
         await waitFor(() => {
-            expect(screen.getByTestId('order-item-EVO-123')).toBeInTheDocument();
+            expect(screen.getByTestId('order-item-EVO-A1B2C3D4')).toBeInTheDocument();
         });
 
-        fireEvent.click(screen.getByTestId('order-item-EVO-123'));
+        fireEvent.click(screen.getByTestId('order-item-EVO-A1B2C3D4'));
 
         await waitFor(() => {
             expect(screen.getByTestId('order-details-panel')).toBeInTheDocument();
-            expect(screen.getByText('Order Details')).toBeInTheDocument();
-            expect(screen.getByText('123 St, KL, 50000')).toBeInTheDocument(); // Check address rendering
-            expect(screen.getByText('Peptide A')).toBeInTheDocument(); // Check items rendering
         });
+
+        expect(screen.getByText('Order Details')).toBeInTheDocument();
+        expect(screen.getByText('123 St, KL, 50000')).toBeInTheDocument();
+        expect(screen.getByText('Peptide A')).toBeInTheDocument();
+    });
+
+    it('shows Load More button when hasMore is true', async () => {
+        fetchMock.mockResolvedValue(paginatedResponse(mockOrders, true, 'ord-456'));
+        renderWithRouter(<AdminOrders />);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('load-more-btn')).toBeInTheDocument();
+        });
+        expect(screen.getByText('Load More Orders')).toBeInTheDocument();
+    });
+
+    it('hides Load More button when hasMore is false', async () => {
+        fetchMock.mockResolvedValue(paginatedResponse(mockOrders, false));
+        renderWithRouter(<AdminOrders />);
+
+        await waitFor(() => {
+            expect(screen.getByText('EVO-A1B2C3D4')).toBeInTheDocument();
+        });
+
+        expect(screen.queryByTestId('load-more-btn')).not.toBeInTheDocument();
     });
 
     it('handles error state', async () => {
-        fetchMock.mockResolvedValueOnce({
+        fetchMock.mockResolvedValue({
             ok: false,
             status: 500,
             json: async () => ({ error: 'Server Error' })
         });
-
         renderWithRouter(<AdminOrders />);
 
         await waitFor(() => {
             expect(screen.getByTestId('orders-error')).toBeInTheDocument();
-            expect(screen.getByText('Server Error')).toBeInTheDocument();
-        });
+        }, { timeout: 2000 });
+
+        expect(screen.getByText('Server Error')).toBeInTheDocument();
     });
 });

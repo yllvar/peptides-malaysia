@@ -58,13 +58,25 @@ const AdminOrders: React.FC = () => {
     const [updating, setUpdating] = useState<string | null>(null);
     const [courierInput, setCourierInput] = useState('');
     const [trackingInput, setTrackingInput] = useState('');
+    const [nextCursor, setNextCursor] = useState<string | null>(null);
+    const [hasMore, setHasMore] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(false);
 
     const { accessToken, logout } = useAuthStore();
     const navigate = useNavigate();
 
-    const fetchOrders = async () => {
+    const fetchOrders = async (cursor?: string, append = false) => {
+        if (!append) setLoading(true);
+        else setLoadingMore(true);
+
         try {
-            const response = await fetch('/api/admin/orders', {
+            const params = new URLSearchParams();
+            params.set('limit', '20');
+            if (cursor) params.set('cursor', cursor);
+            if (statusFilter !== 'all') params.set('status', statusFilter);
+            if (searchTerm) params.set('search', searchTerm);
+
+            const response = await fetch(`/api/admin/orders?${params}`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }
@@ -76,19 +88,26 @@ const AdminOrders: React.FC = () => {
             }
             const data = await response.json();
             if (!response.ok) throw new Error(data.error || 'Failed to fetch orders');
-            setOrders(data);
+
+            setOrders(prev => append ? [...prev, ...data.orders] : data.orders);
+            setNextCursor(data.nextCursor);
+            setHasMore(data.hasMore);
         } catch (err: any) {
             setError(err.message);
         } finally {
             setLoading(false);
+            setLoadingMore(false);
         }
     };
 
+    // Debounced search + filter: reset to first page
     useEffect(() => {
-        if (accessToken) {
+        if (!accessToken) return;
+        const timer = setTimeout(() => {
             fetchOrders();
-        }
-    }, [accessToken]);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [searchTerm, statusFilter, accessToken]);
 
     const updateOrderStatus = async (orderId: string, status: string, trackingNumber?: string, courier?: string) => {
         setUpdating(orderId);
@@ -142,16 +161,7 @@ const AdminOrders: React.FC = () => {
         }
     };
 
-    const filteredOrders = orders.filter(order => {
-        const matchesSearch =
-            order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order.shippingName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order.id.toLowerCase().includes(searchTerm.toLowerCase());
-
-        const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
-
-        return matchesSearch && matchesStatus;
-    });
+    // Filtering is now server-side via query params
 
     return (
         <AdminLayout>
@@ -206,55 +216,67 @@ const AdminOrders: React.FC = () => {
                                 <div className="flex items-center justify-center h-64 bg-zinc-900/50 rounded-3xl border border-zinc-800" data-testid="orders-loading">
                                     <Clock className="w-8 h-8 text-evo-orange animate-spin" />
                                 </div>
-                            ) : filteredOrders.length === 0 ? (
+                            ) : orders.length === 0 ? (
                                 <div className="text-center py-24 bg-zinc-900/50 rounded-3xl border border-zinc-800">
                                     <Package className="w-12 h-12 text-zinc-700 mx-auto mb-4" />
                                     <p className="text-gray-400">No orders found matching your criteria.</p>
                                 </div>
                             ) : (
-                                filteredOrders.map(order => (
-                                    <div
-                                        key={order.id}
-                                        data-testid={`order-item-${order.orderNumber}`}
-                                        onClick={() => {
-                                            setSelectedOrder(order);
-                                            setCourierInput(order.courier || '');
-                                            setTrackingInput(order.trackingNumber || '');
-                                        }}
-                                        className={`p-6 bg-zinc-900/50 border rounded-3xl transition-all cursor-pointer hover:bg-zinc-900 group ${selectedOrder?.id === order.id ? 'border-evo-orange' : 'border-zinc-800'}`}
-                                    >
-                                        <div className="flex items-center justify-between mb-4">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-xl bg-black border border-zinc-800 flex items-center justify-center text-evo-orange font-bold text-lg">
-                                                    {order.orderNumber.split('-')[1].slice(-2)}
+                                <>
+                                    {orders.map(order => (
+                                        <div
+                                            key={order.id}
+                                            data-testid={`order-item-${order.orderNumber}`}
+                                            onClick={() => {
+                                                setSelectedOrder(order);
+                                                setCourierInput(order.courier || '');
+                                                setTrackingInput(order.trackingNumber || '');
+                                            }}
+                                            className={`p-6 bg-zinc-900/50 border rounded-3xl transition-all cursor-pointer hover:bg-zinc-900 group ${selectedOrder?.id === order.id ? 'border-evo-orange' : 'border-zinc-800'}`}
+                                        >
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-12 h-12 rounded-xl bg-black border border-zinc-800 flex items-center justify-center text-evo-orange font-bold text-lg">
+                                                        {order.orderNumber.split('-')[1].slice(-2)}
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="font-bold text-lg leading-tight">{order.orderNumber}</h3>
+                                                        <p className="text-xs text-gray-500 font-mono tracking-tighter uppercase">{order.id}</p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <h3 className="font-bold text-lg leading-tight">{order.orderNumber}</h3>
-                                                    <p className="text-xs text-gray-500 font-mono tracking-tighter uppercase">{order.id}</p>
+                                                <div className="text-right">
+                                                    <div className="text-xl font-bold text-white">RM {Number(order.total || 0).toFixed(2)}</div>
+                                                    <div className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</div>
                                                 </div>
                                             </div>
-                                            <div className="text-right">
-                                                <div className="text-xl font-bold text-white">RM {Number(order.total || 0).toFixed(2)}</div>
-                                                <div className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</div>
-                                            </div>
-                                        </div>
 
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-6">
-                                                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                                                    <UserIcon className="w-4 h-4" />
-                                                    <span>{order.shippingName}</span>
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-6">
+                                                    <div className="flex items-center gap-2 text-gray-400 text-sm">
+                                                        <UserIcon className="w-4 h-4" />
+                                                        <span>{order.shippingName}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 text-gray-400 text-sm font-mono uppercase tracking-widest text-[10px]">
+                                                        {order.items.length} {order.items.length === 1 ? 'Item' : 'Items'}
+                                                    </div>
                                                 </div>
-                                                <div className="flex items-center gap-2 text-gray-400 text-sm font-mono uppercase tracking-widest text-[10px]">
-                                                    {order.items.length} {order.items.length === 1 ? 'Item' : 'Items'}
+                                                <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${getStatusStyles(order.status)}`}>
+                                                    {order.status}
                                                 </div>
-                                            </div>
-                                            <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${getStatusStyles(order.status)}`}>
-                                                {order.status}
                                             </div>
                                         </div>
-                                    </div>
-                                ))
+                                    ))}
+                                    {hasMore && (
+                                        <button
+                                            onClick={() => fetchOrders(nextCursor!, true)}
+                                            disabled={loadingMore}
+                                            className="w-full py-3 bg-zinc-900 border border-zinc-800 rounded-xl text-sm font-bold text-gray-400 hover:text-white hover:bg-zinc-800 transition-all mt-4"
+                                            data-testid="load-more-btn"
+                                        >
+                                            {loadingMore ? 'Loading...' : 'Load More Orders'}
+                                        </button>
+                                    )}
+                                </>
                             )}
                         </div>
 

@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         const finalTotal = calculatedSubtotal + shippingCost;
 
         // 3. Create Order in Database
-        const orderNumber = `EVO-${Date.now().toString().slice(-8)}`;
+        const orderNumber = `EVO-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
 
         const order = await prisma.order.create({
             data: {

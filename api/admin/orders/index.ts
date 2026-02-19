@@ -10,7 +10,27 @@ export async function GET(request: Request) {
         const auth = await requireAdmin(request);
         if (!auth.authorized) return auth.errorResponse!;
 
+        const url = new URL(request.url);
+        const take = Math.min(parseInt(url.searchParams.get('limit') || '20'), 50);
+        const cursor = url.searchParams.get('cursor');
+        const status = url.searchParams.get('status');
+        const search = url.searchParams.get('search');
+
+        const where: any = {};
+        if (status && status !== 'all') {
+            where.status = status;
+        }
+        if (search) {
+            where.OR = [
+                { orderNumber: { contains: search, mode: 'insensitive' } },
+                { shippingName: { contains: search, mode: 'insensitive' } },
+            ];
+        }
+
         const orders = await prisma.order.findMany({
+            where,
+            take: take + 1,
+            ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
             include: {
                 items: true,
                 payment: true,
@@ -24,7 +44,15 @@ export async function GET(request: Request) {
             orderBy: { createdAt: 'desc' }
         });
 
-        return Response.json(orders);
+        const hasMore = orders.length > take;
+        const results = hasMore ? orders.slice(0, take) : orders;
+        const nextCursor = hasMore ? results[results.length - 1].id : null;
+
+        return Response.json({
+            orders: results,
+            nextCursor,
+            hasMore
+        });
     } catch (error: any) {
         console.error('Admin Orders Fetch Error:', error);
         return Response.json({

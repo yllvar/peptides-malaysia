@@ -44,19 +44,63 @@ describe('Admin Orders API', () => {
             expect(res.status).toBe(401);
         });
 
-        it('should return all orders if admin', async () => {
+        it('should return paginated orders if admin', async () => {
             const token = await createToken('admin');
-            const mockOrders = [{ id: 'o1', orderNumber: 'EVO-1' }];
+            const mockOrders = [{ id: 'o1', orderNumber: 'EVO-A1B2C3D4' }];
             (prisma.order.findMany as any).mockResolvedValue(mockOrders);
 
-            const req = new Request('http://localhost/api/admin/orders', {
+            const req = new Request('http://localhost/api/admin/orders?limit=20', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const res = await GET(req);
             const data = await res.json();
 
             expect(res.status).toBe(200);
-            expect(data).toEqual(mockOrders);
+            expect(data.orders).toEqual(mockOrders);
+            expect(data.hasMore).toBe(false);
+            expect(data.nextCursor).toBeNull();
+        });
+
+        it('should indicate hasMore when results exceed limit', async () => {
+            const token = await createToken('admin');
+            // Create 21 mock orders (limit=20, so 21 means hasMore=true)
+            const mockOrders = Array.from({ length: 21 }, (_, i) => ({
+                id: `o${i}`, orderNumber: `EVO-${String(i).padStart(8, '0')}`
+            }));
+            (prisma.order.findMany as any).mockResolvedValue(mockOrders);
+
+            const req = new Request('http://localhost/api/admin/orders?limit=20', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const res = await GET(req);
+            const data = await res.json();
+
+            expect(res.status).toBe(200);
+            expect(data.orders).toHaveLength(20);
+            expect(data.hasMore).toBe(true);
+            expect(data.nextCursor).toBe('o19');
+        });
+
+        it('should pass search and status params to Prisma', async () => {
+            const token = await createToken('admin');
+            (prisma.order.findMany as any).mockResolvedValue([]);
+
+            const req = new Request('http://localhost/api/admin/orders?search=john&status=paid', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            await GET(req);
+
+            expect(prisma.order.findMany).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    where: {
+                        status: 'paid',
+                        OR: [
+                            { orderNumber: { contains: 'john', mode: 'insensitive' } },
+                            { shippingName: { contains: 'john', mode: 'insensitive' } },
+                        ]
+                    }
+                })
+            );
         });
     });
 
