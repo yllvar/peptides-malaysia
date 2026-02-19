@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   ArrowRight,
   ThermometerSnowflake,
-  Droplet,
   ShieldCheck,
   Zap,
   Syringe,
@@ -12,249 +11,261 @@ import {
   AlertTriangle,
   ChevronRight,
   Info,
-  Activity
+  Activity,
+  FlaskConical,
+  CheckCircle2,
+  Layers,
+  MoveRight
 } from 'lucide-react';
 
 const Education: React.FC = () => {
-  // Calculator State (Preserved from original Education page as it's highly functional)
-  const [vialQty, setVialQty] = useState<number>(5); // mg
-  const [bacWater, setBacWater] = useState<number>(2); // ml
-  const [desiredDose, setDesiredDose] = useState<number>(0.25); // mg
+  // Calculator State - Calibrated for 20MG / 3ML Standard
+  const [vialQty, setVialQty] = useState<number>(20); // mg
+  const [bacWater, setBacWater] = useState<number>(3); // ml
+  const [desiredDose, setDesiredDose] = useState<number>(2.0); // mg
 
   const concentration = vialQty / bacWater;
   const unitsToPull = ((desiredDose / concentration) * 100).toFixed(1);
 
   return (
-    <div className="bg-evo-black min-h-screen text-white font-sans antialiased">
-      {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center overflow-hidden">
+    <div className="bg-evo-black min-h-screen text-white font-sans antialiased selection:bg-evo-orange selection:text-white">
+
+      {/* HERO - Mobile Centric High Impact */}
+      <section className="relative min-h-[85vh] flex flex-col justify-end pb-12 overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="/images/reta-2.webp"
-            alt="Retatrutide Kit Cinematic"
-            className="w-full h-full object-cover opacity-60"
+            alt="Evo Technical"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-evo-black via-evo-black/20 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-evo-black via-evo-black/80 to-evo-black/20"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="inline-block px-3 py-1 border border-evo-orange/30 text-evo-orange text-[9px] font-bold tracking-[0.4em] uppercase mb-4">Official Protocol v1.4</div>
-          <h1 className="text-5xl md:text-8xl font-display font-bold mb-6 tracking-tighter uppercase italic leading-[0.9]">
+        <div className="relative z-10 px-6 max-w-7xl mx-auto w-full">
+          <div className="inline-flex items-center px-3 py-1 bg-white/5 border border-white/10 backdrop-blur-md mb-6">
+            <span className="text-evo-orange text-[10px] font-bold tracking-[0.3em] uppercase">German Analytical Standards</span>
+          </div>
+          <h1 className="text-6xl md:text-9xl font-display font-bold mb-6 tracking-tighter uppercase italic leading-[0.85]">
             TECHNICAL <br />
-            <span className="text-gray-500 text-3xl md:text-6xl">PREPARATION</span>
+            <span className="text-gray-500">PRÄZISION.</span>
           </h1>
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed font-light italic border-l-2 border-evo-orange pl-8">
-            The definitive gateway to Evo™ Laboratory protocols. Engineered for the elite research community to ensure maximum peptide integrity.
+          <p className="text-gray-400 text-lg md:text-2xl max-w-xl leading-relaxed font-light italic border-l-2 border-evo-orange pl-6">
+            Integrated Laboratory Protocols for the Evo™ Series. Derived from official German synthesis documentation.
           </p>
-        </div>
-      </section>
 
-      {/* Critical Storage Alert */}
-      <section className="bg-evo-orange py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-6 text-black">
-            <ThermometerSnowflake size={48} strokeWidth={1.5} className="animate-pulse" />
-            <div>
-              <h3 className="text-2xl font-display font-bold uppercase italic leading-none mb-1">REFRIGERATE AFTER RECONSTITUTION</h3>
-              <p className="text-xs font-bold uppercase tracking-widest opacity-70">Maintain 2°C – 8°C at all times to preserve peptide stability.</p>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/50 bg-white/5 px-4 py-2 border border-white/5">
+              <Activity size={12} className="text-evo-orange" /> BATCH-VERIFIED
             </div>
-          </div>
-          <div className="bg-black text-white px-8 py-3 font-black text-xs uppercase tracking-[0.2em] rounded-full">
-            Storage Critical
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/50 bg-white/5 px-4 py-2 border border-white/5">
+              <Layers size={12} className="text-evo-orange" /> 99.8% PURITY
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Main Content Hub */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      {/* QUICK NAVIGATION - Mobile Only Tabs */}
+      <div className="sticky top-20 z-40 bg-evo-black/95 backdrop-blur-md border-y border-white/5 px-4 py-3 flex gap-6 overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap md:justify-center">
+        {['Protocols', 'Titration', 'Calculator', 'Technique'].map((item) => (
+          <button key={item} className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 hover:text-evo-orange transition-colors px-2">
+            {item}
+          </button>
+        ))}
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Left Side: Reconstitution Steps */}
-          <div className="lg:col-span-7">
-            <div className="mb-20">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 uppercase italic">RECONSTITUTION PROCESS</h2>
-              <div className="w-24 h-1 bg-evo-orange rounded-full mb-6"></div>
-              <p className="text-gray-500 font-mono text-[10px] tracking-widest uppercase italic">9-STEP ANALYTICAL PREPARATION PROTOCOL</p>
+      {/* STORAGE ALERT - High Visibility */}
+      <section className="bg-evo-orange px-6 py-6">
+        <div className="max-w-7xl mx-auto flex items-center gap-6">
+          <ThermometerSnowflake size={40} className="text-black shrink-0 animate-pulse" />
+          <div className="text-black">
+            <h3 className="text-lg font-display font-black uppercase italic leading-none mb-1">REFRIGERATION MANDATORY</h3>
+            <p className="text-[10px] font-bold uppercase tracking-[0.1em] opacity-80">Maintain 2°C – 8°C post-reconstitution.</p>
+          </div>
+        </div>
+      </section>
+
+      <main className="max-w-7xl mx-auto px-6 py-20 space-y-32">
+
+        {/* 01 | PREPARATION CHECKLIST - Image Top for Mobile */}
+        <section className="space-y-10">
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <span className="text-5xl font-display font-bold text-evo-orange/20 italic">01</span>
+              <h2 className="text-3xl font-display font-bold text-white uppercase italic tracking-widest leading-none">PREPARATION</h2>
+            </div>
+            <p className="text-gray-400 text-sm font-light italic">Verify the presence of the Evo™ Preparation Suite before initializing.</p>
+          </div>
+
+          <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/5 group lg:aspect-[21/9]">
+            <img src="/images/evo-education-1.webp" alt="Checklist" className="w-full h-full object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-evo-black/90 via-transparent to-transparent"></div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { item: 'Retatrutide 20mg', info: 'Vial A-1' },
+              { item: 'BAC Water 3ML', info: 'Solvent' },
+              { item: 'U-100 Syringes', info: '2 Units' },
+              { item: 'Clinical Swabs', info: '2 Units' }
+            ].map((i, idx) => (
+              <div key={idx} className="bg-white/5 border border-white/5 p-6 rounded-2xl flex items-center justify-between group hover:border-evo-orange/30 transition-all">
+                <div>
+                  <p className="text-[10px] font-black text-white uppercase tracking-widest">{i.item}</p>
+                  <p className="text-[9px] text-gray-500 uppercase mt-1 tracking-widest italic">{i.info}</p>
+                </div>
+                <CheckCircle2 className="text-evo-orange/20 group-hover:text-evo-orange transition-colors" size={20} />
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 02 | STERILIZATION & SOLVENT TRANSFER */}
+        <section className="space-y-12">
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <span className="text-5xl font-display font-bold text-evo-orange/20 italic">02</span>
+              <h2 className="text-3xl font-display font-bold text-white uppercase italic tracking-widest leading-none">TRANSFER</h2>
+            </div>
+          </div>
+
+          <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/5 group lg:aspect-[21/9] lg:order-last">
+            <img src="/images/evo-education-3.webp" alt="Transfer" className="w-full h-full object-cover opacity-80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-evo-black/90 via-transparent to-transparent"></div>
+          </div>
+
+          <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-8 lg:space-y-0">
+            {[
+              { t: 'Uncapping', d: 'Remove protective plastic seals from both vials.' },
+              { t: 'Aseptic Wipe', d: 'Sanitize both rubber stoppers with an alcohol swab.' },
+              { t: 'Vacuum Release', d: 'Inject 3ML air into BAC water. Withdraw 3ML (300 Units) solvent.' },
+              { t: 'Trickle Drip', d: 'Angle at 45°. Let solvent trickle down side walls to preserve peptide.' }
+            ].map((step, idx) => (
+              <div key={idx} className="flex gap-6 p-6 bg-[#0a0a0a] border border-white/5 rounded-2xl group hover:border-evo-orange/50 transition-all">
+                <span className="text-2xl font-display font-bold text-evo-orange">0{idx + 1}</span>
+                <div>
+                  <h4 className="text-sm font-black text-white uppercase tracking-widest mb-1">{step.t}</h4>
+                  <p className="text-xs text-gray-400 leading-relaxed font-light">{step.d}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* TITRATION SCHEDULE - Card Based for Mobile */}
+        <section className="space-y-10">
+          <div className="text-center md:text-left space-y-4">
+            <h2 className="text-5xl font-display font-bold text-white uppercase italic tracking-tighter">TITRATION <br /><span className="text-gray-500">SCHEDULE</span></h2>
+            <p className="text-evo-orange font-mono text-[9px] font-bold uppercase tracking-[0.3em]">20MG Unit / 3ML Dilution / Once Weekly</p>
+          </div>
+
+          <div className="relative rounded-[2.5rem] overflow-hidden border border-white/10 group">
+            <div className="absolute inset-0">
+              <img src="/images/reta-3.webp" alt="Schedule" className="w-full h-full object-cover opacity-30" />
+              <div className="absolute inset-0 bg-evo-black/80 backdrop-blur-sm"></div>
             </div>
 
-            <div className="space-y-16">
+            <div className="relative z-10 p-8 flex flex-col gap-4">
               {[
-                { n: "01", t: "Preparation", d: "Wash your hands thoroughly and prepare a clean, clinical workspace for assembly." },
-                { n: "02", t: "Uncap", d: "Remove the plastic flip-top protective cap from the Retatrutide 20mg research vial." },
-                { n: "03", t: "Sanitize", d: "Clean the rubber stoppers of both the peptide vial and the Bacteriostatic Water vial with clinical alcohol swabs." },
-                { n: "04", t: "Withdrawal", d: "Draw exactly 2ml of Bacteriostatic Water into the syringe. Eliminate large air bubbles." },
-                { n: "05", t: "Injection", d: "Carefully insert the needle into the Retatrutide vial, aiming for the inside wall of the glass." },
-                { n: "06", t: "Slow Release", d: "Slowly depress the plunger. Let the water trickle down the glass to avoid damaging the delicate peptide structure." },
-                { n: "07", t: "Dissolve", d: "Gently swirl the vial in a circular motion. DO NOT SHAKE. Wait until the liquid is completely clear." }
-              ].map((step, idx) => (
-                <div key={idx} className="flex gap-8 group">
-                  <span className="text-4xl font-display font-bold text-evo-orange/20 italic group-hover:text-evo-orange transition-colors duration-500">{step.n}</span>
-                  <div>
-                    <h4 className="text-xl font-display font-bold text-white uppercase italic mb-2 tracking-wide">{step.t}</h4>
-                    <p className="text-gray-400 font-light leading-relaxed">{step.d}</p>
+                { w: 'W 1 - 4', d: '2.0 mg', u: '30 IU', n: 'METABOLIC ENTRY' },
+                { w: 'W 5 - 8', d: '4.0 mg', u: '60 IU', n: 'STEADY STATE' },
+                { w: 'W 9', d: '6.0 mg', u: '90 IU', n: 'ACTIVATION' },
+                { w: 'W 10', d: '6.0 mg', u: '90 IU', n: 'VIAL 2 TRANSITION', highlight: true },
+                { w: 'W 11 - 12', d: '6.0 mg', u: '90 IU', n: 'PLATEAU' }
+              ].map((row, idx) => (
+                <div key={idx} className={`flex items-center justify-between p-6 rounded-2xl border ${row.highlight ? 'bg-evo-orange/10 border-evo-orange' : 'bg-black/40 border-white/5'}`}>
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">{row.w}</p>
+                    <p className="text-xl font-display font-black italic text-white">{row.n}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-mono text-evo-orange font-black leading-none">{row.u}</p>
+                    <p className="text-[10px] text-white/40 uppercase mt-1 font-bold">{row.d}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
+        </section>
 
-          {/* Right Side: Calculator & Specs */}
-          <div className="lg:col-span-5">
-            <div className="sticky top-32 space-y-8">
-              {/* PRÄZISIONS CALCULATOR - Integrated into the new layout */}
-              <div className="bg-[#0a0a0a] border border-evo-orange/20 p-8 relative overflow-hidden shadow-2xl">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-evo-orange/5 blur-[60px]"></div>
+        {/* PRÄZISIONS CALCULATOR - Mobile Optimized Inputs */}
+        <section className="bg-[#0a0a0a] border border-evo-orange/20 rounded-[3rem] p-10 relative overflow-hidden">
+          <div className="absolute -top-24 -right-24 w-64 h-64 bg-evo-orange/10 blur-[100px] pointer-events-none"></div>
 
-                <h2 className="text-2xl font-display font-bold text-white mb-8 border-l-2 border-evo-orange pl-6 uppercase tracking-widest italic text-sm">
-                  PRÄZISIONS CALCULATOR
-                </h2>
+          <div className="mb-12">
+            <div className="inline-block px-3 py-1 bg-evo-orange text-black text-[9px] font-black uppercase tracking-[0.3em] mb-4">Laboratory Engine</div>
+            <h2 className="text-4xl font-display font-bold text-white uppercase italic tracking-tighter">DILUTION MATRIX</h2>
+          </div>
 
-                <div className="space-y-6 mb-10">
-                  <div className="relative group">
-                    <label className="block text-[8px] font-bold text-gray-600 uppercase tracking-[0.2em] mb-2">Vial Master Quantity (mg)</label>
-                    <div className="relative">
-                      <input
-                        type="number"
-                        value={vialQty}
-                        onChange={(e) => setVialQty(Number(e.target.value))}
-                        className="w-full bg-black border border-white/5 p-4 text-white focus:border-evo-orange/50 focus:outline-none font-mono text-xl"
-                      />
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 font-mono text-xs">mg</div>
-                    </div>
-                  </div>
-
-                  <div className="relative group">
-                    <label className="block text-[8px] font-bold text-gray-600 uppercase tracking-[0.2em] mb-2">Solvent Dilution (ml)</label>
-                    <div className="relative">
-                      <input
-                        type="number"
-                        value={bacWater}
-                        onChange={(e) => setBacWater(Number(e.target.value))}
-                        className="w-full bg-black border border-white/5 p-4 text-white focus:border-evo-orange/50 focus:outline-none font-mono text-xl"
-                      />
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 font-mono text-xs">ml</div>
-                    </div>
-                  </div>
-
-                  <div className="relative group">
-                    <label className="block text-[8px] font-bold text-gray-600 uppercase tracking-[0.2em] mb-2">Target Research Dose (mg)</label>
-                    <div className="relative">
-                      <input
-                        type="number"
-                        step="0.05"
-                        value={desiredDose}
-                        onChange={(e) => setDesiredDose(Number(e.target.value))}
-                        className="w-full bg-black border border-white/5 p-4 text-white focus:border-evo-orange/50 focus:outline-none font-mono text-xl"
-                      />
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 font-mono text-xs">mg</div>
-                    </div>
+          <div className="grid grid-cols-1 gap-10">
+            <div className="space-y-8">
+              {[
+                { label: 'Vial Master Weight', value: vialQty, setter: setVialQty, unit: 'MG' },
+                { label: 'BAC Solvent Volume', value: bacWater, setter: setBacWater, unit: 'ML' },
+                { label: 'Target Research Dose', value: desiredDose, setter: setDesiredDose, unit: 'MG', step: 0.1 }
+              ].map((field, i) => (
+                <div key={i} className="space-y-4">
+                  <label className="text-[10px] font-black text-gray-600 uppercase tracking-[0.2em]">{field.label}</label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      step={field.step || 1}
+                      value={field.value}
+                      onChange={(e) => field.setter(Number(e.target.value))}
+                      className="w-full bg-black border border-white/10 p-6 rounded-2xl text-4xl font-display italic font-black text-white focus:border-evo-orange/50 transition-all outline-none"
+                    />
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-700 font-mono text-xs font-bold">{field.unit}</div>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                <div className="bg-evo-orange p-6 flex flex-col items-center justify-center text-center">
-                  <span className="text-[9px] text-black font-black uppercase tracking-[0.3em] mb-2">Calculated Syringe Pull</span>
-                  <div className="text-5xl font-display font-bold text-white tracking-tighter italic">
-                    {unitsToPull} <span className="text-lg opacity-70 font-sans uppercase">IU</span>
-                  </div>
-                  <span className="mt-2 text-[8px] text-black/60 font-bold uppercase tracking-widest italic">Standard U-100 Insulin Syringe</span>
+            <div className="bg-evo-orange py-10 px-8 rounded-[2rem] flex flex-col items-center justify-center text-center shadow-[0_20px_60px_rgba(255,152,32,0.3)]">
+              <p className="text-[11px] text-black font-black uppercase tracking-[0.4em] mb-4">Calculated Pull</p>
+              <div className="text-8xl font-display font-black text-white italic tracking-tighter leading-none mb-2">
+                {unitsToPull}
+              </div>
+              <p className="text-lg font-display font-bold text-black italic">UNITS / IU</p>
+              <div className="h-px w-20 bg-black/20 my-6"></div>
+              <p className="text-[9px] text-black font-black uppercase tracking-widest opacity-60">U-100 Graduated Syringe Standard</p>
+            </div>
+          </div>
+        </section>
+
+        {/* TECHNIQUE - Clean Cards */}
+        <section className="space-y-12 pb-20">
+          <div className="space-y-4">
+            <h2 className="text-5xl font-display font-bold text-white uppercase italic tracking-tighter">ADMINISTRATION <br /><span className="text-gray-500">GEOMETRY</span></h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            {[
+              { t: 'Site Selection', d: '2 inches from the navel. Sanitize with fresh swabs.' },
+              { t: 'The Pinch', d: 'Lift adipose tissue to isolate skin from muscle.' },
+              { t: 'The Entry', d: 'Target 45° angle. Continuous steady injection.' },
+              { t: 'Containment', d: 'Dispose in biological sharps container immediately.' }
+            ].map((s, i) => (
+              <div key={i} className="flex items-center gap-6 p-6 bg-white/5 border border-white/5 rounded-2xl group hover:border-evo-orange/20 transition-all">
+                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center shrink-0 text-evo-orange font-display font-bold italic">
+                  0{i + 1}
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-[11px] font-black text-white uppercase tracking-[0.1em]">{s.t}</h4>
+                  <p className="text-xs text-gray-500 font-light leading-relaxed">{s.d}</p>
                 </div>
               </div>
-
-              {/* Verification Info */}
-              <div className="bg-white/5 border border-white/10 p-8 rounded-2xl">
-                <h4 className="text-white font-bold text-[10px] uppercase tracking-[0.3em] mb-6">Verification Matrix</h4>
-                <ul className="space-y-4">
-                  {[
-                    'HPLC Purity Analysis (>99.5%)',
-                    'LC-MS Identity Confirmation',
-                    'MALDI-TOF Mass Spectrometry'
-                  ].map((item, i) => (
-                    <li key={i} className="flex items-center text-[9px] text-gray-500 font-bold tracking-widest uppercase italic">
-                      <ShieldCheck className="h-3 w-3 text-evo-orange mr-3" /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Dosage Section */}
-        <div className="mt-48 relative rounded-3xl overflow-hidden border border-white/10">
-          <div className="absolute inset-0">
-            <img src="/images/reta-3.webp" alt="Dosage Backdrop" className="w-full h-full object-cover opacity-20 blur-sm" />
-            <div className="absolute inset-0 bg-evo-black/80"></div>
+            ))}
           </div>
 
-          <div className="relative z-10 p-12">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 uppercase italic">RESEARCH DOSAGE SCHEDULE</h2>
-              <p className="text-evo-orange font-mono text-xs tracking-widest uppercase italic font-bold">Protocol based on 2ml reconstitution volume</p>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[600px]">
-                <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="py-6 px-4 text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">Research Phase</th>
-                    <th className="py-6 px-4 text-[10px] font-black text-gray-500 uppercase tracking-[0.3em]">Weekly Dose</th>
-                    <th className="py-6 px-4 text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] text-right">Syringe Units (U-100)</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white/5">
-                  {[
-                    { phase: "Weeks 1 - 4", dose: "2 mg", units: "20 Units" },
-                    { phase: "Weeks 5 - 8", dose: "4 mg", units: "40 Units" },
-                    { phase: "Weeks 9 - 12", dose: "6 mg", units: "60 Units" },
-                    { phase: "Weeks 13 - 16", dose: "9 mg", units: "90 Units" },
-                    { phase: "Weeks 17+", dose: "12 mg", units: "120 Units" }
-                  ].map((row, idx) => (
-                    <tr key={idx} className="border-b border-white/5 hover:bg-white/10 transition-colors group">
-                      <td className="py-8 px-4 font-display font-bold text-xl italic group-hover:text-evo-orange transition-colors">{row.phase}</td>
-                      <td className="py-8 px-4 font-mono text-2xl tracking-tighter text-white">{row.dose}</td>
-                      <td className="py-8 px-4 text-right">
-                        <span className="bg-black border border-white/10 px-6 py-3 rounded-full font-black text-evo-orange text-lg tracking-widest italic shadow-xl">
-                          {row.units}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* Best Practices Grid */}
-        <div className="mt-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { icon: Syringe, title: "Injection Method", desc: "Subcutaneous (Sub-Q) injection into stomach, thigh, or upper arm." },
-            { icon: Clock, title: "Rotation", desc: "Choose a different spot for each weekly injection to prevent skin irritation." },
-            { icon: ShieldCheck, title: "Expiration", desc: "Use the reconstituted solution within 30 days for maximum integrity." },
-            { icon: AlertTriangle, title: "Disclaimer", desc: "FOR RESEARCH USE ONLY. Not for human consumption or therapeutic use." }
-          ].map((item, idx) => (
-            <div key={idx} className="bg-gradient-to-b from-white/5 to-transparent border border-white/5 p-8 rounded-2xl hover:border-evo-orange/30 transition-all group">
-              <item.icon className="h-10 w-10 text-evo-orange mb-6 group-hover:scale-110 transition-transform" />
-              <h4 className="text-lg font-display font-bold text-white uppercase italic mb-4 tracking-wider">{item.title}</h4>
-              <p className="text-gray-500 text-sm leading-relaxed font-light">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="mt-48 flex flex-col items-center gap-12 text-center pb-24">
-          <h3 className="text-5xl md:text-7xl font-display font-bold text-white uppercase italic leading-none tracking-tighter">
-            READY TO <br /> <span className="text-gray-600">PROCEED?</span>
-          </h3>
-          <div className="flex flex-col sm:flex-row gap-6 w-full max-w-xl">
-            <Link to="/shop" className="flex-1 bg-evo-orange py-6 px-10 text-white font-black uppercase tracking-[0.2em] text-sm rounded-full hover:bg-white hover:text-black transition-all shadow-2xl flex items-center justify-center gap-4 group">
-              Shop Research Hub <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+          <div className="pt-20 flex flex-col gap-6">
+            <Link to="/shop" className="w-full bg-white text-black py-6 rounded-full font-black uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-4 hover:bg-evo-orange hover:text-white transition-all shadow-2xl group">
+              Return to Research Hub <MoveRight className="group-hover:translate-x-2 transition-transform" />
             </Link>
-            <Link to="/lab-testing" className="flex-1 bg-black border border-white/10 py-6 px-10 text-white font-black uppercase tracking-[0.2em] text-sm rounded-full hover:border-evo-orange transition-all flex items-center justify-center gap-4 group">
-              View Lab Logs <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <div className="flex justify-center gap-8 opacity-20">
+              <span className="text-[8px] font-mono whitespace-nowrap uppercase tracking-widest">MARGIN ±0.01%</span>
+              <span className="text-[8px] font-mono whitespace-nowrap uppercase tracking-widest">DIN ISO 13485 COMPLIANT</span>
+            </div>
           </div>
-        </div>
+        </section>
 
       </main>
     </div>
