@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GET, PATCH } from '../../api/admin/orders/index';
-import { prisma } from '../../src/lib/db';
+import { prisma } from '../../api/_db.js';
 import { SignJWT } from 'jose';
 
 // Mock prisma
-vi.mock('../../src/lib/db', () => ({
+vi.mock('../../api/_db.js', () => ({
     prisma: {
         order: {
             findMany: vi.fn(),

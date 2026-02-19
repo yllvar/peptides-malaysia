@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { POST } from '../../api/checkout/webhook/index';
-import { prisma } from '../../src/lib/db';
+import { prisma } from '../../api/_db.js';
 
-vi.mock('../../src/lib/db', () => ({
+vi.mock('../../api/_db.js', () => ({
     prisma: {
         order: {
             findUnique: vi.fn(),

@@ -1,14 +1,25 @@
+import { prisma } from '../../_db.js';
+
 export const config = {
     runtime: 'nodejs',
 };
 
 export async function GET(request: Request) {
     try {
-        // Dynamic import to catch errors
-        const { prisma } = await import('../../../src/lib/db');
-
         const orderCount = await prisma.order.count();
-        return Response.json({ ok: true, orderCount });
+        const productCount = await prisma.product.count();
+
+        const successfulOrders = await prisma.order.findMany({
+            where: { status: { in: ['paid', 'processing', 'shipped', 'delivered'] } }
+        });
+        const totalRevenue = successfulOrders.reduce((acc, order) => acc + Number(order.total), 0);
+
+        return Response.json({
+            ok: true,
+            orderCount,
+            productCount,
+            totalRevenue: totalRevenue.toFixed(2)
+        });
     } catch (error: any) {
         return Response.json({
             error: error.message,
