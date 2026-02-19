@@ -25,13 +25,16 @@
       ]
     },
     "types": [
-      "node"
+      "node",
+      "vitest/globals",
+      "@testing-library/jest-dom"
     ]
   },
   "include": [
     "src",
     "api",
-    "pages"
+    "pages",
+    "__tests__"
   ],
   "exclude": [
     "node_modules"

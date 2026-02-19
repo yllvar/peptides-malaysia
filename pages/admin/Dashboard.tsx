@@ -80,6 +80,7 @@ const AdminDashboard: React.FC = () => {
                                 icon={<DollarSign className="w-5 h-5" />}
                                 color="text-emerald-500"
                                 bg="bg-emerald-500/10"
+                                data-testid="stat-revenue"
                             />
                             <StatCard
                                 title="Active Orders"
@@ -88,6 +89,7 @@ const AdminDashboard: React.FC = () => {
                                 color="text-evo-orange"
                                 bg="bg-evo-orange/10"
                                 link="/admin/orders"
+                                data-testid="stat-active-orders"
                             />
                             <StatCard
                                 title="Total Orders"
@@ -96,6 +98,7 @@ const AdminDashboard: React.FC = () => {
                                 color="text-blue-500"
                                 bg="bg-blue-500/10"
                                 link="/admin/orders"
+                                data-testid="stat-total-orders"
                             />
                             <StatCard
                                 title="Stock Alerts"
@@ -188,7 +191,7 @@ const AdminDashboard: React.FC = () => {
     );
 };
 
-const StatCard = ({ title, value, icon, color, bg, link }: any) => {
+const StatCard = ({ title, value, icon, color, bg, link, ...props }: any) => {
     const Card = () => (
         <div className="bg-zinc-900/50 border border-zinc-800 rounded-3xl p-6 hover:border-zinc-700 transition-all group">
             <div className="flex justify-between items-start mb-4">
@@ -202,8 +205,8 @@ const StatCard = ({ title, value, icon, color, bg, link }: any) => {
         </div>
     );
 
-    if (link) return <Link to={link}><Card /></Link>;
-    return <Card />;
+    if (link) return <Link to={link} {...props}><Card /></Link>;
+    return <div {...props}><Card /></div>;
 };
 
 export default AdminDashboard;

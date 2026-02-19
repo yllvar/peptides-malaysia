@@ -113,6 +113,28 @@ describe('Admin Analytics API', () => {
         expect(data.recentOrders).toEqual([]);
     });
 
+    it('should handle zero orders/revenue gracefully', async () => {
+        vi.mocked(prisma.order.findMany).mockResolvedValue([]); // No orders
+        vi.mocked(prisma.order.count).mockResolvedValue(0);
+        vi.mocked(prisma.product.findMany).mockResolvedValue([]);
+
+        const token = await createToken('admin');
+        const req = new Request('http://localhost/api/admin/analytics', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const res = await GET(req);
+        const data = await res.json();
+
+        expect(res.status).toBe(200);
+        expect(data.stats).toEqual({
+            totalRevenue: 0,
+            activeOrders: 0,
+            lowStock: 0,
+            totalOrders: 0
+        });
+        expect(data.recentOrders).toEqual([]);
+        expect(data.lowStockProducts).toEqual([]);
+    });
     it('should return 500 on database error', async () => {
         const token = await createToken('admin');
         (prisma.order.findMany as any).mockRejectedValue(new Error('DB Error'));
