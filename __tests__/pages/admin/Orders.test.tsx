@@ -17,6 +17,9 @@ vi.mock('../../../components/admin/AdminLayout', () => ({
 
 const fetchMock = vi.fn();
 global.fetch = fetchMock;
+// Mock window.confirm for Phase 3 backward-status tests
+global.confirm = vi.fn();
+
 
 const paginatedResponse = (orders: any[], hasMore = false, nextCursor: string | null = null) => ({
     ok: true,
@@ -197,7 +200,7 @@ describe('Admin Orders Page', () => {
     });
 
 
-    it('enforces fulfillment details before marking as shipped', async () => {
+    it('enforces fulfillment details before marking as shipped — button is disabled when inputs empty', async () => {
         fetchMock.mockResolvedValue(paginatedResponse(mockOrders));
         renderWithRouter(<AdminOrders />);
 
@@ -210,31 +213,27 @@ describe('Admin Orders Page', () => {
             expect(screen.getByText('Mark as Shipped')).toBeInTheDocument();
         });
 
+        // Button must be disabled when courier/tracking are empty
         const shipBtn = screen.getByText('Mark as Shipped');
-        fireEvent.click(shipBtn);
+        expect(shipBtn).toBeDisabled();
 
-        await waitFor(() => {
-            expect(screen.getByText(/Courier and Tracking Number are required/)).toBeInTheDocument();
-        });
-
-        // Now fill details
+        // Fill details — button should become enabled
         const courierInput = screen.getByPlaceholderText(/Courier/i);
         const trackingInput = screen.getByPlaceholderText(/Tracking Number/i);
 
         fireEvent.change(courierInput, { target: { value: 'J&T' } });
         fireEvent.change(trackingInput, { target: { value: 'TRACK123' } });
 
-        // Wait for state updates/rerender after change
-        // We need to re-query button or fire again
+        await waitFor(() => expect(shipBtn).not.toBeDisabled());
+
+        fetchMock.mockResolvedValueOnce({ ok: true, json: async () => ({ id: 'ord-123', status: 'shipped' }) });
         fireEvent.click(shipBtn);
 
         await waitFor(() => {
-            const calls = fetchMock.mock.calls;
-            // The update call is a PATCH to /api/admin/orders (or similar if relative url)
-            const updateCall = calls.find(call => call[1] && call[1].method === 'PATCH');
-            expect(updateCall).toBeTruthy();
-            if (updateCall) {
-                const body = JSON.parse(updateCall[1].body as string);
+            const patchCall = fetchMock.mock.calls.find(c => c[1]?.method === 'PATCH');
+            expect(patchCall).toBeTruthy();
+            if (patchCall) {
+                const body = JSON.parse(patchCall[1].body as string);
                 expect(body).toMatchObject({
                     orderId: 'ord-123',
                     status: 'shipped',
@@ -243,5 +242,51 @@ describe('Admin Orders Page', () => {
                 });
             }
         });
+    });
+
+    it('shows confirmation dialog before backward status change and proceeds if confirmed', async () => {
+        const deliveredOrder = { ...mockOrders[0], status: 'delivered' };
+        fetchMock.mockResolvedValue(paginatedResponse([deliveredOrder]));
+        renderWithRouter(<AdminOrders />);
+
+        await waitFor(() => screen.getByTestId('order-item-EVO-A1B2C3D4'));
+        fireEvent.click(screen.getByTestId('order-item-EVO-A1B2C3D4'));
+
+        await waitFor(() => screen.getByText('Update Tracking Info'));
+
+        // Admin confirms the backward-status dialog
+        (global.confirm as any).mockReturnValue(true);
+        fetchMock.mockResolvedValueOnce({ ok: true, json: async () => ({ id: 'ord-123', status: 'paid' }) });
+
+        fireEvent.click(screen.getByRole('button', { name: /^paid$/i }));
+
+        expect(global.confirm).toHaveBeenCalledWith(expect.stringContaining('DELIVERED'));
+        await waitFor(() => {
+            const patchCall = fetchMock.mock.calls.find(c => c[1]?.method === 'PATCH');
+            expect(patchCall).toBeTruthy();
+            expect(JSON.parse(patchCall![1].body)).toMatchObject({ status: 'paid' });
+        });
+    });
+
+    it('cancels backward status change if admin dismisses the confirmation', async () => {
+        const deliveredOrder = { ...mockOrders[0], status: 'delivered' };
+        fetchMock.mockResolvedValue(paginatedResponse([deliveredOrder]));
+        renderWithRouter(<AdminOrders />);
+
+        await waitFor(() => screen.getByTestId('order-item-EVO-A1B2C3D4'));
+        fireEvent.click(screen.getByTestId('order-item-EVO-A1B2C3D4'));
+
+        await waitFor(() => screen.getByText('Update Tracking Info'));
+
+        // Admin dismisses the dialog
+        (global.confirm as any).mockReturnValue(false);
+        const callCountBefore = fetchMock.mock.calls.filter(c => c[1]?.method === 'PATCH').length;
+
+        fireEvent.click(screen.getByRole('button', { name: /^paid$/i }));
+
+        expect(global.confirm).toHaveBeenCalledWith(expect.stringContaining('DELIVERED'));
+        // No PATCH should have been fired
+        const callCountAfter = fetchMock.mock.calls.filter(c => c[1]?.method === 'PATCH').length;
+        expect(callCountAfter).toBe(callCountBefore);
     });
 });

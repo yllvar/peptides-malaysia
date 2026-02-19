@@ -61,9 +61,10 @@ Integrate an email service (e.g., Resend, SendGrid, or AWS SES) to:
 2.  Send "Shipping Confirmation" email (with tracking link) when status moves to `Shipped`.
 **Status:** Implemented on 2026-02-19 using Resend.
 
-### Phase 3: Validation & Guardrails (Medium Priority)
-- Disable "Shipped" button if tracking number is empty.
-- Add confirmation dialog when moving backwards (e.g. `Delivered` -> `Paid`).
+### Phase 3: Validation & Guardrails (Medium Priority) - **[DONE]**
+- ~~Disable "Shipped" button if tracking number is empty.~~ → "Mark as Shipped" button is now visually `disabled` (greyed out) until both Courier and Tracking Number inputs are filled.
+- ~~Add confirmation dialog when moving backwards (e.g. `Delivered` → `Paid`).~~ → `window.confirm()` prompt fires for any backward or destructive (`failed`) status transition.
+**Status:** Implemented on 2026-02-19.
 
 ## 5. Documentation Status
 - **Current:** No specific documentation for admin fulfillment procedures.

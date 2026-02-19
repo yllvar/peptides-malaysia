@@ -161,6 +161,26 @@ const AdminOrders: React.FC = () => {
         }
     };
 
+    // --- Phase 3: Backward-status guardrail ---
+    const STATUS_RANK: Record<string, number> = {
+        pending: 0, paid: 1, processing: 2, shipped: 3, delivered: 4, failed: 5
+    };
+
+    const confirmStatusChange = (currentStatus: string, newStatus: string): boolean => {
+        const currentRank = STATUS_RANK[currentStatus] ?? -1;
+        const newRank = STATUS_RANK[newStatus] ?? -1;
+        // 'failed' is always a downgrade from any active state
+        const isBackward = newStatus === 'failed'
+            ? currentRank >= STATUS_RANK['paid']
+            : newRank < currentRank;
+        if (isBackward) {
+            return window.confirm(
+                `⚠️ Backward status change\n\nYou are moving this order from "${currentStatus.toUpperCase()}" → "${newStatus.toUpperCase()}".\n\nAre you sure?`
+            );
+        }
+        return true;
+    };
+
     // Filtering is now server-side via query params
 
     return (
@@ -301,7 +321,10 @@ const AdminOrders: React.FC = () => {
                                             {['paid', 'processing', 'delivered', 'failed'].map(status => (
                                                 <button
                                                     key={status}
-                                                    onClick={() => updateOrderStatus(selectedOrder.id, status)}
+                                                    onClick={() => {
+                                                        if (!confirmStatusChange(selectedOrder.status, status)) return;
+                                                        updateOrderStatus(selectedOrder.id, status);
+                                                    }}
                                                     disabled={updating === selectedOrder.id}
                                                     className={`py-2 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all border ${selectedOrder.status === status ? getStatusStyles(status) : 'border-zinc-800 hover:border-zinc-700 text-gray-400'}`}
                                                 >
@@ -338,7 +361,12 @@ const AdminOrders: React.FC = () => {
                                                         }
                                                         updateOrderStatus(selectedOrder.id, 'shipped', trackingInput, courierInput);
                                                     }}
-                                                    className="w-full bg-evo-orange hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-all text-xs tracking-widest uppercase shadow-lg shadow-orange-900/20"
+                                                    disabled={!trackingInput || !courierInput || updating === selectedOrder.id}
+                                                    title={!trackingInput || !courierInput ? 'Enter Courier and Tracking Number first' : ''}
+                                                    className={`w-full font-bold py-3 rounded-xl transition-all text-xs tracking-widest uppercase shadow-lg shadow-orange-900/20 ${!trackingInput || !courierInput
+                                                            ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                                                            : 'bg-evo-orange hover:bg-orange-600 text-white'
+                                                        }`}
                                                 >
                                                     Mark as Shipped
                                                 </button>
