@@ -146,6 +146,12 @@ const AdminOrders: React.FC = () => {
         <AdminLayout>
             <div className="min-h-screen pt-8 pb-12 bg-evo-black text-white px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
+                    {error && (
+                        <div className="mb-6 bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-xl flex items-center gap-3" data-testid="orders-error">
+                            <XCircle className="w-5 h-5 shrink-0" />
+                            <p>{error}</p>
+                        </div>
+                    )}
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                         <div>
                             <h1 className="text-3xl font-bold font-display tracking-tight flex items-center gap-3">
@@ -186,7 +192,7 @@ const AdminOrders: React.FC = () => {
                         {/* Orders List */}
                         <div className="lg:col-span-2 space-y-4">
                             {loading ? (
-                                <div className="flex items-center justify-center h-64 bg-zinc-900/50 rounded-3xl border border-zinc-800">
+                                <div className="flex items-center justify-center h-64 bg-zinc-900/50 rounded-3xl border border-zinc-800" data-testid="orders-loading">
                                     <Clock className="w-8 h-8 text-evo-orange animate-spin" />
                                 </div>
                             ) : filteredOrders.length === 0 ? (
@@ -198,6 +204,7 @@ const AdminOrders: React.FC = () => {
                                 filteredOrders.map(order => (
                                     <div
                                         key={order.id}
+                                        data-testid={`order-item-${order.orderNumber}`}
                                         onClick={() => {
                                             setSelectedOrder(order);
                                             setCourierInput(order.courier || '');
@@ -216,7 +223,7 @@ const AdminOrders: React.FC = () => {
                                                 </div>
                                             </div>
                                             <div className="text-right">
-                                                <div className="text-xl font-bold text-white">RM {parseFloat(order.total.toString()).toFixed(2)}</div>
+                                                <div className="text-xl font-bold text-white">RM {Number(order.total || 0).toFixed(2)}</div>
                                                 <div className="text-xs text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</div>
                                             </div>
                                         </div>
@@ -243,7 +250,7 @@ const AdminOrders: React.FC = () => {
                         {/* Order Details Panel */}
                         <div className="lg:col-span-1">
                             {selectedOrder ? (
-                                <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-8 sticky top-32 backdrop-blur-xl">
+                                <div className="bg-zinc-900/80 border border-zinc-800 rounded-3xl p-8 sticky top-32 backdrop-blur-xl" data-testid="order-details-panel">
                                     <div className="flex justify-between items-start mb-6">
                                         <h2 className="text-2xl font-bold">Order Details</h2>
                                         <button
@@ -326,12 +333,12 @@ const AdminOrders: React.FC = () => {
                                                     <div className="text-gray-300">
                                                         <span className="font-bold text-white">{item.quantity}x</span> {item.productName}
                                                     </div>
-                                                    <div className="font-bold text-white">RM {parseFloat(item.lineTotal.toString()).toFixed(2)}</div>
+                                                    <div className="font-bold text-white">RM {Number(item.lineTotal || 0).toFixed(2)}</div>
                                                 </div>
                                             ))}
                                             <div className="flex justify-between items-center pt-4 border-t border-zinc-800">
                                                 <div className="text-xs font-bold uppercase tracking-widest text-gray-500">Total Amount</div>
-                                                <div className="text-2xl font-bold text-evo-orange">RM {parseFloat(selectedOrder.total.toString()).toFixed(2)}</div>
+                                                <div className="text-2xl font-bold text-evo-orange">RM {Number(selectedOrder.total || 0).toFixed(2)}</div>
                                             </div>
                                         </div>
                                     </div>
