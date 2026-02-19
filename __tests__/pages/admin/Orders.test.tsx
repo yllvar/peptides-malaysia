@@ -195,4 +195,53 @@ describe('Admin Orders Page', () => {
 
         expect(screen.getByText('Server Error')).toBeInTheDocument();
     });
+
+
+    it('enforces fulfillment details before marking as shipped', async () => {
+        fetchMock.mockResolvedValue(paginatedResponse(mockOrders));
+        renderWithRouter(<AdminOrders />);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('order-item-EVO-A1B2C3D4')).toBeInTheDocument();
+        });
+        fireEvent.click(screen.getByTestId('order-item-EVO-A1B2C3D4'));
+
+        await waitFor(() => {
+            expect(screen.getByText('Mark as Shipped')).toBeInTheDocument();
+        });
+
+        const shipBtn = screen.getByText('Mark as Shipped');
+        fireEvent.click(shipBtn);
+
+        await waitFor(() => {
+            expect(screen.getByText(/Courier and Tracking Number are required/)).toBeInTheDocument();
+        });
+
+        // Now fill details
+        const courierInput = screen.getByPlaceholderText(/Courier/i);
+        const trackingInput = screen.getByPlaceholderText(/Tracking Number/i);
+
+        fireEvent.change(courierInput, { target: { value: 'J&T' } });
+        fireEvent.change(trackingInput, { target: { value: 'TRACK123' } });
+
+        // Wait for state updates/rerender after change
+        // We need to re-query button or fire again
+        fireEvent.click(shipBtn);
+
+        await waitFor(() => {
+            const calls = fetchMock.mock.calls;
+            // The update call is a PATCH to /api/admin/orders (or similar if relative url)
+            const updateCall = calls.find(call => call[1] && call[1].method === 'PATCH');
+            expect(updateCall).toBeTruthy();
+            if (updateCall) {
+                const body = JSON.parse(updateCall[1].body as string);
+                expect(body).toMatchObject({
+                    orderId: 'ord-123',
+                    status: 'shipped',
+                    trackingNumber: 'TRACK123',
+                    courier: 'J&T'
+                });
+            }
+        });
+    });
 });

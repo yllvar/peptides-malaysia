@@ -298,7 +298,7 @@ const AdminOrders: React.FC = () => {
                                     <div className="space-y-4 mb-8">
                                         <label className="block text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Change Status</label>
                                         <div className="grid grid-cols-2 gap-2">
-                                            {['paid', 'processing', 'shipped', 'delivered', 'failed'].map(status => (
+                                            {['paid', 'processing', 'delivered', 'failed'].map(status => (
                                                 <button
                                                     key={status}
                                                     onClick={() => updateOrderStatus(selectedOrder.id, status)}
@@ -329,12 +329,27 @@ const AdminOrders: React.FC = () => {
                                                 value={trackingInput}
                                                 onChange={(e) => setTrackingInput(e.target.value)}
                                             />
-                                            <button
-                                                onClick={() => updateOrderStatus(selectedOrder.id, selectedOrder.status, trackingInput, courierInput)}
-                                                className="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-xl transition-all border border-white/10 text-xs tracking-widest uppercase"
-                                            >
-                                                Update Fulfillment
-                                            </button>
+                                            {selectedOrder.status !== 'shipped' && selectedOrder.status !== 'delivered' ? (
+                                                <button
+                                                    onClick={() => {
+                                                        if (!trackingInput || !courierInput) {
+                                                            setError('Courier and Tracking Number are required to ship.');
+                                                            return;
+                                                        }
+                                                        updateOrderStatus(selectedOrder.id, 'shipped', trackingInput, courierInput);
+                                                    }}
+                                                    className="w-full bg-evo-orange hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition-all text-xs tracking-widest uppercase shadow-lg shadow-orange-900/20"
+                                                >
+                                                    Mark as Shipped
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => updateOrderStatus(selectedOrder.id, selectedOrder.status, trackingInput, courierInput)}
+                                                    className="w-full bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-xl transition-all border border-white/10 text-xs tracking-widest uppercase"
+                                                >
+                                                    Update Tracking Info
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
 
