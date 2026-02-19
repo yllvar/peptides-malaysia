@@ -110,9 +110,20 @@ const AdminOrders: React.FC = () => {
             if (!response.ok) throw new Error(data.error || 'Update failed');
 
             // Update local state
-            setOrders(orders.map(o => o.id === orderId ? { ...o, status, trackingNumber: trackingNumber || o.trackingNumber, courier: courier || o.courier } : o));
+            setOrders(orders.map(o => o.id === orderId ? {
+                ...o,
+                status,
+                trackingNumber: trackingNumber !== undefined ? trackingNumber : o.trackingNumber,
+                courier: courier !== undefined ? courier : o.courier
+            } : o));
+
             if (selectedOrder?.id === orderId) {
-                setSelectedOrder({ ...selectedOrder, status, trackingNumber: trackingNumber || selectedOrder.trackingNumber, courier: courier || selectedOrder.courier });
+                setSelectedOrder({
+                    ...selectedOrder,
+                    status,
+                    trackingNumber: trackingNumber !== undefined ? trackingNumber : selectedOrder.trackingNumber,
+                    courier: courier !== undefined ? courier : selectedOrder.courier
+                });
             }
         } catch (err: any) {
             alert(err.message);
