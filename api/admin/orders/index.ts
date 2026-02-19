@@ -1,5 +1,6 @@
 import { prisma } from '../../_db.js';
 import { requireAdmin } from '../../_auth.js';
+import { sendShippingConfirmationEmail } from '../../../src/lib/email.js';
 
 export const config = {
     runtime: 'nodejs',
@@ -84,8 +85,23 @@ export async function PATCH(request: Request) {
 
         const updatedOrder = await prisma.order.update({
             where: { id: orderId },
-            data: updateData
+            data: updateData,
+            include: { user: { select: { email: true } } }
         });
+
+        // Send shipping notification email when status becomes 'shipped'
+        if (status === 'shipped' && trackingNumber && courier) {
+            const recipientEmail = updatedOrder.user?.email || updatedOrder.guestEmail;
+            if (recipientEmail) {
+                sendShippingConfirmationEmail(
+                    recipientEmail,
+                    updatedOrder.orderNumber,
+                    trackingNumber,
+                    courier,
+                    updatedOrder.shippingName
+                ).catch(err => console.error('Shipping email failed:', err));
+            }
+        }
 
         return Response.json(updatedOrder);
     } catch (error: any) {

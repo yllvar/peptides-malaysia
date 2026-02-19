@@ -36,11 +36,6 @@ export default defineConfig({
     setupFiles: './__tests__/setup.ts',
     css: false,
     include: ['__tests__/**/*.test.{ts,tsx}'],
-    poolOptions: {
-      threads: {
-        singleThread: true // Faster for simple tests without heavy isolation needs
-      }
-    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],

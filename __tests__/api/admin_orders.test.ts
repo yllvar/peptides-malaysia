@@ -128,7 +128,7 @@ describe('Admin Orders API', () => {
             const data = await res.json();
 
             expect(res.status).toBe(200);
-            expect(prisma.order.update).toHaveBeenCalledWith({
+            expect(prisma.order.update).toHaveBeenCalledWith(expect.objectContaining({
                 where: { id: 'o1' },
                 data: expect.objectContaining({
                     status: 'shipped',
@@ -136,7 +136,7 @@ describe('Admin Orders API', () => {
                     courier: 'J&T',
                     shippedAt: expect.any(Date)
                 })
-            });
+            }));
         });
 
         it('should set deliveredAt when status is delivered', async () => {
@@ -151,13 +151,13 @@ describe('Admin Orders API', () => {
 
             await PATCH(req);
 
-            expect(prisma.order.update).toHaveBeenCalledWith({
+            expect(prisma.order.update).toHaveBeenCalledWith(expect.objectContaining({
                 where: { id: 'o1' },
                 data: expect.objectContaining({
                     status: 'delivered',
                     deliveredAt: expect.any(Date)
                 })
-            });
+            }));
         });
 
         it('should accept arbitrary status values (no enum validation - documents current behavior)', async () => {

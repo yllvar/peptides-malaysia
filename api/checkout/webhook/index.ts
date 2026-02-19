@@ -1,4 +1,5 @@
 import { prisma } from '../../_db.js';
+import { sendOrderReceivedEmail } from '../../../src/lib/email.js';
 
 export const config = {
     runtime: 'nodejs',
@@ -67,7 +68,7 @@ export async function POST(request: Request) {
 
             const orderWithItems = await prisma.order.findUnique({
                 where: { id: orderId },
-                include: { items: true }
+                include: { items: true, user: { select: { email: true } } }
             });
 
             if (!orderWithItems) {
@@ -113,6 +114,24 @@ export async function POST(request: Request) {
                 ...stockUpdates
             ]);
             console.log(`Payment VERIFIED and Stock Decremented for Order ${orderId}`);
+
+            // Send order confirmation email
+            const recipientEmail = orderWithItems.user?.email || orderWithItems.guestEmail;
+            if (recipientEmail) {
+                sendOrderReceivedEmail(recipientEmail, {
+                    orderNumber: orderWithItems.orderNumber,
+                    total: Number(orderWithItems.total),
+                    items: orderWithItems.items.map(i => ({
+                        productName: i.productName,
+                        quantity: i.quantity,
+                        lineTotal: Number(i.lineTotal)
+                    })),
+                    shippingName: orderWithItems.shippingName,
+                    shippingAddress: orderWithItems.shippingAddress,
+                    shippingCity: orderWithItems.shippingCity,
+                    shippingPostcode: orderWithItems.shippingPostcode
+                }).catch(err => console.error('Order confirmation email failed:', err));
+            }
         } else {
             await prisma.$transaction([
                 prisma.order.update({
