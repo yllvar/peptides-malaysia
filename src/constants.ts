@@ -14,7 +14,7 @@ export const PRODUCTS: Product[] = [
     badge: 'BEST SELLER',
     isNew: true,
     inStock: true,
-    features: ['Triple Agonist (GLP-1, GIP, GCGR)', '>99.9% Purity HPLC Verified', 'Includes 10ml BAC Water (Combo Reta-Bac)', 'Cold-Chain Logistics'],
+    features: ['Triple Agonist (GLP-1, GIP, GCGR)', '>99.9% Purity HPLC Verified', 'Includes 3ml BAC Water (Combo Reta-Bac)', 'Cold-Chain Logistics'],
     techSpec: {
       mass: '4731.33 g/mol',
       halfLife: '~6 Days',

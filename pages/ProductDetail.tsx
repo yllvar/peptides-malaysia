@@ -75,7 +75,7 @@ _I have read and accepted the Research Use Only terms for the Evo™ Series._`;
 
             <div className="bg-white/5 border-l-4 border-evo-orange p-4 mb-8">
               <p className="text-sm text-gray-300 leading-relaxed italic">
-                <span className="font-bold text-white uppercase not-italic">Research Kit Logic:</span> Bundled research unit containing the lyophilized peptide and 10ml of Evo™ Bacteriostatic Water. Optimized for structural stability.
+                <span className="font-bold text-white uppercase not-italic">Research Kit Logic:</span> Bundled research unit containing the lyophilized peptide and 3ml of Evo™ Bacteriostatic Water. Optimized for structural stability.
               </p>
             </div>
 
