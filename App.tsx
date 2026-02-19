@@ -19,6 +19,7 @@ import Terms from './pages/Terms';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import OrderHistory from './pages/OrderHistory';
+import TrackOrder from './pages/TrackOrder';
 import AdminOrders from './pages/admin/Orders';
 import AdminProducts from './pages/admin/Products';
 import AdminDashboard from './pages/admin/Dashboard';
@@ -57,6 +58,7 @@ const AppContent: React.FC = () => {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/payment/status" element={<PaymentStatus />} />
           <Route path="/orders" element={<OrderHistory />} />
+          <Route path="/track" element={<TrackOrder />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/admin/products" element={<AdminProducts />} />

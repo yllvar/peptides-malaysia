@@ -172,9 +172,7 @@ const AdminProducts: React.FC = () => {
         }
     };
 
-    if (user?.role !== 'admin') {
-        return <div className="min-h-screen pt-32 text-center">Unauthorized</div>;
-    }
+
 
     return (
         <AdminLayout>

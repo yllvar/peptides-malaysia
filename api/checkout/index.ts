@@ -5,6 +5,9 @@ export const config = {
 };
 import { calculateShippingCost } from '../../src/lib/utils/shipping.js';
 
+/** Strip all non-digit characters so phone numbers are stored in a consistent format for downstream queries (e.g. WhatsApp Bot LIKE lookups). */
+const sanitizePhone = (phone: string): string => phone.replace(/\D/g, '');
+
 export async function POST(request: Request) {
     try {
         const { items, shippingInfo, userId } = await request.json();
@@ -57,9 +60,9 @@ export async function POST(request: Request) {
                 userId: userId || null,
                 guestName: !userId ? shippingInfo.fullName : undefined,
                 guestEmail: !userId ? shippingInfo.email : undefined,
-                guestPhone: !userId ? shippingInfo.phone : undefined,
+                guestPhone: !userId ? sanitizePhone(shippingInfo.phone) : undefined,
                 shippingName: shippingInfo.fullName,
-                shippingPhone: shippingInfo.phone,
+                shippingPhone: sanitizePhone(shippingInfo.phone),
                 shippingAddress: shippingInfo.address,
                 shippingCity: shippingInfo.city,
                 shippingPostcode: shippingInfo.postcode,
