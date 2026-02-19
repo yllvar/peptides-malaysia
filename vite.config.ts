@@ -18,12 +18,29 @@ export default defineConfig({
       '@': path.resolve(__dirname, '.'),
     }
   },
+  build: {
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom', 'zustand'],
+          ui: ['lucide-react']
+        }
+      }
+    }
+  },
   test: {
     globals: true,
     environment: 'happy-dom',
     setupFiles: './__tests__/setup.ts',
     css: false,
     include: ['__tests__/**/*.test.{ts,tsx}'],
+    poolOptions: {
+      threads: {
+        singleThread: true // Faster for simple tests without heavy isolation needs
+      }
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
