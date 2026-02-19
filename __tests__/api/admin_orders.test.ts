@@ -13,6 +13,10 @@ vi.mock('../../api/_db.js', () => ({
     },
 }));
 
+vi.mock('../../src/lib/email.js', () => ({
+    sendShippingConfirmationEmail: vi.fn().mockResolvedValue({ success: true })
+}));
+
 const JWT_SECRET = 'test-secret';
 process.env.JWT_SECRET = JWT_SECRET;
 

@@ -22,6 +22,10 @@ vi.mock('../../api/_db.js', () => ({
 // Mock global fetch for ToyyibPay verification
 global.fetch = vi.fn();
 
+vi.mock('../../src/lib/email.js', () => ({
+    sendOrderReceivedEmail: vi.fn().mockResolvedValue({ success: true })
+}));
+
 describe('Checkout Webhook API', () => {
     beforeEach(() => {
         vi.clearAllMocks();

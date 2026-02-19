@@ -85,5 +85,5 @@ It is **not** legacy/dead code for the Web App itself — only irrelevant to the
 ## 6. Status
 - [x] Audit complete
 - [x] P0 fix implemented
-- [x] P1 fix implemented (Resend email on payment + shipping)
+- [x] P1 fix implemented (Resend email; currently using `onboarding@resend.dev` until production domain verified)
 - [x] P3 fix implemented (random UUID-based order IDs)

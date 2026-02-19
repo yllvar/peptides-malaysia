@@ -8,6 +8,10 @@ function getResend(): Resend | null {
 }
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
 
+if (FROM_EMAIL.includes('resend.dev')) {
+    console.log(`[Email] Using testing domain ${FROM_EMAIL}. Emails will likely only be delivered to the Resend account owner (evopeptidesmastermail@gmail.com).`);
+}
+
 interface EmailOrder {
     orderNumber: string;
     total: number;
