@@ -30,6 +30,23 @@ export const PRODUCTS: Product[] = [
     }
   },
   {
+    id: 'evo-retat-10mg',
+    name: 'Retatrutide 10mg',
+    price: 0,
+    category: 'Weight Management',
+    description: 'The absolute zenith of metabolic capability. Retatrutide (GGG Tri-Agonist). Designed for advanced research protocols focusing on metabolic efficiency.',
+    image: '/images/evo-retatrutide-10mg.webp',
+    isNew: true,
+    inStock: true,
+    features: ['Triple Agonist (GLP-1, GIP, GCGR)', '>99.9% Purity HPLC Verified', 'Cold-Chain Logistics'],
+    techSpec: {
+      mass: '4731.33 g/mol',
+      halfLife: '~6 Days',
+      focus: 'Triple-G Agonism',
+      formula: 'C221H342N54O67'
+    }
+  },
+  {
     id: 'evo-bpc-tb-blend',
     name: 'Evo BPC-157 + TB-500 Blend 10mg (5mg/5mg)',
     price: 0,
