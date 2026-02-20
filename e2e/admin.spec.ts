@@ -30,21 +30,25 @@ test.describe('Admin Dashboard Flow', () => {
         });
 
         // Mock Admin Orders
-        await page.route('**/api/admin/orders', async route => {
+        await page.route('**/api/admin/orders**', async route => { // Match queries like ?limit=20
             await route.fulfill({
                 status: 200,
-                json: [
-                    {
-                        id: 'o1',
-                        orderNumber: 'EVO-12345678',
-                        shippingName: 'John Admin',
-                        status: 'paid',
-                        total: 150.00,
-                        createdAt: new Date().toISOString(),
-                        items: [{ id: 'i1', productName: 'P1', quantity: 1, lineTotal: 150 }],
-                        user: { fullName: 'John Admin', email: 'john@admin.com' }
-                    }
-                ]
+                json: {
+                    orders: [
+                        {
+                            id: 'o1',
+                            orderNumber: 'EVO-12345678',
+                            shippingName: 'John Admin',
+                            status: 'paid',
+                            total: 150.00,
+                            createdAt: new Date().toISOString(),
+                            items: [{ id: 'i1', productName: 'P1', quantity: 1, lineTotal: 150 }],
+                            user: { fullName: 'John Admin', email: 'john@admin.com' }
+                        }
+                    ],
+                    hasMore: false,
+                    nextCursor: null
+                }
             });
         });
     });
