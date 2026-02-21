@@ -11,12 +11,12 @@ export function useBlogPosts() {
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
 
-                if (!data || data.length === 0) return BLOG_POSTS;
+                if (!data || data.length === 0) return BLOG_POSTS.map(p => ({ ...p, slug: p.id }));
 
                 return data.map((p: any) => ({
-                    id: p.id,
+                    id: p.slug || p.id, // Use slug as ID for frontend consistency
                     title: p.title,
-                    slug: p.slug,
+                    slug: p.slug || p.id,
                     excerpt: p.excerpt,
                     content: p.content,
                     category: p.category,

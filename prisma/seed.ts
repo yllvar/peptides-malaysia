@@ -80,7 +80,7 @@ async function seed() {
     // 3. Seed Blog Posts
     for (const b of BLOG_POSTS) {
         await prisma.blogPost.upsert({
-            where: { slug: `post-${b.id}` },
+            where: { slug: b.id },
             update: {
                 title: b.title,
                 excerpt: b.excerpt,
@@ -88,20 +88,20 @@ async function seed() {
                 category: b.category,
                 readTime: b.readTime,
                 imageUrl: b.imageUrl,
-                relatedProductId: b.relatedProductId,
+                relatedProduct: b.relatedProductId ? { connect: { id: b.relatedProductId } } : undefined,
                 purityBatch: b.purityBatch,
                 references: b.references || [],
                 faqs: b.faqs || [],
             },
             create: {
                 title: b.title,
-                slug: `post-${b.id}`,
+                slug: b.id,
                 excerpt: b.excerpt,
                 content: b.content,
                 category: b.category,
                 readTime: b.readTime,
                 imageUrl: b.imageUrl,
-                relatedProductId: b.relatedProductId,
+                relatedProduct: b.relatedProductId ? { connect: { id: b.relatedProductId } } : undefined,
                 purityBatch: b.purityBatch,
                 references: b.references || [],
                 faqs: b.faqs || [],
