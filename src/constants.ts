@@ -102,35 +102,8 @@ export const STORAGE_PROTOCOLS = {
   solvent: 'Optimized for Evo™ Bacteriostatic (BAC) Water'
 };
 
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    id: '1',
-    title: "Evo™ Series: Technical Master Specification",
-    excerpt: "The surgical precision of our 'Sporty-Noir' luxury brand through analytical data and laboratory standards.",
-    content: "Every vial in the Evo series is characterized by three core pillars: Evo-Grade Purity, Enhanced Stability, and the 'Evo Kit' Logic. <br/><br/><strong>Evo-Grade Purity:</strong> All products undergo rigorous HPLC and MS testing to ensure absolute sequences. <br/><br/><strong>Enhanced Stability:</strong> Vacuum-sealed in specialized light-protected vials to prevent UV degradation. <br/><br/><strong>Evo Kit Logic:</strong> We bundle peptides with high-purity BAC water to ensure structural stability during reconstitution.",
-    date: "Feb 11, 2024",
-    category: "Science",
-    readTime: "6 min"
-  },
-  {
-    id: '2',
-    title: "The Triple-G Agonist Era",
-    excerpt: "Exploring the pharmacodynamics of Retatrutide: The vanguard of metabolic and adipose research.",
-    content: "Retatrutide represents the next evolution in metabolic research, moving beyond the single (Semaglutide) and dual (Tirzepatide) agonist models. <br/><br/>By targeting the Glucagon receptor (GCGR) alongside GIP and GLP-1, Retatrutide exhibits a unique mechanism of increasing energy expenditure while suppressing appetite.",
-    date: "Feb 11, 2024",
-    category: "Science",
-    readTime: "8 min"
-  },
-  {
-    id: '3',
-    title: "Local Excellence & Logistics Hub",
-    excerpt: "How Evo Peptides is eliminating international shipping risk with KL Ready Stock.",
-    content: "Operating from our hub in Kuala Lumpur, we utilize local logistics like Lalamove and Grab for same-day delivery in the Klang Valley. Our mission is to provide the elite Malaysian research community with immediate access to verified, lab-tested compounds without the uncertainty of customs.",
-    date: "Feb 11, 2024",
-    category: "Operations",
-    readTime: "4 min"
-  }
-];
+import { BLOG_POSTS_DATA } from './data/blogData';
+export const BLOG_POSTS = BLOG_POSTS_DATA;
 
 export const COA_DATA: COADocument[] = [
   { id: 'c1', productName: 'Retatrutide 20mg', batchNumber: 'EVO-RT-0092', purity: '99.8%', date: '2023-11-15' },

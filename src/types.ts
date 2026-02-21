@@ -32,6 +32,11 @@ export interface BlogPost {
   date: string;
   category: string;
   readTime: string;
+  imageUrl?: string;
+  references?: Array<{ label: string; url: string }>;
+  faqs?: Array<{ question: string; answer: string }>;
+  relatedProductId?: string;
+  purityBatch?: string;
 }
 
 export interface COADocument {

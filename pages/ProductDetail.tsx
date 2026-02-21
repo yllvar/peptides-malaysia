@@ -4,6 +4,7 @@ import { useProducts } from '../src/hooks/useProducts';
 import { useCartStore } from '../src/stores/cartStore';
 import { WHATSAPP_NUMBER, STORAGE_PROTOCOLS } from '../src/constants';
 import { Check, AlertCircle, ShoppingCart, MessageCircle, FileText, Activity, CheckCircle2, ChevronRight } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -51,6 +52,13 @@ _I have read and accepted the Research Use Only terms for the Evo™ Series._`;
 
   return (
     <div className="pt-24 pb-16 bg-evo-black min-h-screen">
+      <SEO
+        title={`${product.name} | Evo™ Peptides Research`}
+        description={product.description}
+        image={product.image}
+        url={`https://evopeptides.shop/product/${product.id}`}
+        type="product"
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Breadcrumb */}

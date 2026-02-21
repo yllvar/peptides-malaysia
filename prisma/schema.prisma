@@ -65,6 +65,7 @@ model Product {
   techSpecs         TechnicalSpec[]
   coaDocuments      CoaDocument[]
   orderItems        OrderItem[]
+  blogPosts         BlogPost[]
 
   @@index([isPublished, sortOrder])
   @@index([category])
@@ -176,7 +177,12 @@ model BlogPost {
   isPublished   Boolean   @default(false) @map("is_published")
   publishedAt   DateTime? @map("published_at")
   createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  relatedProductId String?   @map("related_product_id")
+  purityBatch      String?   @map("purity_batch")
+  references       Json?     @default("[]")
+  faqs             Json?     @default("[]")
+  relatedProduct   Product?  @relation(fields: [relatedProductId], references: [id], onDelete: SetNull)
 
   @@map("blog_posts")
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { POST } from '../../api/track';
-import { prisma } from '../../api/orders/_db'; // Reuse the mock from existing tests if possible, or mock globally
+import { prisma } from '../../api/_db'; // Reuse the mock from existing tests if possible, or mock globally
 
 // Mock Prisma
 vi.mock('../../api/_db', () => ({

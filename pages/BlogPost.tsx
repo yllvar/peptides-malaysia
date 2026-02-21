@@ -1,7 +1,9 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBlogPosts } from '../src/hooks/useBlogPosts';
-import { ArrowLeft, Clock, Calendar } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, ExternalLink, ShieldCheck, HelpCircle, ChevronDown } from 'lucide-react';
+import SEO from '../components/SEO';
+import BlogCTABox from '../components/BlogCTABox';
 
 const BlogPost: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,6 +29,12 @@ const BlogPost: React.FC = () => {
 
   return (
     <div className="pt-24 pb-16 bg-evo-black min-h-screen">
+      <SEO
+        title={`${post.title} | Evo™ Peptides Research`}
+        description={post.excerpt || post.title}
+        image={post.imageUrl}
+        type="article"
+      />
       <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <Link to="/education" className="inline-flex items-center text-gray-500 hover:text-white mb-8 transition-colors">
@@ -50,10 +58,70 @@ const BlogPost: React.FC = () => {
           </div>
         </header>
 
-        <div className="prose prose-invert prose-lg max-w-none">
+        <div className="prose prose-invert prose-lg max-w-none mb-12">
           <div className="text-gray-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
 
+        {/* TRUST FACTOR - Batch & Purity Badge */}
+        {post.purityBatch && (
+          <div className="bg-white/5 border-l-4 border-evo-orange p-6 mb-12 rounded-r-2xl flex items-center justify-between">
+            <div>
+              <div className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Analytical Verification</div>
+              <div className="text-lg font-display font-bold text-white uppercase italic">Batch #{post.purityBatch}</div>
+            </div>
+            <div className="flex items-center gap-3 bg-evo-orange/10 px-4 py-2 rounded-full border border-evo-orange/20">
+              <ShieldCheck className="text-evo-orange" size={20} />
+              <span className="text-xs font-black text-white uppercase tracking-tighter">HPLC Verified {'>'}99.9%</span>
+            </div>
+          </div>
+        )}
+
+        {/* THE KIT - Conversion CTA */}
+        {post.relatedProductId && (
+          <BlogCTABox productId={post.relatedProductId} />
+        )}
+
+        {/* FAQ SECTION - Objection Handling */}
+        {post.faqs && post.faqs.length > 0 && (
+          <div className="mb-12 space-y-6">
+            <h3 className="text-2xl font-display font-bold text-white uppercase italic tracking-tighter flex items-center gap-3">
+              <HelpCircle className="text-evo-orange" /> Common Inquiries
+            </h3>
+            <div className="space-y-4">
+              {post.faqs.map((faq, i) => (
+                <div key={i} className="bg-white/5 border border-white/5 rounded-2xl p-6 group hover:border-white/10 transition-all">
+                  <h4 className="text-white font-bold mb-2 flex items-center justify-between">
+                    {faq.question}
+                  </h4>
+                  <p className="text-gray-400 text-sm leading-relaxed font-light">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* REFERENCES - Scientific Authority */}
+        {post.references && post.references.length > 0 && (
+          <div className="mb-12 pt-8 border-t border-white/10">
+            <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mb-4">Scientific Citations</h3>
+            <ul className="space-y-2">
+              {post.references.map((ref, i) => (
+                <li key={i}>
+                  <a
+                    href={ref.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-gray-400 hover:text-evo-orange transition-colors flex items-center gap-2 underline underline-offset-4 decoration-white/10"
+                  >
+                    <ExternalLink size={14} /> {ref.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* FOOTER DISCLAIMER */}
         <div className="mt-16 pt-8 border-t border-white/10 bg-white/5 p-8 rounded-lg">
           <h3 className="text-white font-bold mb-2">Research Disclaimer</h3>
           <p className="text-sm text-gray-400">

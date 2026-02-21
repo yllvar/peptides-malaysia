@@ -3,6 +3,7 @@ import { render, RenderOptions } from '@testing-library/react';
 import { MemoryRouter, MemoryRouterProps } from 'react-router-dom';
 import { CartItem, Product } from '../src/types';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { HelmetProvider } from 'react-helmet-async';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -21,9 +22,11 @@ export function renderWithRouter(
     options?: Omit<RenderOptions, 'wrapper'>
 ) {
     const Wrapper = ({ children }: { children: React.ReactNode }) => (
-        <QueryClientProvider client={queryClient}>
-            <MemoryRouter {...routerProps}>{children}</MemoryRouter>
-        </QueryClientProvider>
+        <HelmetProvider>
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter {...routerProps}>{children}</MemoryRouter>
+            </QueryClientProvider>
+        </HelmetProvider>
     );
     return render(ui, { wrapper: Wrapper, ...options });
 }

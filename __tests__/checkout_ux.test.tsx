@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Checkout from '../pages/Checkout';
+import { HelmetProvider } from 'react-helmet-async';
 import { useCartStore } from '../src/stores/cartStore';
 import { useAuthStore } from '../src/stores/authStore';
 
@@ -49,9 +50,11 @@ describe('Checkout UX Integration', () => {
         });
 
         render(
-            <BrowserRouter>
-                <Checkout />
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <Checkout />
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         expect(screen.getByText(/Your cart is empty/i)).toBeDefined();
@@ -60,9 +63,11 @@ describe('Checkout UX Integration', () => {
 
     it('should show shipping zone and estimate when a valid postcode is entered', async () => {
         render(
-            <BrowserRouter>
-                <Checkout />
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <Checkout />
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         const postcodeField = screen.getByPlaceholderText(/5-Digit Code/i);
@@ -81,9 +86,11 @@ describe('Checkout UX Integration', () => {
 
     it('should update the total price dynamically based on shipping zone', async () => {
         render(
-            <BrowserRouter>
-                <Checkout />
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <Checkout />
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         const postcodeField = screen.getByPlaceholderText(/5-Digit Code/i);
@@ -102,9 +109,11 @@ describe('Checkout UX Integration', () => {
 
     it('should validate form fields and prevent submission with errors', async () => {
         render(
-            <BrowserRouter>
-                <Checkout />
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <Checkout />
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         // Find and submit the form
@@ -118,9 +127,11 @@ describe('Checkout UX Integration', () => {
 
     it('should show loading state and handle successful redirection', async () => {
         render(
-            <BrowserRouter>
-                <Checkout />
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <Checkout />
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         // Fill form
@@ -150,9 +161,11 @@ describe('Checkout UX Integration', () => {
         });
 
         render(
-            <BrowserRouter>
-                <Checkout />
-            </BrowserRouter>
+            <HelmetProvider>
+                <BrowserRouter>
+                    <Checkout />
+                </BrowserRouter>
+            </HelmetProvider>
         );
 
         // Fill form

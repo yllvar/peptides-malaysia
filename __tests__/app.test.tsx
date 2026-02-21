@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import App from '../App';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { HelmetProvider } from 'react-helmet-async';
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 
@@ -22,9 +23,11 @@ vi.mock('../src/stores/authStore', () => ({
 }));
 
 const renderApp = () => render(
-    <QueryClientProvider client={queryClient}>
-        <App />
-    </QueryClientProvider>
+    <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+            <App />
+        </QueryClientProvider>
+    </HelmetProvider>
 );
 
 describe('App Component (Integration)', () => {
@@ -34,19 +37,19 @@ describe('App Component (Integration)', () => {
     });
 
     it('renders without crashing', () => {
-        render(<App />);
+        renderApp();
         expect(document.querySelector('.flex-grow')).toBeInTheDocument();
     });
 
     it('renders the Navbar brand', () => {
-        render(<App />);
+        renderApp();
         // Both Navbar and Footer have "PEPTIDES" — use getAllByText
         const brandElements = screen.getAllByText('PEPTIDES');
         expect(brandElements.length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders the Footer', () => {
-        render(<App />);
+        renderApp();
         expect(screen.getByText('Legal Disclaimer')).toBeInTheDocument();
     });
 
@@ -55,8 +58,7 @@ describe('App Component (Integration)', () => {
             { id: 'test-1', name: 'Test', price: 100, category: 'Recovery', description: 'd', image: '/i.jpg', inStock: true, features: ['f'], quantity: 2 }
         ];
         localStorage.setItem('peptides_my_cart', JSON.stringify(mockCart));
-
-        render(<App />);
+        renderApp();
         // Cart count should appear in navbar
         expect(screen.getByText('2')).toBeInTheDocument();
     });
@@ -65,7 +67,7 @@ describe('App Component (Integration)', () => {
         localStorage.setItem('peptides_my_cart', 'invalid-json');
 
         // Should not throw
-        expect(() => render(<App />)).not.toThrow();
+        expect(() => renderApp()).not.toThrow();
     });
 });
 

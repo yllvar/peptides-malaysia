@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useProducts } from '../src/hooks/useProducts';
 import { WHATSAPP_NUMBER } from '../src/constants';
 import { useSearchParams } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 const Shop: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -32,6 +33,10 @@ const Shop: React.FC = () => {
 
   return (
     <div className="bg-evo-black min-h-screen bg-sparkle">
+      <SEO
+        title="Shop The Evo™ Series | High-Purity Research Peptides"
+        description="Browse our selection of laboratory-grade research peptides. Retatrutide, BPC-157/TB-500 Blends, GHK-Cu, and more. KL Ready Stock."
+      />
       {/* Immersive Shop Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-evo-orange/10 to-transparent blur-3xl opacity-30 select-none pointer-events-none" />

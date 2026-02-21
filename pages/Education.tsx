@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
+import { useBlogPosts } from '../src/hooks/useBlogPosts';
 import {
   ArrowLeft,
   ArrowRight,
@@ -24,11 +26,17 @@ const Education: React.FC = () => {
   const [bacWater, setBacWater] = useState<number>(3); // ml
   const [desiredDose, setDesiredDose] = useState<number>(2.0); // mg
 
+  const { data: posts } = useBlogPosts();
+
   const concentration = vialQty / bacWater;
   const unitsToPull = ((desiredDose / concentration) * 100).toFixed(1);
 
   return (
     <div className="bg-evo-black min-h-screen text-white font-sans antialiased selection:bg-evo-orange selection:text-white">
+      <SEO
+        title="Technical Preparation & Dilution Protocols | Evo Peptides"
+        description="Learn the exact laboratory protocols, titration schedules, and preparation guidelines for Evo™ Peptides."
+      />
 
       {/* HERO - Mobile Centric High Impact */}
       <section className="relative min-h-[85vh] flex flex-col justify-end pb-12 overflow-hidden">
@@ -230,6 +238,45 @@ const Education: React.FC = () => {
             </div>
           </div>
         </section>
+
+        {/* LATEST RESEARCH - Content SEO Gap Fix */}
+        {posts && posts.length > 0 && (
+          <section className="space-y-12">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="space-y-4">
+                <h2 className="text-5xl font-display font-bold text-white uppercase italic tracking-tighter">LATEST <br /><span className="text-gray-500">RESEARCH</span></h2>
+                <p className="text-gray-400 text-sm font-light italic">Deep dives into the pharmacology and operational standards of the Evo™ Series.</p>
+              </div>
+              <div className="hidden md:block h-px flex-grow bg-white/5 mx-12 mb-4"></div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {posts.map((post) => (
+                <Link
+                  key={post.id}
+                  to={`/blog/${post.id}`}
+                  className="group bg-white/5 border border-white/5 p-8 rounded-3xl hover:border-evo-orange/30 transition-all flex flex-col h-full"
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-[10px] font-black text-evo-orange uppercase tracking-[0.2em]">{post.category}</span>
+                    <div className="flex items-center gap-2 text-[10px] text-gray-500 font-bold">
+                      <Clock size={12} /> {post.readTime}
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-display font-bold text-white uppercase italic leading-tight mb-4 group-hover:text-evo-orange transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 font-light leading-relaxed mb-8 flex-grow">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center gap-2 text-[10px] font-black text-white uppercase tracking-widest group-hover:gap-4 transition-all">
+                    Read Article <MoveRight size={14} className="text-evo-orange" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* TECHNIQUE - Clean Cards */}
         <section className="space-y-12 pb-20">

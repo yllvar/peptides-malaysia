@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShieldCheck, Zap, Truck, FlaskConical, Flame, Activity, Dumbbell, ChevronRight, Clock } from 'lucide-react';
 import { PRODUCTS } from '../src/constants';
+import SEO from '../components/SEO';
 
 const Home: React.FC = () => {
   const featuredProduct = PRODUCTS[0]; // Retatrutide Kit
@@ -22,6 +23,10 @@ const Home: React.FC = () => {
 
   return (
     <div className="bg-evo-black overflow-hidden relative">
+      <SEO
+        title="Evo™ Peptides | Premier Research Compounds Malaysia"
+        description="German-Engineered Research Peptides. KL Ready Stock. Verified Purity, HPLC Tested. Retatrutide, BPC-157, GHK-Cu, and more."
+      />
 
 
       {/* Hero Section - Simplified Evo-Noir Implementation */}

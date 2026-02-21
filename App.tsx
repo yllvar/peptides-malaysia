@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import SEO from './components/SEO';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Latest from './pages/Latest';
@@ -40,6 +41,7 @@ const AppContent: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-evo-black text-white font-sans antialiased selection:bg-evo-orange selection:text-white">
+      <SEO />
       {!isAdmin && <Navbar />}
 
       <div className="flex-grow">

@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import ProductDetail from '../pages/ProductDetail';
+import { HelmetProvider } from 'react-helmet-async';
 import { PRODUCTS, COA_DATA } from '../src/constants';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -32,13 +33,15 @@ vi.mock('../src/stores/cartStore', () => ({
  */
 function renderProductDetail(productId: string) {
     const result = render(
-        <QueryClientProvider client={queryClient}>
-            <MemoryRouter initialEntries={[`/product/${productId}`]}>
-                <Routes>
-                    <Route path="/product/:id" element={<ProductDetail />} />
-                </Routes>
-            </MemoryRouter>
-        </QueryClientProvider>
+        <HelmetProvider>
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter initialEntries={[`/product/${productId}`]}>
+                    <Routes>
+                        <Route path="/product/:id" element={<ProductDetail />} />
+                    </Routes>
+                </MemoryRouter>
+            </QueryClientProvider>
+        </HelmetProvider>
     );
     return { ...result, addToCart: mockAddToCart };
 }
@@ -48,11 +51,13 @@ describe('Product Detail Page', () => {
 
     it('shows "Product not found" for invalid ID', () => {
         render(
-            <MemoryRouter initialEntries={['/product/nonexistent-id']}>
-                <Routes>
-                    <Route path="/product/:id" element={<ProductDetail />} />
-                </Routes>
-            </MemoryRouter>
+            <HelmetProvider>
+                <MemoryRouter initialEntries={['/product/nonexistent-id']}>
+                    <Routes>
+                        <Route path="/product/:id" element={<ProductDetail />} />
+                    </Routes>
+                </MemoryRouter>
+            </HelmetProvider>
         );
         expect(screen.getByText('Product not found')).toBeInTheDocument();
     });

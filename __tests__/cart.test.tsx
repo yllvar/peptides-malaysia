@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Cart from '../pages/Cart';
 import { createMockCartItem } from './helpers';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { HelmetProvider } from 'react-helmet-async';
 import * as cartStore from '../src/stores/cartStore';
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
@@ -52,11 +53,13 @@ describe('Cart Page', () => {
         (cartStore.useCartStore as any).mockImplementation((selector: any) => selector ? selector(state) : state);
 
         return render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <Cart />
-                </MemoryRouter>
-            </QueryClientProvider>
+            <HelmetProvider>
+                <QueryClientProvider client={queryClient}>
+                    <MemoryRouter>
+                        <Cart />
+                    </MemoryRouter>
+                </QueryClientProvider>
+            </HelmetProvider>
         );
     };
 
