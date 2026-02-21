@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
     { name: 'DNA', path: '/about' },
     { name: 'Lab Data', path: '/lab-testing' },
     { name: 'Protocols', path: '/education' },
-    { name: 'Insights', path: '/blog' },
+    { name: 'Blog', path: '/blog' },
     { name: 'Contact', path: '/contact' },
   ];
 
