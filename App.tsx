@@ -14,6 +14,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import PaymentStatus from './pages/PaymentStatus';
 import About from './pages/About';
+import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
@@ -53,7 +54,7 @@ const AppContent: React.FC = () => {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/lab-testing" element={<LabTesting />} />
           <Route path="/education" element={<Education />} />
-
+          <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
