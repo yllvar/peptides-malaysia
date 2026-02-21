@@ -1,4 +1,4 @@
-import { prisma } from '../_db.js';
+import { prisma, connectDb } from '../_db.js';
 
 export const config = {
     runtime: 'nodejs',
@@ -44,6 +44,7 @@ function toPublicDTO(product: any) {
 
 export async function GET(request: Request) {
     try {
+        await connectDb();
         const products = await prisma.product.findMany({
             where: { isPublished: true },
             include: {

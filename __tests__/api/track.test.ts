@@ -4,7 +4,7 @@ import { prisma } from '../../api/_db'; // Reuse the mock from existing tests if
 
 // Mock Prisma
 vi.mock('../../api/_db', () => ({
-    prisma: {
+    connectDb: vi.fn().mockResolvedValue(undefined), prisma: {
         order: {
             findFirst: vi.fn(),
         },

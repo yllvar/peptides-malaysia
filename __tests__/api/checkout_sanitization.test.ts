@@ -8,7 +8,7 @@ vi.mock('../../src/lib/utils/shipping', () => ({
 
 // Mock Prisma
 vi.mock('../../api/_db', () => ({
-    prisma: {
+    connectDb: vi.fn().mockResolvedValue(undefined), prisma: {
         product: {
             findMany: vi.fn(),
         },
@@ -28,7 +28,7 @@ describe('Checkout API - Phone Sanitization (P0)', () => {
         vi.clearAllMocks();
         // Setup default mock returns
         (prisma.product.findMany as any).mockResolvedValue([
-            { id: 'p1', name: 'Test Product', price: 100, stockQuantity: 10 }
+            { id: 'p1', name: 'Test Product', price: 100, stockQuantity: 10, isPublished: true, inStock: true }
         ]);
         (prisma.order.create as any).mockResolvedValue({ id: 'order-123' });
 

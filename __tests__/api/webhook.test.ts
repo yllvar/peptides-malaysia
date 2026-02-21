@@ -3,7 +3,7 @@ import { POST } from '../../api/checkout/webhook/index';
 import { prisma } from '../../api/_db.js';
 
 vi.mock('../../api/_db.js', () => ({
-    prisma: {
+    connectDb: vi.fn().mockResolvedValue(undefined), prisma: {
         order: {
             findUnique: vi.fn(),
             update: vi.fn(),

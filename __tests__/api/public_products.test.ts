@@ -1,20 +1,18 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-const { mockFindMany } = vi.hoisted(() => ({
-    mockFindMany: vi.fn(),
+vi.mock('../../api/_db', () => ({
+    connectDb: vi.fn().mockResolvedValue(undefined),
+    prisma: {
+        product: {
+            findMany: vi.fn(),
+        },
+    },
 }));
 
-vi.mock('@prisma/client', () => {
-    return {
-        PrismaClient: class MockPrismaClient {
-            product = {
-                findMany: mockFindMany,
-            };
-        },
-    };
-});
-
 import { GET } from '../../api/products/index';
+import { prisma as prismaMock } from '../../api/_db';
+
+const mockFindMany = prismaMock.product.findMany as any;
 
 describe('Public Products API', () => {
     beforeEach(() => {

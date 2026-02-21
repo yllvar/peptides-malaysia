@@ -5,7 +5,7 @@ import { SignJWT } from 'jose';
 
 // Mock prisma
 vi.mock('../../api/_db.js', () => ({
-    prisma: {
+    connectDb: vi.fn().mockResolvedValue(undefined), prisma: {
         order: {
             findMany: vi.fn(),
             update: vi.fn(),

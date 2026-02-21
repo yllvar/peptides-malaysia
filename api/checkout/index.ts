@@ -1,4 +1,4 @@
-import { prisma } from '../_db.js';
+import { prisma, connectDb } from '../_db.js';
 
 export const config = {
     runtime: 'nodejs',
@@ -10,40 +10,56 @@ const sanitizePhone = (phone: string): string => phone.replace(/\D/g, '');
 
 export async function POST(request: Request) {
     try {
+        await connectDb();
         const { items, shippingInfo, userId } = await request.json();
 
         if (!items || items.length === 0 || !shippingInfo) {
             return Response.json({ error: 'Invalid order data' }, { status: 400 });
         }
 
-        // 1. Fetch products to get canonical prices and validate stock
-        const productIds = items.map((i: any) => i.id);
+        // 1. Aggregate quantities per ID to prevent bypass of stock limits via duplicate entries
+        const aggregatedQuantities: Record<string, number> = {};
+        for (const item of items) {
+            if (!item.id || typeof item.quantity !== 'number' || item.quantity <= 0) {
+                return Response.json({ error: 'Invalid item data' }, { status: 400 });
+            }
+            aggregatedQuantities[item.id] = (aggregatedQuantities[item.id] || 0) + item.quantity;
+        }
+
+        // 2. Fetch canonical data from DB (strict published check)
+        const productIds = Object.keys(aggregatedQuantities);
         const dbProducts = await prisma.product.findMany({
-            where: { id: { in: productIds } }
+            where: {
+                id: { in: productIds },
+                isPublished: true
+            }
         });
+
+        if (dbProducts.length !== productIds.length) {
+            return Response.json({ error: 'One or more products are unavailable or discontinued' }, { status: 404 });
+        }
 
         let calculatedSubtotal = 0;
         const validatedItems = [];
 
-        for (const item of items) {
-            const product = dbProducts.find(p => p.id === item.id);
-            if (!product) {
-                return Response.json({ error: `Product ${item.id} not found` }, { status: 404 });
+        for (const product of dbProducts) {
+            const requestedQty = aggregatedQuantities[product.id];
+
+            if (!product.inStock || product.stockQuantity < requestedQty) {
+                return Response.json({
+                    error: `Insufficient stock for ${product.name}. Available: ${product.stockQuantity}`
+                }, { status: 400 });
             }
-            if (!item.quantity || item.quantity <= 0) {
-                return Response.json({ error: `Invalid quantity for item ${item.id}` }, { status: 400 });
-            }
-            if (product.stockQuantity < item.quantity) {
-                return Response.json({ error: `Insufficient stock for ${product.name}. Available: ${product.stockQuantity}` }, { status: 400 });
-            }
+
             const price = Number(product.price);
-            calculatedSubtotal += price * item.quantity;
+            calculatedSubtotal += price * requestedQty;
+
             validatedItems.push({
                 productId: product.id,
                 productName: product.name,
                 productPrice: price,
-                quantity: item.quantity,
-                lineTotal: price * item.quantity
+                quantity: requestedQty,
+                lineTotal: price * requestedQty
             });
         }
 

@@ -4,7 +4,7 @@ import { prisma } from '../../api/_db';
 
 // Mock prisma
 vi.mock('../../api/_db', () => ({
-    prisma: {
+    connectDb: vi.fn().mockResolvedValue(undefined), prisma: {
         order: {
             create: vi.fn(),
         },
@@ -30,7 +30,7 @@ describe('Checkout API', () => {
 
         // Default: products exist and have stock
         (prisma.product.findMany as any).mockResolvedValue([
-            { id: 'p1', name: 'Product 1', stockQuantity: 10, price: 100 }
+            { id: 'p1', name: 'Product 1', stockQuantity: 10, price: 100, isPublished: true, inStock: true }
         ]);
     });
 
@@ -62,12 +62,12 @@ describe('Checkout API', () => {
         const data = await res.json();
 
         expect(res.status).toBe(400);
-        expect(data.error).toBe('Invalid quantity for item p1');
+        expect(data.error).toBe('Invalid item data');
     });
 
     it('should return 400 if stock is insufficient', async () => {
         (prisma.product.findMany as any).mockResolvedValue([
-            { id: 'p1', name: 'Product 1', stockQuantity: 1, price: 100 }
+            { id: 'p1', name: 'Product 1', stockQuantity: 1, price: 100, isPublished: true, inStock: true }
         ]);
 
         const orderData = {

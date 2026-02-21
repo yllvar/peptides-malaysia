@@ -1,4 +1,4 @@
-import { prisma } from './_db.js';
+import { prisma, connectDb } from './_db.js';
 
 export const config = {
     runtime: 'nodejs',
@@ -9,6 +9,7 @@ const sanitizePhone = (phone: string): string => phone.replace(/\D/g, '');
 
 export async function POST(request: Request) {
     try {
+        await connectDb();
         const { orderNumber, phone } = await request.json();
 
         if (!orderNumber || !phone) {
@@ -24,14 +25,26 @@ export async function POST(request: Request) {
                 orderNumber: orderNumber,
                 shippingPhone: sanitizedPhone
             },
-            include: {
-                items: true,
-                payment: true
+            select: {
+                orderNumber: true,
+                status: true,
+                total: true,
+                createdAt: true,
+                shippedAt: true,
+                deliveredAt: true,
+                trackingNumber: true,
+                courier: true,
+                items: {
+                    select: {
+                        productName: true,
+                        quantity: true,
+                        lineTotal: true
+                    }
+                }
             }
         });
 
         if (!order) {
-            // Generic error message to prevent enumeration of valid order IDs
             return Response.json({ error: 'Order not found or details do not match' }, { status: 404 });
         }
 

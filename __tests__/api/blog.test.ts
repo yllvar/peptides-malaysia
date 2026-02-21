@@ -4,7 +4,7 @@ import { prisma } from '../../api/_db';
 
 // Mock prisma
 vi.mock('../../api/_db', () => ({
-    prisma: {
+    connectDb: vi.fn().mockResolvedValue(undefined), prisma: {
         blogPost: {
             findMany: vi.fn(),
         },

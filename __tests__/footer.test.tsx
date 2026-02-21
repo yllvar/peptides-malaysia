@@ -28,7 +28,7 @@ describe('Footer Component', () => {
         renderWithRouter(<Footer />);
         expect(screen.getByText('Contact Us')).toBeInTheDocument();
         expect(screen.getByText('Lab Reports (COA)')).toBeInTheDocument();
-        expect(screen.getByText('Research Protocols')).toBeInTheDocument();
+        expect(screen.getByText('Research Protocols & Blog')).toBeInTheDocument();
     });
 
     it('renders privacy and terms links', () => {
