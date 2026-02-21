@@ -37,9 +37,20 @@ const BlogPost: React.FC = () => {
       />
       <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <Link to="/education" className="inline-flex items-center text-gray-500 hover:text-white mb-8 transition-colors">
-          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Protocols
+        <Link to="/blog" className="inline-flex items-center text-gray-500 hover:text-white mb-8 transition-colors">
+          <ArrowLeft className="h-4 w-4 mr-2" /> Back to Blog
         </Link>
+
+        {post.imageUrl && (
+          <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 mb-10">
+            <img
+              src={post.imageUrl}
+              alt={post.title}
+              className="w-full h-full object-cover opacity-80"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-evo-black via-transparent to-transparent"></div>
+          </div>
+        )}
 
         <header className="mb-10">
           <span className="inline-block bg-evo-orange/10 text-evo-orange text-xs font-bold px-3 py-1 rounded mb-4 uppercase tracking-wider">

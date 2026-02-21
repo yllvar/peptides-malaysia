@@ -20,7 +20,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 21, 2026",
         category: "Comparison",
         readTime: "7 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/3825539/pexels-photo-3825539.jpeg?auto=compress&cs=tinysrgb&w=800",
         purityBatch: "EVO-RT-0092",
         relatedProductId: "evo-retat-kit",
         references: [
@@ -46,7 +46,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 20, 2026",
         category: "Comparison",
         readTime: "6 min",
-        imageUrl: "/images/evo-retatrutide.webp",
+        imageUrl: "https://images.pexels.com/photos/3952224/pexels-photo-3952224.jpeg?auto=compress&cs=tinysrgb&w=800",
         relatedProductId: "evo-retat-kit",
         references: [
             { label: "ClinicalTrials.gov - SYNERGY-Outcomes", url: "https://clinicaltrials.gov/ct2/show/NCT05869032" }
@@ -67,7 +67,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 19, 2026",
         category: "Comparison",
         readTime: "8 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/601170/pexels-photo-601170.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "NIH - Retatrutide: A Game Changer in Obesity", url: "https://pubmed.ncbi.nlm.nih.gov/37363665/" }
         ]
@@ -84,7 +84,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 18, 2026",
         category: "Comparison",
         readTime: "9 min",
-        imageUrl: "/images/evo-retatrutide.webp",
+        imageUrl: "https://images.pexels.com/photos/3646113/pexels-photo-3646113.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "ACS Journal - Strategic Design of Triple Agonists", url: "https://pubs.acs.org/doi/10.1021/acs.jmedchem.0c02115" }
         ]
@@ -101,7 +101,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 17, 2026",
         category: "Comparison",
         readTime: "7 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/256262/pexels-photo-256262.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "The Lancet - CagriSema vs Tirzepatide Insights", url: "https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(23)01160-2/fulltext" }
         ]
@@ -126,7 +126,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 16, 2026",
         category: "Technical",
         readTime: "5 min",
-        imageUrl: "/images/evo-landing-header.webp",
+        imageUrl: "https://images.pexels.com/photos/3735709/pexels-photo-3735709.jpeg?auto=compress&cs=tinysrgb&w=800",
         relatedProductId: "evo-retat-kit",
         references: [
             { label: "Drugs.com - Retatrutide Research Dosage", url: "https://www.drugs.com/dosage/retatrutide.html" }
@@ -149,7 +149,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 15, 2026",
         category: "Technical",
         readTime: "6 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/3825527/pexels-photo-3825527.jpeg?auto=compress&cs=tinysrgb&w=800",
         purityBatch: "EVO-RT-0092",
         references: [
             { label: "Patsnap Synapse - Retatrutide Standards", url: "https://synapse.patsnap.com/drug/retatrutide" }
@@ -167,7 +167,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 14, 2026",
         category: "Technical",
         readTime: "9 min",
-        imageUrl: "/images/evo-retatrutide.webp",
+        imageUrl: "https://images.pexels.com/photos/672444/pexels-photo-672444.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "Nature Metabolism - Glucagon Signaling", url: "https://www.nature.com/articles/s42255-020-0220-4" }
         ]
@@ -184,7 +184,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 13, 2026",
         category: "Technical",
         readTime: "5 min",
-        imageUrl: "/images/evo-landing-header.webp",
+        imageUrl: "https://images.pexels.com/photos/3912953/pexels-photo-3912953.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "Lilly Investor News - Handling Incretins", url: "https://investor.lilly.com/news-releases" }
         ]
@@ -201,7 +201,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 12, 2026",
         category: "Technical",
         readTime: "4 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/3786119/pexels-photo-3786119.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "Journal of Clinical Investigation - Dosing Models", url: "https://www.jci.org/" }
         ],
@@ -222,7 +222,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 11, 2026",
         category: "Results",
         readTime: "7 min",
-        imageUrl: "/images/evo-retatrutide.webp",
+        imageUrl: "https://images.pexels.com/photos/3735770/pexels-photo-3735770.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "Eli Lilly News - Phase 3 Results", url: "https://investor.lilly.com/news-releases" }
         ]
@@ -239,7 +239,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 10, 2026",
         category: "Results",
         readTime: "6 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/1142948/pexels-photo-1142948.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "NEJM - 48-week Weight Loss Data", url: "https://www.nejm.org/doi/full/10.1056/NEJMoa2301972" }
         ]
@@ -256,7 +256,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 09, 2026",
         category: "Results",
         readTime: "8 min",
-        imageUrl: "/images/evo-retatrutide.webp",
+        imageUrl: "https://images.pexels.com/photos/2261144/pexels-photo-2261144.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "Clinical Trials Arena - Analysis", url: "https://www.clinicaltrialsarena.com/news/lilly-retatrutide-phase-2-obesity/" }
         ]
@@ -273,7 +273,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 08, 2026",
         category: "Results",
         readTime: "5 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/1249214/pexels-photo-1249214.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "Diabetes Journal - Incretin Switching", url: "https://dom-pubs.onlinelibrary.wiley.com/" }
         ]
@@ -290,7 +290,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 07, 2026",
         category: "Results",
         readTime: "4 min",
-        imageUrl: "/images/evo-landing-header.webp",
+        imageUrl: "https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "PR Newswire - Patient Outcomes", url: "https://www.prnewswire.com/" }
         ]
@@ -308,7 +308,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 06, 2026",
         category: "Safety",
         readTime: "9 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/3771115/pexels-photo-3771115.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "ResearchGate - Safety Meta-Analysis", url: "https://www.researchgate.net/" }
         ]
@@ -325,7 +325,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 05, 2026",
         category: "Safety",
         readTime: "6 min",
-        imageUrl: "/images/evo-retatrutide.webp",
+        imageUrl: "https://images.pexels.com/photos/3735777/pexels-photo-3735777.jpeg?auto=compress&cs=tinysrgb&w=800",
         purityBatch: "EVO-RT-0092",
         references: [
             { label: "FDA - Purity Standards for Peptides", url: "https://www.fda.gov/" }
@@ -343,7 +343,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 04, 2026",
         category: "Safety",
         readTime: "8 min",
-        imageUrl: "/images/evo-dna.webp",
+        imageUrl: "https://images.pexels.com/photos/1153370/pexels-photo-1153370.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "ScienceDirect - CNS Activation", url: "https://www.sciencedirect.com/" }
         ]
@@ -360,7 +360,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 03, 2026",
         category: "Safety",
         readTime: "7 min",
-        imageUrl: "/images/evo-retatrutide.webp",
+        imageUrl: "https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "AJP - Liver Physiology Research", url: "https://journals.physiology.org/journal/ajpgi" }
         ]
@@ -377,7 +377,7 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
         date: "Feb 02, 2026",
         category: "Safety",
         readTime: "5 min",
-        imageUrl: "/images/evo-landing-header.webp",
+        imageUrl: "https://images.pexels.com/photos/221185/pexels-photo-221185.jpeg?auto=compress&cs=tinysrgb&w=800",
         references: [
             { label: "NIH - Online Marketplace Risks", url: "https://www.nih.gov/" }
         ]

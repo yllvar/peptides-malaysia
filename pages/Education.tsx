@@ -255,22 +255,33 @@ const Education: React.FC = () => {
                 <Link
                   key={post.id}
                   to={`/blog/${post.id}`}
-                  className="group bg-white/5 border border-white/5 p-8 rounded-3xl hover:border-evo-orange/30 transition-all flex flex-col h-full"
+                  className="group bg-white/5 border border-white/5 rounded-3xl overflow-hidden hover:border-evo-orange/30 transition-all flex flex-col h-full"
                 >
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-[10px] font-black text-evo-orange uppercase tracking-[0.2em]">{post.category}</span>
-                    <div className="flex items-center gap-2 text-[10px] text-gray-500 font-bold">
-                      <Clock size={12} /> {post.readTime}
+                  {post.imageUrl && (
+                    <div className="relative aspect-video overflow-hidden">
+                      <img
+                        src={post.imageUrl}
+                        alt={post.title}
+                        className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                      />
                     </div>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-white uppercase italic leading-tight mb-4 group-hover:text-evo-orange transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-xs text-gray-500 font-light leading-relaxed mb-8 flex-grow">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center gap-2 text-[10px] font-black text-white uppercase tracking-widest group-hover:gap-4 transition-all">
-                    Read Article <MoveRight size={14} className="text-evo-orange" />
+                  )}
+                  <div className="p-8 flex flex-col flex-grow">
+                    <div className="flex items-center justify-between mb-6">
+                      <span className="text-[10px] font-black text-evo-orange uppercase tracking-[0.2em]">{post.category}</span>
+                      <div className="flex items-center gap-2 text-[10px] text-gray-500 font-bold">
+                        <Clock size={12} /> {post.readTime}
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-display font-bold text-white uppercase italic leading-tight mb-4 group-hover:text-evo-orange transition-colors">
+                      {post.title}
+                    </h3>
+                    <p className="text-xs text-gray-500 font-light leading-relaxed mb-8 flex-grow line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center gap-2 text-[10px] font-black text-white uppercase tracking-widest group-hover:gap-4 transition-all">
+                      Read Article <MoveRight size={14} className="text-evo-orange" />
+                    </div>
                   </div>
                 </Link>
               ))}
