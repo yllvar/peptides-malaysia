@@ -122,7 +122,7 @@ describe('Checkout UX Integration', () => {
 
         expect(await screen.findByText(/Invalid MY phone number/i)).toBeDefined();
         expect(await screen.findByText(/Postcode must be 5 digits/i)).toBeDefined();
-        expect(screen.queryByText(/Encrypting Transmission/i)).toBeNull();
+        expect(screen.queryByText(/Initializing Protocol/i)).toBeNull();
     });
 
     it('should show loading state and handle successful redirection', async () => {
@@ -141,12 +141,12 @@ describe('Checkout UX Integration', () => {
         fireEvent.change(screen.getByPlaceholderText(/5-Digit Code/i), { target: { value: '43300' } });
         fireEvent.change(screen.getByPlaceholderText(/City/i), { target: { value: 'Seri Kembangan' } });
 
-        const submitBtn = screen.getByRole('button', { name: /SECURE SETTLEMENT/i });
+        const submitBtn = screen.getByRole('button', { name: /INITIALIZE ORDER/i });
 
         fireEvent.click(submitBtn);
 
         // Should show loading state
-        expect(screen.getByText(/Encrypting Transmission/i)).toBeDefined();
+        expect(screen.getByText(/Initializing Protocol/i)).toBeDefined();
 
         // Wait for potential async effects (though fetch is mocked)
         await vi.waitFor(() => {
@@ -175,7 +175,7 @@ describe('Checkout UX Integration', () => {
         fireEvent.change(screen.getByPlaceholderText(/5-Digit Code/i), { target: { value: '43300' } });
         fireEvent.change(screen.getByPlaceholderText(/City/i), { target: { value: 'Seri Kembangan' } });
 
-        const submitBtn = screen.getByRole('button', { name: /SECURE SETTLEMENT/i });
+        const submitBtn = screen.getByRole('button', { name: /INITIALIZE ORDER/i });
         fireEvent.click(submitBtn);
 
         await vi.waitFor(() => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useCartStore } from '../src/stores/cartStore';
 import { useAuthStore } from '../src/stores/authStore';
 import { Link, useNavigate } from 'react-router-dom';
-import { ChevronRight, ShieldCheck, Truck, CreditCard, Loader2, AlertCircle } from 'lucide-react';
+import { ChevronRight, ShieldCheck, Truck, CreditCard, Loader2, AlertCircle, ArrowRight } from 'lucide-react';
 import { calculateShippingCost } from '../src/lib/utils/shipping';
 
 const Checkout: React.FC = () => {
@@ -44,6 +44,8 @@ const Checkout: React.FC = () => {
             </div>
         );
     }
+
+    const [paymentMethod, setPaymentMethod] = useState<'gateway' | 'manual'>('manual');
 
     const validateForm = () => {
         const errors: Record<string, string> = {};
@@ -87,7 +89,8 @@ const Checkout: React.FC = () => {
                 body: JSON.stringify({
                     items: cart,
                     shippingInfo: form,
-                    userId: user?.id
+                    userId: user?.id,
+                    paymentMethod: paymentMethod
                 }),
             });
 
@@ -104,7 +107,10 @@ const Checkout: React.FC = () => {
                 throw new Error(data.error || 'Checkout failed');
             }
 
-            if (data.paymentUrl) {
+            if (data.method === 'manual') {
+                // Redirect to status page with manual flag and order ID
+                navigate(`/payment/status?method=manual&order_id=${data.orderId}&order_number=${data.orderNumber}`);
+            } else if (data.paymentUrl) {
                 window.location.href = data.paymentUrl;
             } else {
                 throw new Error('No payment URL received');
@@ -248,21 +254,46 @@ const Checkout: React.FC = () => {
                                         <CreditCard className="h-5 w-5 text-evo-orange" />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold text-white uppercase tracking-tight">Gateway Interface</h2>
+                                        <h2 className="text-xl font-bold text-white uppercase tracking-tight">Payment Selection</h2>
                                         <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Financial settlement protocol</p>
                                     </div>
                                 </div>
-                                <div className="p-6 border border-evo-orange/30 bg-evo-orange/5 rounded-2xl flex items-center justify-between group hover:border-evo-orange transition-colors duration-500">
-                                    <div className="flex items-center gap-4">
-                                        <div className="h-5 w-5 rounded-full border-2 border-evo-orange flex items-center justify-center p-0.5">
-                                            <div className="w-full h-full rounded-full bg-evo-orange shadow-[0_0_10px_rgba(255,87,34,0.5)]"></div>
+
+                                <div className="space-y-4">
+                                    <div
+                                        onClick={() => setPaymentMethod('manual')}
+                                        className={`p-6 border cursor-pointer rounded-2xl flex items-center justify-between group transition-all duration-300 ${paymentMethod === 'manual' ? 'border-evo-orange bg-evo-orange/5' : 'border-white/5 bg-black/20 hover:border-white/10'}`}
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center p-0.5 ${paymentMethod === 'manual' ? 'border-evo-orange' : 'border-gray-700'}`}>
+                                                {paymentMethod === 'manual' && <div className="w-full h-full rounded-full bg-evo-orange shadow-[0_0_10px_rgba(255,87,34,0.5)]"></div>}
+                                            </div>
+                                            <div>
+                                                <div className="text-white font-bold tracking-tight">Direct Bank Transfer</div>
+                                                <div className="text-[10px] text-gray-500 uppercase tracking-[0.1em] mt-0.5 font-medium italic">Instant Verification via WhatsApp Receipt</div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div className="text-white font-bold tracking-tight">FPX Online Banking / Card</div>
-                                            <div className="text-[10px] text-gray-500 uppercase tracking-[0.1em] mt-0.5 font-medium">Verified Gateway: ToyyibPay Encryption</div>
+                                        <div className="flex gap-2">
+                                            <div className="bg-white/5 px-3 py-1 rounded-md text-[8px] font-bold text-gray-400 border border-white/5">UOB</div>
+                                            <div className="bg-white/5 px-3 py-1 rounded-md text-[8px] font-bold text-gray-400 border border-white/5">DUITNOW</div>
                                         </div>
                                     </div>
-                                    <img src="/logo/toyibpay-logo.webp" alt="ToyyibPay" className="h-7 opacity-50 group-hover:opacity-100 transition-opacity" />
+
+                                    <div
+                                        onClick={() => setPaymentMethod('gateway')}
+                                        className={`p-6 border cursor-pointer rounded-2xl flex items-center justify-between group transition-all duration-300 ${paymentMethod === 'gateway' ? 'border-evo-orange bg-evo-orange/5' : 'border-white/5 bg-black/20 hover:border-white/10 opacity-60 grayscale hover:grayscale-0'}`}
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center p-0.5 ${paymentMethod === 'gateway' ? 'border-evo-orange' : 'border-gray-700'}`}>
+                                                {paymentMethod === 'gateway' && <div className="w-full h-full rounded-full bg-evo-orange shadow-[0_0_10px_rgba(255,87,34,0.5)]"></div>}
+                                            </div>
+                                            <div>
+                                                <div className="text-white font-bold tracking-tight">FPX / Credit Card</div>
+                                                <div className="text-[10px] text-gray-500 uppercase tracking-[0.1em] mt-0.5 font-medium">ToyyibPay Secure Encryption</div>
+                                            </div>
+                                        </div>
+                                        <img src="/logo/toyibpay-logo.webp" alt="ToyyibPay" className="h-4 opacity-50" />
+                                    </div>
                                 </div>
                             </section>
 
@@ -285,16 +316,16 @@ const Checkout: React.FC = () => {
                                     {loading ? (
                                         <>
                                             <Loader2 className="h-5 w-5 animate-spin" />
-                                            Encrypting Transmission...
+                                            Initializing Protocol...
                                         </>
                                     ) : (
                                         <>
                                             {getTotalPrice() > 0 ? (
-                                                `SECURE SETTLEMENT: RM${(getTotalPrice() + shippingCost).toFixed(2)}`
+                                                `INITIALIZE ORDER: RM${(getTotalPrice() + shippingCost).toFixed(2)}`
                                             ) : (
-                                                'Initialize Incomplete Protocol'
+                                                'Incomplete Protocol'
                                             )}
-                                            <ShieldCheck className="h-5 w-5" />
+                                            <ArrowRight className="h-5 w-5" />
                                         </>
                                     )}
                                 </div>

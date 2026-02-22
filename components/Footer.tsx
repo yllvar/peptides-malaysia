@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-xs text-gray-600">© {new Date().getFullYear()} Evo Peptides. All rights reserved.</p>
+          <p className="text-xs text-gray-600">© 2025 Evo Peptides by UDB Tech Ventures. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link to="/privacy" className="text-xs text-gray-600 hover:text-white transition-colors">Privacy Policy</Link>
             <Link to="/terms" className="text-xs text-gray-600 hover:text-white transition-colors">Terms of Service</Link>

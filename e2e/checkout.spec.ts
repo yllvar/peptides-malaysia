@@ -52,7 +52,7 @@ test.describe('Checkout Flow', () => {
         await expect(page.getByText(/ADDED TO CART/i)).toBeVisible();
 
         // Verify Navbar badge
-        await expect(page.locator('nav').getByText('1')).toBeVisible();
+        await expect(page.locator('a[href="/cart"] span.bg-evo-orange')).toHaveText('1');
 
         // Go back and add Product 2
         await page.goto('/shop');
@@ -61,7 +61,7 @@ test.describe('Checkout Flow', () => {
         await expect(page.getByText(/ADDED TO CART/i)).toBeVisible();
 
         // Verify Navbar badge
-        await expect(page.locator('nav').getByText('2')).toBeVisible();
+        await expect(page.locator('a[href="/cart"] span.bg-evo-orange')).toHaveText('2');
 
         // 2. Go to Cart
         await page.locator('a[href="/cart"]').first().click();
@@ -81,7 +81,7 @@ test.describe('Checkout Flow', () => {
         await page.getByPlaceholder(/City/i).fill('Kuala Lumpur');
 
         // 5. Click Settlement and Verify Redirect to Mocked Gateway
-        const settleButton = page.getByRole('button', { name: /SECURE SETTLEMENT/i });
+        const settleButton = page.getByRole('button', { name: /INITIALIZE ORDER/i });
         await expect(settleButton).toBeVisible();
         await settleButton.click();
 
@@ -96,7 +96,7 @@ test.describe('Checkout Flow', () => {
         await page.locator('div.grid a.group').first().click();
         await page.getByRole('button', { name: /ADD TO CART/i }).click();
         await expect(page.getByText(/ADDED TO CART/i)).toBeVisible();
-        await expect(page.locator('nav').getByText('1')).toBeVisible();
+        await expect(page.locator('a[href="/cart"] span.bg-evo-orange')).toHaveText('1');
 
         // 2. Simulate returning from ToyyibPay with a success status
         // ToyyibPay returns to /payment/status with status_id=1

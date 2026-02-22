@@ -6,7 +6,7 @@ function getResend(): Resend | null {
     if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY);
     return _resend;
 }
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+const FROM_EMAIL = `"Evo™ Peptides Research" <${process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'}>`;
 
 if (FROM_EMAIL.includes('resend.dev')) {
     console.log(`[Email] Using testing domain ${FROM_EMAIL}. Emails will likely only be delivered to the Resend account owner (evopeptidesmastermail@gmail.com).`);
@@ -58,9 +58,13 @@ export async function sendOrderReceivedEmail(to: string, order: EmailOrder) {
                         </div>
                     </div>
 
-                    <p>We will notify you once your order has been shipped.</p>
+                    <p>Verification usually takes 5-15 minutes during lab hours. Once verified, your research batch will be prepared for immediate dispatch.</p>
                     
-                    <p>Best regards,<br/>Evo Peptides Team</p>
+                    <p style="color: #666; font-size: 12px; margin-top: 40px; border-top: 1px solid #eee; pt: 20px;">
+                        <strong>Evo™ Peptides Research Hub</strong><br/>
+                        Analytical Standards Department<br/>
+                        evopeptidesmastermail@gmail.com
+                    </p>
                 </div>
             `
         });
@@ -102,8 +106,11 @@ export async function sendShippingConfirmationEmail(to: string, orderNumber: str
 
                     <p>You can track your package using the tracking number above depending on the courier's website.</p>
                     
-                    <p>Thank you for shopping with us!</p>
-                    <p>Best regards,<br/>Evo Peptides Team</p>
+                    <p style="color: #666; font-size: 12px; margin-top: 40px; border-top: 1px solid #eee; pt: 20px;">
+                        <strong>Evo™ Peptides Research Hub</strong><br/>
+                        Logistics & Dispatch Department<br/>
+                        evopeptidesmastermail@gmail.com
+                    </p>
                 </div>
             `
         });

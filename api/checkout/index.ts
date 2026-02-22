@@ -11,7 +11,7 @@ const sanitizePhone = (phone: string): string => phone.replace(/\D/g, '');
 export async function POST(request: Request) {
     try {
         await connectDb();
-        const { items, shippingInfo, userId } = await request.json();
+        const { items, shippingInfo, userId, paymentMethod = 'gateway' } = await request.json();
 
         if (!items || items.length === 0 || !shippingInfo) {
             return Response.json({ error: 'Invalid order data' }, { status: 400 });
@@ -92,7 +92,27 @@ export async function POST(request: Request) {
             },
         });
 
-        // 4. Prepare ToyyibPay Payload
+        // 4. Handle Manual Payment
+        if (paymentMethod === 'manual') {
+            await prisma.orderPayment.create({
+                data: {
+                    orderId: order.id,
+                    gateway: 'MANUAL',
+                    gatewayRef: 'BANK_TRANSFER',
+                    amount: finalTotal,
+                    status: 'pending',
+                }
+            });
+
+            return Response.json({ 
+                success: true, 
+                orderId: order.id, 
+                orderNumber: order.orderNumber,
+                method: 'manual'
+            });
+        }
+
+        // 5. Prepare ToyyibPay Payload (Gateway Flow)
         const formData = new URLSearchParams();
         const baseUrl = (process.env.TOYYIBPAY_BASE_URL || 'https://dev.toyyibpay.com').trim();
 
@@ -114,7 +134,7 @@ export async function POST(request: Request) {
         formData.append('billEmail', shippingInfo.email);
         formData.append('billPhone', shippingInfo.phone);
 
-        // 5. Call ToyyibPay
+        // 6. Call ToyyibPay
         console.log(`Calling ToyyibPay at: ${baseUrl}/index.php/api/createBill`);
         const tpResponse = await fetch(`${baseUrl}/index.php/api/createBill`, {
             method: 'POST',
