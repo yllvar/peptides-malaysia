@@ -37,10 +37,9 @@ describe('Footer Component', () => {
         expect(screen.getByText('Terms of Service')).toBeInTheDocument();
     });
 
-    it('renders the current year in copyright', () => {
+    it('renders the copyright with UDB Tech Ventures attribution', () => {
         renderWithRouter(<Footer />);
-        const currentYear = new Date().getFullYear().toString();
-        expect(screen.getByText(new RegExp(currentYear))).toBeInTheDocument();
+        expect(screen.getByText(/© 2025 Evo Peptides by UDB Tech Ventures/i)).toBeInTheDocument();
     });
 
     it('renders the location', () => {

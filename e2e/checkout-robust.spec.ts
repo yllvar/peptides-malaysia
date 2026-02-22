@@ -107,8 +107,8 @@ test.describe('Robust Checkout & Payment Flow', () => {
         await page.getByPlaceholder('City').fill('Test City');
         await page.getByPlaceholder('5-Digit Code').fill('50000');
 
-        // 7. Click Settlement
-        const settleBtn = page.getByRole('button', { name: /SECURE SETTLEMENT/i });
+        // 7. Click Initialization
+        const settleBtn = page.getByRole('button', { name: /INITIALIZE ORDER/i });
         await settleBtn.click();
 
         // Wait for redirect to ToyyibPay (Sandbox URL)
