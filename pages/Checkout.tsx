@@ -344,20 +344,29 @@ const Checkout: React.FC = () => {
                             <h2 className="text-xl font-bold text-white mb-8 uppercase tracking-tighter italic">Batch <span className="text-gray-600 font-normal">Manifest</span></h2>
 
                             <div className="space-y-6 mb-10">
-                                {cart.map((item) => (
-                                    <div key={item.id} className="flex gap-6 group">
-                                        <div className="h-20 w-20 bg-black rounded-2xl border border-white/5 overflow-hidden flex-shrink-0 group-hover:border-evo-orange/30 transition-colors">
-                                            <img src={item.image} alt={item.name} className="h-full w-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all" />
-                                        </div>
-                                        <div className="flex-grow py-1">
-                                            <div className="text-white text-sm font-bold tracking-tight mb-1 group-hover:text-evo-orange transition-colors">{item.name}</div>
-                                            <div className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Protocol QTY: {item.quantity} units</div>
-                                            <div className="text-white text-sm font-mono mt-2">
-                                                {item.price > 0 ? `RM${(item.price * item.quantity).toFixed(2)}` : 'TBA'}
+                                {cart.map((item) => {
+                                    const isSub = !!item.isSubscription;
+                                    const currentPrice = isSub ? Number(item.price) * 0.9 : Number(item.price);
+                                    const itemKey = `${item.id}-${isSub ? 'sub' : 'once'}`;
+                                    return (
+                                        <div key={itemKey} className="flex gap-6 group">
+                                            <div className="h-20 w-20 bg-black rounded-2xl border border-white/5 overflow-hidden flex-shrink-0 group-hover:border-evo-orange/30 transition-colors">
+                                                <img src={item.image} alt={item.name} className="h-full w-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all" />
+                                            </div>
+                                            <div className="flex-grow py-1">
+                                                <div className="text-white text-sm font-bold tracking-tight mb-1 group-hover:text-evo-orange transition-colors">
+                                                    {item.name}
+                                                    {isSub && <span className="text-[9px] text-evo-orange font-bold uppercase ml-2 tracking-tighter border border-evo-orange/20 px-1 py-0.5 rounded">Evo Cycle</span>}
+                                                </div>
+                                                <div className="text-[10px] text-gray-500 font-black uppercase tracking-widest">Protocol QTY: {item.quantity} units</div>
+                                                <div className="text-white text-sm font-mono mt-2 flex items-center gap-2">
+                                                    <span>RM{(currentPrice * item.quantity).toFixed(2)}</span>
+                                                    {isSub && <span className="text-[10px] text-gray-600 line-through italic font-normal">RM{(Number(item.price) * item.quantity).toFixed(2)}</span>}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
 
                             <div className="space-y-4 border-t border-white/10 pt-8">

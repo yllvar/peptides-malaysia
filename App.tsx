@@ -26,6 +26,7 @@ import AdminOrders from './pages/admin/Orders';
 import AdminProducts from './pages/admin/Products';
 import AdminDashboard from './pages/admin/Dashboard';
 import NotFound from './pages/NotFound';
+import Magnet from './components/Magnet';
 import { WHATSAPP_NUMBER } from './src/constants';
 
 const ScrollToTop = () => {
@@ -74,6 +75,7 @@ const AppContent: React.FC = () => {
       </div>
 
       {!isAdmin && <Footer />}
+      {!isAdmin && <Magnet />}
     </div>
   );
 };

@@ -66,7 +66,7 @@ describe('Product Detail Page', () => {
         renderProductDetail(retatrutide.id);
         // Product name appears in heading and breadcrumb — use getByRole for heading
         expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(retatrutide.name);
-        expect(screen.getByText(`RM${retatrutide.price.toFixed(2)}`)).toBeInTheDocument();
+        expect(screen.getAllByText(`RM${retatrutide.price.toFixed(2)}`).length).toBeGreaterThanOrEqual(1);
     });
 
     it('renders product image', () => {
@@ -100,7 +100,7 @@ describe('Product Detail Page', () => {
         await user.click(screen.getByText(/ADD TO CART/));
 
         expect(addToCart).toHaveBeenCalledTimes(1);
-        expect(addToCart).toHaveBeenCalledWith(retatrutide);
+        expect(addToCart).toHaveBeenCalledWith(retatrutide, false);
     });
 
     it('opens WhatsApp when BUY VIA WHATSAPP is clicked', async () => {

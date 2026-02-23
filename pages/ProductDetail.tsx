@@ -10,6 +10,7 @@ const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState<'desc' | 'guide' | 'coa' | 'tech'>('desc');
   const [showAdded, setShowAdded] = useState(false);
+  const [purchaseType, setPurchaseType] = useState<'one-time' | 'subscription'>('one-time');
 
   const { data: products, isLoading } = useProducts();
   const addToCart = useCartStore((state) => state.addToCart);
@@ -45,7 +46,7 @@ _I have read and accepted the Research Use Only terms for the Evo™ Series._`;
   };
 
   const handleAddToCart = () => {
-    addToCart(product);
+    addToCart(product, purchaseType === 'subscription');
     setShowAdded(true);
     setTimeout(() => setShowAdded(false), 2000);
   };
@@ -85,6 +86,45 @@ _I have read and accepted the Research Use Only terms for the Evo™ Series._`;
               <p className="text-sm text-gray-300 leading-relaxed italic">
                 <span className="font-bold text-white uppercase not-italic">Research Kit Logic:</span> Bundled research unit containing the lyophilized peptide and 3ml of Evo™ Bacteriostatic Water. Optimized for structural stability.
               </p>
+            </div>
+            {/* Subscription Selection */}
+            <div className="space-y-3 mb-8">
+              <div
+                onClick={() => setPurchaseType('one-time')}
+                className={`p-4 rounded-2xl border cursor-pointer transition-all ${purchaseType === 'one-time' ? 'bg-white/10 border-evo-orange shadow-[0_0_20px_rgba(255,77,0,0.1)]' : 'bg-transparent border-white/10 hover:border-white/20'}`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${purchaseType === 'one-time' ? 'border-evo-orange' : 'border-gray-600'}`}>
+                      {purchaseType === 'one-time' && <div className="w-2.5 h-2.5 bg-evo-orange rounded-full" />}
+                    </div>
+                    <span className={`text-sm font-bold uppercase tracking-widest ${purchaseType === 'one-time' ? 'text-white' : 'text-gray-400'}`}>One-time Purchase</span>
+                  </div>
+                  <span className="text-sm font-bold text-white">RM{product.price.toFixed(2)}</span>
+                </div>
+              </div>
+
+              <div
+                onClick={() => setPurchaseType('subscription')}
+                className={`p-4 rounded-2xl border cursor-pointer transition-all relative overflow-hidden ${purchaseType === 'subscription' ? 'bg-white/10 border-evo-orange shadow-[0_0_20px_rgba(255,77,0,0.1)]' : 'bg-transparent border-white/10 hover:border-white/20'}`}
+              >
+                <div className="absolute top-0 right-0 bg-evo-orange text-white text-[8px] font-black px-3 py-1 uppercase tracking-tighter">10% OFF</div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${purchaseType === 'subscription' ? 'border-evo-orange' : 'border-gray-600'}`}>
+                      {purchaseType === 'subscription' && <div className="w-2.5 h-2.5 bg-evo-orange rounded-full" />}
+                    </div>
+                    <div>
+                      <span className={`text-sm font-bold uppercase tracking-widest block ${purchaseType === 'subscription' ? 'text-white' : 'text-gray-400'}`}>Evo Cycle Program</span>
+                      <span className="text-[10px] text-gray-500 uppercase font-medium">Auto-ship every 30 days. Cancel anytime.</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-sm font-bold text-evo-orange">RM{(product.price * 0.9).toFixed(2)}</span>
+                    <span className="text-[10px] text-gray-600 line-through block italic">RM{product.price.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Actions */}

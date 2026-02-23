@@ -49,50 +49,64 @@ const Cart: React.FC = () => {
 
           {/* Left: Cart Items */}
           <div className="lg:col-span-8 space-y-4">
-            {cart.map((item) => (
-              <div key={item.id} className="bg-neutral-900 border border-white/10 rounded-xl p-5 flex items-center gap-5 group hover:border-white/20 transition-colors">
-                <Link to={`/product/${item.id}`} className="h-20 w-20 bg-black rounded-lg border border-white/5 overflow-hidden flex-shrink-0">
-                  <img src={item.image} alt={item.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                </Link>
-                <div className="flex-grow min-w-0">
-                  <Link to={`/product/${item.id}`} className="text-white font-bold text-sm sm:text-base hover:text-evo-orange transition-colors line-clamp-1">{item.name}</Link>
-                  <div className="text-xs text-gray-500 mt-0.5">{item.category}</div>
-                  <div className="text-sm text-gray-400 mt-1">
-                    {item.price > 0 ? `RM${item.price.toFixed(2)} each` : 'Price TBA'}
+            {cart.map((item) => {
+              const isSub = !!item.isSubscription;
+              const currentPrice = isSub ? Number(item.price) * 0.9 : Number(item.price);
+              const itemKey = `${item.id}-${isSub ? 'sub' : 'once'}`;
+
+              return (
+                <div key={itemKey} className="bg-neutral-900 border border-white/10 rounded-xl p-5 flex items-center gap-5 group hover:border-white/20 transition-colors">
+                  <Link to={`/product/${item.id}`} className="h-20 w-20 bg-black rounded-lg border border-white/5 overflow-hidden flex-shrink-0">
+                    <img src={item.image} alt={item.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </Link>
+                  <div className="flex-grow min-w-0">
+                    <Link to={`/product/${item.id}`} className="text-white font-bold text-sm sm:text-base hover:text-evo-orange transition-colors line-clamp-1">
+                      {item.name}
+                      {isSub && <span className="text-[10px] text-evo-orange font-bold uppercase ml-2 tracking-tighter border border-evo-orange/20 px-1.5 py-0.5 rounded">Evo Cycle</span>}
+                    </Link>
+                    <div className="text-xs text-gray-500 mt-0.5">{item.category}</div>
+                    <div className="text-sm text-gray-400 mt-1">
+                      {item.price > 0 ? (
+                        <>
+                          RM{currentPrice.toFixed(2)} each
+                          {isSub && <span className="text-[10px] text-gray-600 line-through ml-2 italic">RM{Number(item.price).toFixed(2)}</span>}
+                        </>
+                      ) : 'Price TBA'}
+                    </div>
+                  </div>
+
+                  {/* Quantity Controls */}
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    <button
+                      onClick={() => updateQuantity(item.id, -1, isSub)}
+                      className="w-8 h-8 flex items-center justify-center bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 text-white transition-colors text-sm font-bold"
+                    >
+                      −
+                    </button>
+                    <span className="text-sm font-bold text-white w-6 text-center">{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.id, 1, isSub)}
+                      className="w-8 h-8 flex items-center justify-center bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 text-white transition-colors text-sm font-bold"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  {/* Line total & remove */}
+                  <div className="text-right flex-shrink-0 ml-2">
+                    <div className="text-evo-orange font-bold">
+                      {item.price > 0 ? `RM${(currentPrice * item.quantity).toFixed(2)}` : 'TBA'}
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(item.id, isSub)}
+                      className="text-xs text-gray-600 hover:text-red-500 mt-1.5 flex items-center justify-end transition-colors"
+                    >
+                      <Trash2 className="h-3 w-3 mr-1" /> Remove
+                    </button>
                   </div>
                 </div>
-
-                {/* Quantity Controls */}
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <button
-                    onClick={() => updateQuantity(item.id, -1)}
-                    className="w-8 h-8 flex items-center justify-center bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 text-white transition-colors text-sm font-bold"
-                  >
-                    −
-                  </button>
-                  <span className="text-sm font-bold text-white w-6 text-center">{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(item.id, 1)}
-                    className="w-8 h-8 flex items-center justify-center bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 text-white transition-colors text-sm font-bold"
-                  >
-                    +
-                  </button>
-                </div>
-
-                {/* Line total & remove */}
-                <div className="text-right flex-shrink-0 ml-2">
-                  <div className="text-evo-orange font-bold">
-                    {item.price > 0 ? `RM${(item.price * item.quantity).toFixed(2)}` : 'TBA'}
-                  </div>
-                  <button
-                    onClick={() => removeFromCart(item.id)}
-                    className="text-xs text-gray-600 hover:text-red-500 mt-1.5 flex items-center justify-end transition-colors"
-                  >
-                    <Trash2 className="h-3 w-3 mr-1" /> Remove
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
 
             <Link to="/shop" className="inline-flex items-center text-xs text-gray-500 hover:text-white uppercase tracking-widest font-bold transition-colors mt-4 gap-2">
               ← Continue Shopping
@@ -105,14 +119,22 @@ const Cart: React.FC = () => {
               <h2 className="text-xl font-bold text-white mb-6 uppercase tracking-tight">Order Summary</h2>
 
               <div className="space-y-3 mb-6">
-                {cart.map((item) => (
-                  <div key={item.id} className="flex justify-between text-sm">
-                    <span className="text-gray-400 truncate mr-4">{item.name} × {item.quantity}</span>
-                    <span className="text-white flex-shrink-0">
-                      {item.price > 0 ? `RM${(item.price * item.quantity).toFixed(2)}` : 'TBA'}
-                    </span>
-                  </div>
-                ))}
+                {cart.map((item) => {
+                  const isSub = !!item.isSubscription;
+                  const currentPrice = isSub ? Number(item.price) * 0.9 : Number(item.price);
+                  const itemKey = `${item.id}-${isSub ? 'sub' : 'once'}`;
+                  return (
+                    <div key={itemKey} className="flex justify-between text-sm">
+                      <div className="flex flex-col">
+                        <span className="text-gray-400 truncate max-w-[180px]">{item.name} × {item.quantity}</span>
+                        {isSub && <span className="text-[10px] text-evo-orange font-bold uppercase tracking-tighter italic">Evo Cycle Program</span>}
+                      </div>
+                      <span className="text-white flex-shrink-0">
+                        {item.price > 0 ? `RM${(currentPrice * item.quantity).toFixed(2)}` : 'TBA'}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="border-t border-white/10 pt-4 space-y-3">

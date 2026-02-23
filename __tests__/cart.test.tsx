@@ -86,7 +86,7 @@ describe('Cart Page', () => {
         const removeButtons = screen.getAllByText(/Remove/i);
 
         await user.click(removeButtons[0]);
-        expect(mockRemoveFromCart).toHaveBeenCalledWith('item-1');
+        expect(mockRemoveFromCart).toHaveBeenCalledWith('item-1', false);
     });
 
     it('calls updateQuantity when + or - is clicked', async () => {
@@ -94,11 +94,11 @@ describe('Cart Page', () => {
         const user = userEvent.setup();
         const plusButtons = screen.getAllByText('+');
         await user.click(plusButtons[0]);
-        expect(mockUpdateQuantity).toHaveBeenCalledWith('item-1', 1);
+        expect(mockUpdateQuantity).toHaveBeenCalledWith('item-1', 1, false);
 
         const minusButtons = screen.getAllByText('−'); // Note the minus character used in new Cart.tsx
         await user.click(minusButtons[1]);
-        expect(mockUpdateQuantity).toHaveBeenCalledWith('item-2', -1);
+        expect(mockUpdateQuantity).toHaveBeenCalledWith('item-2', -1, false);
     });
 
     it('renders empty state when cart is empty', () => {

@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

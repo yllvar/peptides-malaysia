@@ -22,6 +22,7 @@ export interface TechnicalSpec {
 
 export interface CartItem extends Product {
   quantity: number;
+  isSubscription?: boolean;
 }
 
 export interface BlogPost {
