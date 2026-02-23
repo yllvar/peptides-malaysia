@@ -15,7 +15,7 @@ describe('Magnet Component', () => {
 
     it('is initially hidden', () => {
         render(<Magnet />);
-        expect(screen.queryByText(/EVO™ RESEARCH PROTOCOL/i)).not.toBeInTheDocument();
+        expect(screen.queryByText(/EVO™ PROTOCOL/i)).not.toBeInTheDocument();
     });
 
     it('becomes visible after 5 seconds', () => {
@@ -25,7 +25,7 @@ describe('Magnet Component', () => {
             vi.advanceTimersByTime(5000);
         });
 
-        expect(screen.getByText(/EVO™ RESEARCH PROTOCOL/i)).toBeInTheDocument();
+        expect(screen.getByText(/EVO™ PROTOCOL/i)).toBeInTheDocument();
     });
 
     it('stays hidden if evo_magnet_seen is set in localStorage', () => {
@@ -36,7 +36,7 @@ describe('Magnet Component', () => {
             vi.advanceTimersByTime(5000);
         });
 
-        expect(screen.queryByText(/EVO™ RESEARCH PROTOCOL/i)).not.toBeInTheDocument();
+        expect(screen.queryByText(/EVO™ PROTOCOL/i)).not.toBeInTheDocument();
     });
 
     it('can be dismissed and sets localStorage', () => {
@@ -46,10 +46,14 @@ describe('Magnet Component', () => {
             vi.advanceTimersByTime(5000);
         });
 
-        const closeButton = screen.getByRole('button', { name: '' }); // The X button doesn't have an aria-label in current implementation, but it's the first button
+        const closeButton = screen.getByLabelText('Close');
         fireEvent.click(closeButton);
 
-        expect(screen.queryByText(/EVO™ RESEARCH PROTOCOL/i)).not.toBeInTheDocument();
+        act(() => {
+            vi.advanceTimersByTime(1000); // Wait for exit animation
+        });
+
+        expect(screen.queryByText(/EVO™ PROTOCOL/i)).not.toBeInTheDocument();
         expect(localStorage.getItem('evo_magnet_seen')).toBe('true');
     });
 
@@ -101,6 +105,6 @@ describe('Magnet Component', () => {
         fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
         fireEvent.click(submitButton);
 
-        expect(await screen.findByText(/Connection failed/i)).toBeInTheDocument();
+        expect(await screen.findByText(/Verification failed/i)).toBeInTheDocument();
     });
 });
