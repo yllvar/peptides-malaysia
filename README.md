@@ -1,9 +1,5 @@
 # Peptides Malaysia - Evo™
 
-<div align="center">
-<img width="1200" height="475" alt="Peptides Malaysia Evo Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
-
 **Peptides Malaysia - Evo™** is a premium e-commerce platform for research peptides in Malaysia. Built with React (Vite), Tailwind CSS 4, and powered by Vercel Serverless Functions + Neon Postgres.
 
 ---
