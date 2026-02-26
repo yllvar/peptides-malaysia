@@ -22,7 +22,7 @@ const PaymentStatus: React.FC = () => {
 
     // Format WhatsApp Message
     const whatsappMessage = encodeURIComponent(`Hi Evo, I've just placed order #${orderNumber}. Here is my payment receipt for verification.`);
-    const whatsappUrl = `https://wa.me/601133373941?text=${whatsappMessage}`;
+    const whatsappUrl = `https://wa.me/60179148515?text=${whatsappMessage}`;
 
     if (method === 'manual') {
         return (
@@ -57,18 +57,18 @@ const PaymentStatus: React.FC = () => {
                                     </div>
                                     <div className="text-left">
                                         <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Target Repository</p>
-                                        <p className="text-white font-bold uppercase">United Overseas Bank (UOB)</p>
+                                        <p className="text-white font-bold uppercase">Hong Leong Bank</p>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="text-left">
                                         <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Account Name</p>
-                                        <p className="text-white font-display font-bold text-lg italic uppercase">UDB TECH VENTURES</p>
+                                        <p className="text-white font-display font-bold text-lg italic uppercase">EVO EMPIRE</p>
                                     </div>
                                     <div className="text-left">
                                         <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-1">Account Number</p>
-                                        <p className="text-evo-orange font-mono font-black text-2xl">911-305-327-1</p>
+                                        <p className="text-evo-orange font-mono font-black text-2xl">04900866704</p>
                                     </div>
                                 </div>
                             </div>

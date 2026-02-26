@@ -274,7 +274,7 @@ const Checkout: React.FC = () => {
                                             </div>
                                         </div>
                                         <div className="flex gap-2">
-                                            <div className="bg-white/5 px-3 py-1 rounded-md text-[8px] font-bold text-gray-400 border border-white/5">UOB</div>
+                                            <div className="bg-white/5 px-3 py-1 rounded-md text-[8px] font-bold text-gray-400 border border-white/5">HLB</div>
                                             <div className="bg-white/5 px-3 py-1 rounded-md text-[8px] font-bold text-gray-400 border border-white/5">DUITNOW</div>
                                         </div>
                                     </div>
