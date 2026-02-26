@@ -66,7 +66,7 @@ test.describe('Product & Shopping Flow', () => {
         await page.goto('/product/evo-retat-kit');
 
         await expect(page.locator('h1')).toContainText('Retatrutide 20mg Kit');
-        await expect(page.getByText('RM580.00')).toBeVisible();
+        await expect(page.getByText('RM580.00').first()).toBeVisible();
 
         // Check features
         await expect(page.getByText('20mg Lyophilized')).toBeVisible();
