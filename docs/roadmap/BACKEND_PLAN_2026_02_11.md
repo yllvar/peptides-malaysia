@@ -1011,7 +1011,7 @@ TOYYIBPAY_BASE_URL=https://toyyibpay.com
 BLOB_READ_WRITE_TOKEN=vercel_blob_xxxxxxxx   # Auto-set by Vercel
 
 # App Config (exposed to frontend via VITE_ prefix)
-VITE_WHATSAPP_NUMBER=60179148515
+VITE_WHATSAPP_NUMBER=601133373941
 VITE_APP_URL=https://peptidesmalaysia.com
 VITE_API_URL=/api                             # Relative — same Vercel deployment
 ```

@@ -261,7 +261,7 @@ The app uses **`HashRouter`** (e.g., `example.com/#/shop`). This is important to
 ### 6.1 WhatsApp Configuration
 **File:** `constants.ts:3`
 **Status:** ✅ **CONFIGURED**
-**Value:** `60179148515`
+**Value:** `601133373941`
 **Impact:** All checkout flows and contact links are fully functional and point to the official business line.
 
 ---

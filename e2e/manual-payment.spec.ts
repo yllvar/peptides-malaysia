@@ -69,7 +69,7 @@ test.describe('Manual Payment Flow (Human-Touch)', () => {
         // 7. Fill Shipping Info
         await page.getByPlaceholder(/Receiver Name/i).fill('Manual Test User');
         await page.getByPlaceholder(/example\.com/i).fill('manual@test.com');
-        await page.getByPlaceholder(/0123456789/i).fill('0179148515');
+        await page.getByPlaceholder(/0123456789/i).fill('01133373941');
         await page.getByPlaceholder(/Street name/i).fill('No. 42 Research Lab Crescent');
         await page.getByPlaceholder(/5-Digit Code/i).fill('43300');
         await page.getByPlaceholder(/City/i).fill('Seri Kembangan');
@@ -88,7 +88,7 @@ test.describe('Manual Payment Flow (Human-Touch)', () => {
         const whatsappLink = page.getByRole('link', { name: /Submit Receipt via WhatsApp/i });
         await expect(whatsappLink).toBeVisible();
         const href = await whatsappLink.getAttribute('href');
-        expect(href).toContain('wa.me/60179148515');
+        expect(href).toContain('wa.me/601133373941');
         expect(href).toContain(encodeURIComponent('EVO-DEBUG-123'));
     });
 
@@ -119,7 +119,7 @@ test.describe('Manual Payment Flow (Human-Touch)', () => {
         await page.goto('/checkout', { waitUntil: 'networkidle' });
         await page.getByPlaceholder(/Receiver Name/i).fill('Clear Cart User');
         await page.getByPlaceholder(/example\.com/i).fill('clear@test.com');
-        await page.getByPlaceholder(/0123456789/i).fill('0179148515');
+        await page.getByPlaceholder(/0123456789/i).fill('01133373941');
         await page.getByPlaceholder(/Street name/i).fill('Cart Street 123');
         await page.getByPlaceholder(/5-Digit Code/i).fill('50000');
         await page.getByPlaceholder(/City/i).fill('KL');
@@ -156,7 +156,7 @@ test.describe('Manual Payment Flow (Human-Touch)', () => {
 
         await page.getByPlaceholder(/Receiver Name/i).fill('Error Test User');
         await page.getByPlaceholder(/example\.com/i).fill('error@test.com');
-        await page.getByPlaceholder(/0123456789/i).fill('0179148515');
+        await page.getByPlaceholder(/0123456789/i).fill('01133373941');
         await page.getByPlaceholder(/Street name/i).fill('123 Error St');
         await page.getByPlaceholder(/5-Digit Code/i).fill('50000');
         await page.getByPlaceholder(/City/i).fill('Error City');
