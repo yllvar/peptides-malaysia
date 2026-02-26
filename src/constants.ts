@@ -1,6 +1,6 @@
 import { Product, BlogPost, COADocument } from './types';
 
-export const WHATSAPP_NUMBER = "601133373941";
+export const WHATSAPP_NUMBER = "601164215492";
 export const CURRENCY = "RM";
 
 export const PRODUCTS: Product[] = [

@@ -22,7 +22,7 @@ const PaymentStatus: React.FC = () => {
 
     // Format WhatsApp Message
     const whatsappMessage = encodeURIComponent(`Hi Evo, I've just placed order #${orderNumber}. Here is my payment receipt for verification.`);
-    const whatsappUrl = `https://wa.me/601133373941?text=${whatsappMessage}`;
+    const whatsappUrl = `https://wa.me/601164215492?text=${whatsappMessage}`;
 
     if (method === 'manual') {
         return (
